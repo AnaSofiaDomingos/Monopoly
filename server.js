@@ -6,6 +6,42 @@ var express = require("express"),
     hostname = process.env.HOSTNAME || 'localhost',
     port = parseInt(process.env.PORT, 10) || 8080;
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+var mysql      = require('mysql');
+
+/* DISTANT SERVER MYSQL
+var connection = mysql.createConnection({
+  host     : 'kwib.myd.infomaniak.com',
+  user     : 'kwib_monopoly',
+  password : 'Super2008',
+  database : 'kwib_monopoly'
+});
+*/
+
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'monopoly'
+});
+
+
+connection.connect();
+
+connection.query('SELECT * FROM test', function(err, rows, fields) {
+  if (err) throw err;
+
+  console.log(rows[0].Texte);
+
+});
+
+connection.end();
+
+io.on('connection', function(){ /* NOTIFICATIONS SOCKETIO */ });
+
 
 ////////////////////////////
 //        ROUTING         //
