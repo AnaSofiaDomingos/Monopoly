@@ -7,7 +7,6 @@ var express = require("express"),
     port = parseInt(process.env.PORT, 10) || 8080;
 
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
 
 var mysql      = require('mysql');
 
@@ -33,11 +32,13 @@ connection.connect();
 connection.end();
 */
 
-io.on('connection', function(){ /* NOTIFICATIONS SOCKETIO */ });
 
 
 // routes ======================================================================
 require('./app/routes.js')(app);
+// socket ======================================================================
+require('./app/socket.js')(server);
+
 
 app.use(methodOverride());
 app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-form-urlencoded
