@@ -28,33 +28,21 @@ var connection = mysql.createConnection({
   database : 'monopoly'
 });
 
-
+/* BDD CONNEXION
 connection.connect();
-
-connection.query('SELECT * FROM test', function(err, rows, fields) {
-  if (err) throw err;
-
-  console.log(rows[0].Texte);
-
-});
-
 connection.end();
+*/
 
 io.on('connection', function(){ /* NOTIFICATIONS SOCKETIO */ });
 
 
-////////////////////////////
-//        ROUTING         //
-////////////////////////////
-
-
-app.get("/", function (req, res) {
-  res.redirect("/index.html");
-});
-
+// routes ======================================================================
+require('./app/routes.js')(app);
 
 app.use(methodOverride());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(bodyParser.urlencoded({
   extended: true
 }));
