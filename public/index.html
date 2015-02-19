@@ -9,64 +9,45 @@
   <title>Monopoly</title>
 
    <script>
-   		function constructionCase(String typecase){
-   			for (var i = 1; i <= 8; i++) {
-   				//echo "div class="$typecase"></div>"
+   		// fonction permettant de construire les cases de chaque pays et carte
+   		function constructionCase(typecase, id){
+   			for (var i = id; i > (id-7); i--) {
+   				 document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
    			}
    		}
    </script>
 </head>
-<body onload="init()">
+<body>
 	<div id="plateau">
-		<div id="afrique">
-			<div id="case8" class="case-coin"></div>
-			<div id="case7" class="case-horizontal"></div>
-			<div id="case6" class="case-horizontal"></div>
-			<div id="case5"class="case-horizontal"></div>
-			<div id="case4" class="case-horizontal"></div>
-			<div id="case3" class="case-horizontal"></div>
-			<div id="case2" class="case-horizontal"></div>
-			<div id="case1" class="case-horizontal"></div>
-			<div id="case0" class="case-coin"></div>
+		<div id="amérique">
+			<div id="case24" class="case-coin"></div>
+			<script> constructionCase("case-horizontal", 17); </script>
+			<div id="case16" class="case-coin"></div>
 		</div>
 
 		<div id="asie">
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
+			<script> constructionCase("case-vertical", 9); </script>
 		</div>
 
 		<div id="case-centrale"></div>
-		
+
 		<div id="europe">
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
-			<div class="case-vertical"></div>
+			<script> constructionCase("case-vertical", 25); </script>
 		</div>
-		
-		<div class="amérique">
-			<div class="case-coin"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div id="0" class="case-coin"></div>
+
+		<div class="afrique">
+			<div id="case8" class="case-coin"></div>
+			<script> constructionCase("case-horizontal", 7); </script>
+			<div id="case0" class="case-coin"></div>
 		</div>
+	
 	</div>
 
 	<br/>
-	<input type="button" value="Lancer les dés" onclick="lancerDes()" />
+	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes()" />
 	<br/>
+	<script type="text/javascript">
+		init();
+	</script>
 </body>
 </html>
