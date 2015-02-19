@@ -5,6 +5,11 @@ html,body{
 
 #plateau{
 	margin:auto;
+	font-size: 0px;
+}
+
+#plateau * {
+	font-size : 1em;
 }
 
 .case-horizontal{
@@ -24,17 +29,19 @@ html,body{
 	border: 1px solid rgba(0,0,0,1);
 	display: inline-block;
 }
+}
+
+#case-depart{
+	background: brown;
+}
+
 #europe,#asie, #case-centrale{
 	display: inline-block;
 }
 
 #case-centrale{
 	background: brown;
-	width: 300px;
-	height: 300px;
-}
+	width: 364px;
+	height: 364px;
+}	
 
-#case-depart{
-	background-color: rgba(192, 57, 43,1.0);
-	display: inline-block;
-}
