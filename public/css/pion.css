@@ -6,23 +6,23 @@
 	float: left;
 }
 
-.player1{
+#player1{
 	background-color: red;
 }
 
-.player2{
+#player2{
 	background-color: blue;	
 }
 
-.player3{
+#player3{
 	background-color: green;
 }
-.player4{
+#player4{
 	background-color: yellow;
 }
-.player5{
+#player5{
 	background-color: pink;
 }
-.player6{
+#player6{
 	background-color: black;
 }

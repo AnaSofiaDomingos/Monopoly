@@ -21,47 +21,18 @@ module.exports = function(app, mysql) {
 	});
 	
 	// -----------------
-	// URI : /fintour
+	// URI : /endofturn
 	// method : PUT
 	// Date : 19.02.2015
 	// -----------------
 
-	app.get("/fintour", function (req, res) {
-	
-		//var sample = req.body;
+	app.put("/endofturn", function (req, res) {
+		console.log("/endofturn reached");
+		var sample = req.body;
+		console.log(req.body);
 		
-		var sample = {
-
-  "id": "1",
-  
-  "bought": {
-	"land": "France"
-  },
-  
-  "upgraded": {
-	"land": "Qatar",
-	"level": "2"
-  },
-  
-  "sold": {
-    "land": "Italy"
-  },
-  
-  "loaned": {
-    "land": "Switzerland"
-  },
-
-  "drew": {
-    "card": "21"
-  },
-  
-  "account": "201500",
-  
-  "position": "21"
-  
-};
 		// end of turn==================================================================
 		require('./endofturn.js')(sample, mysql);
-		res.redirect("/index.html");
+		res.send("data updated");
 	});
 }

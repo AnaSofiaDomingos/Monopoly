@@ -35,14 +35,14 @@ connection.end();
 
 
 // routes ======================================================================
-require('./app/routes.js')(app);
+require('./app/routes.js')(app, mysql);
 // socket ======================================================================
 require('./app/socket.js')(server);
 
 
 app.use(methodOverride());
 app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-form-urlencoded
-app.use(bodyParser.json()); // parse application/json
+app.use(express.query());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(bodyParser.urlencoded({
   extended: true
