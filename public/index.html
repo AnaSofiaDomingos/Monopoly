@@ -7,37 +7,39 @@
   <script src="move.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="./css/pion.css">
   <title>Monopoly</title>
-
    <script>
    		// fonction permettant de construire les cases de chaque pays et carte
-   		function constructionCase(typecase, id){
-   			for (var i = id; i > (id-7); i--) {
-   				 document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
-   			}
+   		function constructionCase(typecase, id, sens ){
+   			if (sens == 1)
+   				for (var i = id; i < (id+7); i++) 
+	   				 document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
+   			else
+	   			for (var i = id; i > (id-7); i--)
+	   				 document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
    		}
    </script>
 </head>
 <body>
 	<div id="plateau">
 		<div id="amérique">
-			<div id="case24" class="case-coin"></div>
-			<script> constructionCase("case-horizontal", 17); </script>
 			<div id="case16" class="case-coin"></div>
+			<script> constructionCase("case-horizontal",17, 1); </script>
+			<div id="case24" class="case-coin"></div>
 		</div>
 
 		<div id="asie">
-			<script> constructionCase("case-vertical", 9); </script>
+			<script> constructionCase("case-vertical", 15, 0); </script>
 		</div>
 
 		<div id="case-centrale"></div>
 
 		<div id="europe">
-			<script> constructionCase("case-vertical", 25); </script>
+			<script> constructionCase("case-vertical", 25, 1); </script>
 		</div>
 
 		<div class="afrique">
 			<div id="case8" class="case-coin"></div>
-			<script> constructionCase("case-horizontal", 7); </script>
+			<script> constructionCase("case-horizontal", 7, 0 ); </script>
 			<div id="case0" class="case-coin"></div>
 		</div>
 	
