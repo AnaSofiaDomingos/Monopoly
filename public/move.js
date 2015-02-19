@@ -1,8 +1,8 @@
 var taillePlateau = 32;
 var nbJoueurs = 6;
 var plateau = new Array(taillePlateau);
-var idLocal = 5;
-var joueurs = [0, 0, 9, 0, 0, 0];
+var idLocal = 0;
+var joueurs = [0, 0, 0, 0, 0, 0];
 var posLocal = 0;
 
 
@@ -55,7 +55,6 @@ function WritePlayersPosition(){
 	ResetPlateau();
 	for(var i = 0; i<nbJoueurs; i++) {
 		var posJoueur = document.getElementById("case"+joueurs[i]);
-		alert("ok");
 		var rond = document.createElement("div");
 		rond.setAttribute("class", "pion player"+(i+1));
 		posJoueur.appendChild(rond);

@@ -1,0 +1,28 @@
+.pion {
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	margin: 3px;
+	float: left;
+}
+
+.player1{
+	background-color: red;
+}
+
+.player2{
+	background-color: blue;	
+}
+
+.player3{
+	background-color: green;
+}
+.player4{
+	background-color: yellow;
+}
+.player5{
+	background-color: pink;
+}
+.player6{
+	background-color: black;
+}
