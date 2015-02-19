@@ -4,6 +4,8 @@
   <meta charset=utf-8>
   <link rel="stylesheet" type="text/css" href="./css/normalize.css">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <script src="move.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="./css/pion.css">
   <title>Monopoly</title>
 
    <script>
@@ -14,18 +16,18 @@
    		}
    </script>
 </head>
-<body>
+<body onload="init()">
 	<div id="plateau">
 		<div id="afrique">
-			<div id="0" class="case-coin"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div class="case-horizontal"></div>
-			<div id="case-depart" class="case-coin"></div>
+			<div id="case8" class="case-coin"></div>
+			<div id="case7" class="case-horizontal"></div>
+			<div id="case6" class="case-horizontal"></div>
+			<div id="case5"class="case-horizontal"></div>
+			<div id="case4" class="case-horizontal"></div>
+			<div id="case3" class="case-horizontal"></div>
+			<div id="case2" class="case-horizontal"></div>
+			<div id="case1" class="case-horizontal"></div>
+			<div id="case0" class="case-coin"></div>
 		</div>
 
 		<div id="asie">
@@ -62,5 +64,9 @@
 			<div id="0" class="case-coin"></div>
 		</div>
 	</div>
+
+	<br/>
+	<input type="button" value="Lancer les dés" onclick="lancerDes()" />
+	<br/>
 </body>
 </html>
