@@ -56,4 +56,4 @@ app.use(errorHandler({
 }));
 
 console.log("server listening at http://" + hostname + ":" + port);
-app.listen(port, hostname);
+app.listen(port);
