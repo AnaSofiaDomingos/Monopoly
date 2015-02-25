@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 18 Février 2015 à 09:51
+-- Généré le :  Mer 25 Février 2015 à 09:58
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.5.8
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `cartes` (
   `idCarte` int(11) NOT NULL AUTO_INCREMENT,
   `NomCarte` varchar(20) NOT NULL,
   `Contenu` text NOT NULL,
-  `Position` point DEFAULT NULL,
+  `Position` int(11) DEFAULT NULL,
   `Garder` tinyint(1) NOT NULL,
   PRIMARY KEY (`idCarte`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
@@ -72,12 +72,12 @@ CREATE TABLE IF NOT EXISTS `joueurs` (
   `idJoueur` int(11) NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(20) NOT NULL,
   `mdp` varchar(30) NOT NULL COMMENT 'Super2008 pour tous',
-  `position` point DEFAULT NULL,
+  `position` int(11) DEFAULT NULL,
   `etatPrison` tinyint(1) NOT NULL,
   `solde` int(11) NOT NULL,
   PRIMARY KEY (`idJoueur`),
   UNIQUE KEY `pseudo` (`pseudo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `joueurs`
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `joueurs` (
 
 INSERT INTO `joueurs` (`idJoueur`, `pseudo`, `mdp`, `position`, `etatPrison`, `solde`) VALUES
 (1, 'Ana', '0fddc5fc3b323288bb908ad27937c2', NULL, 0, 100000000),
-(2, 'Pannufle', '0fddc5fc3b323288bb908ad27937c2', NULL, 0, 100000000),
+(2, 'Pannufle', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 201500),
 (3, 'Monstross', '0fddc5fc3b323288bb908ad27937c2', NULL, 0, 100000000),
 (4, 'MalComX', '0fddc5fc3b323288bb908ad27937c2', NULL, 0, 100000000),
 (5, 'DomKiki', '0fddc5fc3b323288bb908ad27937c2', NULL, 0, 100000000);
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `pays` (
   `idPays` int(11) NOT NULL AUTO_INCREMENT,
   `NomPays` varchar(20) NOT NULL,
   `Prix` double NOT NULL,
-  `Position` point DEFAULT NULL,
+  `Position` int(11) DEFAULT NULL,
   `Continent` varchar(20) NOT NULL,
   PRIMARY KEY (`idPays`),
   UNIQUE KEY `NomPays` (`NomPays`)
