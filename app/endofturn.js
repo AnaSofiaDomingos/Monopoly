@@ -1,16 +1,17 @@
 module.exports = function(sample, mysql) {
-		
+
 	var id = sample.id;
-	
+
 	var connection = mysql.createConnection({
-	  host     : 'localhost',
-	  user     : 'root',
-	  password : '',
-	  database : 'monopoly'
+		host     : '129.194.185.13',
+		user     : 'monopoly',
+		password : 'Super2008',
+		database : 'monopoly'
 	});
- 
+
+
 	connection.connect();
- 
+
 	// Achat pays
 	var bought = sample.bought;
 	if (bought.land != "")
@@ -18,7 +19,7 @@ module.exports = function(sample, mysql) {
 			if (err) throw err;
 			console.log("Player "+id+" bought "+bought.land);
 		});
-		
+
 	// Amélioration pays
 	var upgraded = sample.upgraded;
 	if (upgraded.land != "")
@@ -26,7 +27,7 @@ module.exports = function(sample, mysql) {
 			if (err) throw err;
 			console.log("Player "+id+" upgraded "+upgraded.land+" to level "+upgraded.level);
 		});
-	
+
 	// Vente pays
 	var sold = sample.sold;
 	if (sold.land != "")
@@ -34,7 +35,7 @@ module.exports = function(sample, mysql) {
 			if (err) throw err;
 			console.log("Player "+id+" sold "+sold.land);
 		});
-	
+
 	// Hypothèque pays
 	var loaned = sample.loaned;
 	if (loaned.land != "")
@@ -42,7 +43,7 @@ module.exports = function(sample, mysql) {
 			if (err) throw err;
 			console.log("Player "+id+" loaned "+loaned.land);
 		});
-		
+
 	// Pioche carte
 	var keep = false;
 	var drew = sample.drew;
@@ -58,7 +59,7 @@ module.exports = function(sample, mysql) {
 			});
 		else console.log("Player "+id+" drew the card "+drew.card);
 	}
-	
+
 	// Mise à jour position
 	var position = sample.position;
 	if (position >= 0)
@@ -66,14 +67,14 @@ module.exports = function(sample, mysql) {
 			if (err) throw err;
 			console.log("Player "+id+" is at position "+position);
 		});
-	
+
 	// Mise à jour solde
 	var account = sample.account;
 	connection.query('UPDATE joueurs SET solde='+account+' WHERE idJoueur='+id, function(err, rows, fields) {
 		if (err) throw err;
 		console.log("Player "+id+" has "+account+" left");
 	});
- 
+
 	connection.end();
 
 }
