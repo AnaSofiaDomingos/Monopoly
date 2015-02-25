@@ -4,7 +4,7 @@ var plateau = new Array(taillePlateau);
 var idLocal = 0;
 var joueurs = [0, 0, 5, 0, 0, 0];
 var posLocal = 0;
-
+var idGlobal = 2;
 
 function init() {
 	for (var i = 0; i<taillePlateau; i++) {
