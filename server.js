@@ -23,10 +23,10 @@ var connection = mysql.createConnection({
 
 
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'monopoly'
+    host     : '129.194.185.13',
+    user     : 'monopoly',
+    password : 'Super2008',
+    database : 'monopoly'
 });
 
 /* BDD CONNEXION
