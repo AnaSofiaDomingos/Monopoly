@@ -1,19 +1,12 @@
-module.exports = function(sample, mysql) {
+module.exports = function(sample, connection) {
 		
 	var id = sample.id;
-	
-	var connection = mysql.createConnection({
-	  host     : 'localhost',
-	  user     : 'root',
-	  password : '',
-	  database : 'monopoly'
-	});
  
 	connection.connect();
  
 	// Achat pays
 	var bought = sample.bought;
-	if (bought.land != "")
+	if (bought.land != "") 
 		connection.query('INSERT INTO possedepays VALUES ('+id+', ( SELECT idPays FROM pays WHERE NomPays="'+bought.land+'" ), 0, 0)', function(err, rows, fields) {
 			if (err) throw err;
 			console.log("Player "+id+" bought "+bought.land);
@@ -46,10 +39,10 @@ module.exports = function(sample, mysql) {
 	// Pioche carte
 	var keep = false;
 	var drew = sample.drew;
-	if (drew.card >= 0) {
+	if (drew.card > 0) {
 		connection.query('SELECT garder FROM cartes WHERE idCarte='+drew.card, function(err, rows, fields) {
 			if (err) throw err;
-			keep = rows[0].solution;
+			// keep = rows[0].solution;
 		});
 		if (keep)
 			connection.query('INSERT INTO possedecarte VALUES ('+drew.card+', '+id+')', function(err, rows, fields) {

@@ -8,6 +8,8 @@ var express = require("express"),
 
 var server = require('http').createServer(app);
 
+app.use(bodyParser.json());
+
 var mysql      = require('mysql');
 
 /* DISTANT SERVER MYSQL
@@ -33,9 +35,8 @@ connection.end();
 */
 
 
-
 // routes ======================================================================
-require('./app/routes.js')(app, mysql);
+require('./app/routes.js')(app, connection);
 // socket ======================================================================
 require('./app/socket.js')(server);
 

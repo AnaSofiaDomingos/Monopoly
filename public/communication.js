@@ -1,39 +1,33 @@
 function finTour() {
 	// Send data
-	var idJoueur = 7;
-	/*var jsone = {
-		"id": idJoueur,
-		"position" : joueurs[idLocal],
-
-		"bought"
-	};*/
+	var idJoueur = idGlobal;
 
 	var sample = {
 
 	  "id": idJoueur,
 	  
 	  "bought": {
-		"land": "France"
+		"land": ""
 	  },
 	  
 	  "upgraded": {
-		"land": "Qatar",
-		"level": "2"
+		"land": "",
+		"level": ""
 	  },
 	  
 	  "sold": {
-	    "land": "Italy"
+	    "land": ""
 	  },
 	  
 	  "loaned": {
-	    "land": "Switzerland"
+	    "land": ""
 	  },
 
 	  "drew": {
-	    "card": "21"
+	    "card": 0
 	  },
 	  
-	  "account": "201500",
+	  "account": 201500,
 	  
 	  "position": joueurs[idLocal]
 	  
