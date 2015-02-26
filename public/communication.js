@@ -1,4 +1,5 @@
-function finTour() {
+function finTour(GameID) {
+
 	// Send data
 	var idJoueur = idGlobal;
 
@@ -29,11 +30,13 @@ function finTour() {
 
 		"account": 201500,
 
-		"position": joueurs[idLocal]
+		"position": joueurs[idLocal],
+		"GameID" : GameID
 
 	};
 
 	socket.emit('endofturn',sample);
+
 	/*
 	$.ajax({
 		type: "PUT",
@@ -49,6 +52,6 @@ function finTour() {
 
 
 
-function receiveData(idPartie) {
-	
+function receiveData(data) {
+	console.log(data);
 }

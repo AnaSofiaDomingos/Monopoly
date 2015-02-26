@@ -20,6 +20,8 @@ var connection = mysql.createConnection({
     password : 'Super2008',
     database : 'monopoly'
 });
+// has to be done only once
+connection.connect();
 
 // routes ======================================================================
 require('./app/routes.js')(app, connection);
@@ -35,6 +37,19 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+
+function gracefulShutdown(){
+  //connection.end();
+  console.log("G'night Fella");
+  process.exit();
+}
+
+
+// listen for TERM signal .e.g. kill
+process.on ('SIGTERM', gracefulShutdown);
+
+// listen for INT signal e.g. Ctrl-C
+process.on ('SIGINT', gracefulShutdown);
 
 app.use(express.static(__dirname + '/public'));
 app.use(errorHandler({

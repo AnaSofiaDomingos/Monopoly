@@ -2,8 +2,6 @@ module.exports = function(sample, connection) {
 
 	var id = sample.id;
 
-	connection.connect();
-
 	// Achat pays
 	var bought = sample.bought;
 	if (bought.land != "") 
@@ -67,6 +65,6 @@ module.exports = function(sample, connection) {
 		console.log("Player "+id+" has "+account+" left");
 	});
 
-	connection.end();
+	
 
 }

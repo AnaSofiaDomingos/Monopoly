@@ -27,6 +27,8 @@ module.exports = function(server, mysql) {
 			console.log(data);
 			// end of turn==================================================================
 			require('./endofturn.js')(data, mysql);
+
+			socket.broadcast.to(data.GameID).emit('notify',data);
 		});
 
 		// ERROR HANDLER
@@ -41,7 +43,7 @@ module.exports = function(server, mysql) {
 			console.log("user left room " + data);
 		});
 
-		//socket.broadcast.to(1).emit('test', "YOLO");
+		socket.broadcast.to(1).emit('test', "YOLO");
 
 	});
 }

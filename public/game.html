@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/pion.css">
 	<title>Monopoly</title>
 	<script>
+		var GameID = 1;
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens ){
 			if (sens == 1)
@@ -21,9 +22,16 @@
 		}
 
 		var socket = io('http://localhost:8080/subscribe');
-		socket.emit('handshake', 1); // tell the server which game this user is part of
+		socket.emit('handshake', GameID); // tell the server which game this user is part of
 
+		socket.on("test",function(data){
+			console.log(data);
 
+		});
+
+		socket.on('notify',function(data){
+			receiveData(data);
+		});
 	</script>
 </head>
 <body>
@@ -54,7 +62,7 @@
 
 	<br/>
 	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes()" />
-	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour()" />
+	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID)" />
 	<br/>
 	<script type="text/javascript">
 		init();
