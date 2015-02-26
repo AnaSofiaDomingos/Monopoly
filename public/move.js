@@ -24,6 +24,8 @@ function init(idPlayer) {
 }
 
 function lancerDes(idCurrentPlayer) {
+	var tmp = document.getElementById("btnDes").disabled = true;
+
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
 
