@@ -5,12 +5,19 @@
 module.exports = function(server, mysql) {
 
 	var io = require('socket.io')(server);
-	//io.set("origins","*");
+
 
 	var nsp = io.of('/subscribe');
 
 	var roomsTable = [];
 	var numberOfPlayer = 0;
+
+	function test(RoomID){
+		var compteur = -1;
+		for (var socket in io.nsps['/subscribe'].adapter.rooms[RoomID] )
+			compteur++;
+		return compteur;
+	}
 
 	nsp.on('connection', function(socket){
 
@@ -20,12 +27,13 @@ module.exports = function(server, mysql) {
 			socket.join(data.RoomID);
 			console.log('user joined the room ' + data.RoomID);
 			roomsTable.push(data.RoomID);
-			console.log(data.idGlobal);
-			socket.to(data.RoomID).emit('PlayerNumber',numberOfPlayer);
+
+
+			numberOfPlayer = test(data.RoomID);
+			socket.emit('PlayerNumber',numberOfPlayer);
 
 			//stockage bdd
 
-			numberOfPlayer++;
 		});
 
 		//END OF TURN
@@ -47,6 +55,7 @@ module.exports = function(server, mysql) {
 		socket.on('disconnect', function(data){
 			// Do stuff (probably some jQuery)
 			console.log("user left room " + data);
+
 		});
 
 
