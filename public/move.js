@@ -1,8 +1,7 @@
 var taillePlateau = 32;
 var nbJoueurs = 6;
 var plateau = new Array(taillePlateau);
-var idLocal = 0;
-var joueurs = [0, 0, 5, 0, 0, 0];
+var joueurs = [0, 0, 0, 0, 0, 0];
 var posLocal = 0;
 var idGlobal = 2;
 
@@ -18,28 +17,29 @@ function init() {
 	WriteAllPlayersPosition();
 }
 
-function lancerDes() {
+function lancerDes(idCurrentPlayer) {
 	var de1 = Math.floor((Math.random() * 6) + 1);
-	var de2 = Math.floor((Math.random() * 6) + 1);		
+	var de2 = Math.floor((Math.random() * 6) + 1);
 
-	var posJoueur = document.getElementById("case"+joueurs[idLocal]);
+	var posJoueur = document.getElementById("case"+joueurs[idCurrentPlayer]);
 
 	posLocal+=de1+de2;
 	var btn = document.getElementById("btnDes");
 	btn.setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
 	posLocal = posLocal%taillePlateau;
 
-	transition();
+	transition(idCurrentPlayer, posLocal);
 }
 
-function transition() {
+function transition(idCurrentPlayer,posLocal) {
 	setTimeout(function() {
-		var oldPos = joueurs[idLocal]; 
-		joueurs[idLocal] = (joueurs[idLocal]+1)%taillePlateau;
-		WritePlayerAtPosition(oldPos, joueurs[idLocal]);
+		var oldPos = joueurs[idCurrentPlayer];
+		console.log(joueurs);
+		joueurs[idCurrentPlayer] = (joueurs[idCurrentPlayer]+1)%taillePlateau;
+		WritePlayerAtPosition(idCurrentPlayer,oldPos, joueurs[idCurrentPlayer]);
 
-		if(joueurs[idLocal] != posLocal)
-			transition();
+		if(joueurs[idCurrentPlayer] != posLocal)
+			transition(idCurrentPlayer,posLocal);
 	}, 300);
 }
 
@@ -50,9 +50,9 @@ function ResetPlateau(){
 	}
 }
 
-function WritePlayerAtPosition(oldPos, newPos){
+function WritePlayerAtPosition(idCurrentPlayer,oldPos, newPos){
 	var posJoueur = document.getElementById("case"+oldPos);
-	var pion = document.getElementById("player"+(idLocal+1));
+	var pion = document.getElementById("player"+(idCurrentPlayer+1));
 	posJoueur.removeChild(pion);
 	posJoueur = document.getElementById("case"+newPos);
 	posJoueur.appendChild(pion);
@@ -66,7 +66,7 @@ function WriteAllPlayersPosition(){
 		pion.setAttribute("id", "player"+(i+1));
 		pion.setAttribute("class", "pion");
 		posJoueur.appendChild(pion);
-		
+
 	}
 }
 
