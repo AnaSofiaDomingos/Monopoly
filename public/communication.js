@@ -1,11 +1,14 @@
 function finTour(GameID, idCurrentPlayer) {
 
+	var tmp = document.getElementById("btnFinTour").disabled = true;
+	tmp = document.getElementById("btnDes").disabled = true;
+
 	// Send data
 	
 
 	var sample = {
 
-			"id": idCurrentPlayer,
+		"id": idCurrentPlayer,
 
 		"bought": {
 			"land": ""
@@ -36,25 +39,23 @@ function finTour(GameID, idCurrentPlayer) {
 	};
 
 	socket.emit('endofturn',sample);
-
-	/*
-	$.ajax({
-		type: "PUT",
-		dataType:'json',
-		url: "/endofturn",
-		contentType: 'application/json',
-		data: JSON.stringify(sample)
-	})
-		.done(function( msg ) {
-		alert( "Data Saved: " + msg );
-		}); */
 }
 
 
 
 function receiveData(data) {
 	console.log(data);
-	idCurrentPlayer = data.id;
+	// idCurrentPlayer = data.id;
 	PlayerPos = data.position;
-	transition(idCurrentPlayer,PlayerPos);
+	transition(data.id,PlayerPos);
+	var nextPlayer = ((data.id+1)%nbJoueurs);
+	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
+	if(nextPlayer != idPlayer) {
+		var tmp = document.getElementById("btnFinTour").disabled = true;
+		tmp = document.getElementById("btnDes").disabled = true;
+	} else { 
+		var tmp = document.getElementById("btnFinTour").disabled = false;
+		tmp = document.getElementById("btnDes").disabled = false;
+	}
 }
+

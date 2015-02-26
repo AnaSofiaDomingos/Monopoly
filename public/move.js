@@ -1,11 +1,17 @@
 var taillePlateau = 32;
-var nbJoueurs = 6;
+var nbJoueurs = 5;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0, 0, 0, 0, 0];
 var posLocal = 0;
-var idGlobal = 2;
 
-function init() {
+function init(idPlayer) {
+	console.log(idPlayer);
+	console.log(idPlayer > 0);
+	if(idPlayer > 0) {
+		var tmp = document.getElementById("btnFinTour").disabled = true;
+		tmp = document.getElementById("btnDes").disabled = true;
+	}
+
 	for (var i = 0; i<taillePlateau; i++) {
 		plateau[i] = new Array(nbJoueurs);
 	}

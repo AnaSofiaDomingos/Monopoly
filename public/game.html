@@ -44,7 +44,9 @@
 		socket.on('PlayerNumber',function(idLocal){
 			idPlayer = idLocal;
 			console.log(idPlayer);
+			init(idPlayer);
 		});
+
 
 	</script>
 </head>
@@ -79,7 +81,9 @@
 	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
 	<br/>
 	<script type="text/javascript">
-		init();
+		
+		
+
 	</script>
 </body>
 </html>
