@@ -11,27 +11,26 @@ module.exports = function(app, mysql) {
 
 
 	// -----------------
-	// URI : /
+	// URI : /play
 	// method : GET
 	// Date : 18.02.2015
 	// -----------------
-	app.get("/", function (req, res) {
-		res.redirect("/index.html");
+	app.get("/play", function (req, res) {
+		res.redirect("/game.html");
 	});
-	
-	// -----------------
-	// URI : /endofturn
-	// method : PUT
-	// Date : 19.02.2015
-	// -----------------
 
-	app.put("/endofturn", function (req, res) {
-		console.log("/endofturn reached");
-		var sample = req.body;
-		console.log(sample);
-		
-		// end of turn==================================================================
-		require('./endofturn.js')(sample, mysql);
-		res.send("data updated");
+
+	////////////////////////////////////////////////////
+	//***** IS ONLY HERE FOR DEVELOPMENT REASONS *****//
+	////////////////////////////////////////////////////
+
+	// -----------------
+	// URI : *
+	// method : GET
+	// Date : 18.02.2015
+	// -----------------
+	app.get('/', function (req, res) {
+		res.redirect("/game.html");
 	});
+
 }
