@@ -12,15 +12,7 @@ app.use(bodyParser.json());
 
 var mysql      = require('mysql');
 
-/* DISTANT SERVER MYSQL
-var connection = mysql.createConnection({
-  host     : 'kwib.myd.infomaniak.com',
-  user     : 'kwib_monopoly',
-  password : 'Super2008',
-  database : 'kwib_monopoly'
-});
-*/
-
+/* DISTANT SERVER MYSQL */
 
 var connection = mysql.createConnection({
     host     : '129.194.185.13',
@@ -29,16 +21,10 @@ var connection = mysql.createConnection({
     database : 'monopoly'
 });
 
-/* BDD CONNEXION
-connection.connect();
-connection.end();
-*/
-
-
 // routes ======================================================================
 require('./app/routes.js')(app, connection);
 // socket ======================================================================
-require('./app/socket.js')(server);
+require('./app/socket.js')(server, connection);
 
 
 app.use(methodOverride());
@@ -57,4 +43,5 @@ app.use(errorHandler({
 }));
 
 console.log("server listening at http://" + hostname + ":" + port);
-app.listen(port);
+
+server.listen(port);

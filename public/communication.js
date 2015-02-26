@@ -4,48 +4,51 @@ function finTour() {
 
 	var sample = {
 
-	  "id": idJoueur,
-	  
-	  "bought": {
-		"land": ""
-	  },
-	  
-	  "upgraded": {
-		"land": "",
-		"level": ""
-	  },
-	  
-	  "sold": {
-	    "land": ""
-	  },
-	  
-	  "loaned": {
-	    "land": ""
-	  },
+			"id": idJoueur,
 
-	  "drew": {
-	    "card": 0
-	  },
-	  
-	  "account": 201500,
-	  
-	  "position": joueurs[idLocal]
-	  
+		"bought": {
+			"land": ""
+		},
+
+		"upgraded": {
+			"land": "",
+			"level": ""
+		},
+
+		"sold": {
+			"land": ""
+		},
+
+		"loaned": {
+			"land": ""
+		},
+
+		"drew": {
+			"card": 0
+		},
+
+		"account": 201500,
+
+		"position": joueurs[idLocal]
+
 	};
 
+	socket.emit('endofturn',sample);
+	/*
 	$.ajax({
-	  type: "PUT",
-	  dataType:'json', 
-	  url: "/endofturn",
-	  contentType: 'application/json',
-	  data: JSON.stringify(sample) 
+		type: "PUT",
+		dataType:'json',
+		url: "/endofturn",
+		contentType: 'application/json',
+		data: JSON.stringify(sample)
 	})
-	  .done(function( msg ) {
-	    alert( "Data Saved: " + msg );
-	  });
+		.done(function( msg ) {
+		alert( "Data Saved: " + msg );
+		}); */
 }
 
 
-function receiveData() {
 
+function receiveData(idPartie) {
+	
 }
