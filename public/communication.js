@@ -1,11 +1,11 @@
-function finTour(GameID) {
+function finTour(GameID, idCurrentPlayer) {
 
 	// Send data
-	var idJoueur = idGlobal;
+	
 
 	var sample = {
 
-			"id": idJoueur,
+			"id": idCurrentPlayer,
 
 		"bought": {
 			"land": ""
@@ -30,7 +30,7 @@ function finTour(GameID) {
 
 		"account": 201500,
 
-		"position": joueurs[idLocal],
+		"position": joueurs[idCurrentPlayer],
 		"GameID" : GameID
 
 	};
@@ -54,4 +54,7 @@ function finTour(GameID) {
 
 function receiveData(data) {
 	console.log(data);
+	idCurrentPlayer = data.id;
+	PlayerPos = data.position;
+	transition(idCurrentPlayer,PlayerPos);
 }

@@ -20,6 +20,7 @@ var connection = mysql.createConnection({
     password : 'Super2008',
     database : 'monopoly'
 });
+
 // has to be done only once
 connection.connect();
 

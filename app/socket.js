@@ -43,7 +43,6 @@ module.exports = function(server, mysql) {
 			console.log("user left room " + data);
 		});
 
-		socket.broadcast.to(1).emit('test', "YOLO");
 
 	});
 }

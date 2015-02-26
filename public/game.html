@@ -11,6 +11,8 @@
 	<title>Monopoly</title>
 	<script>
 		var GameID = 1;
+		var idPlayer = Math.floor(Math.random() * 6) ;
+		console.log(idPlayer);
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens ){
 			if (sens == 1)
@@ -61,8 +63,8 @@
 	</div>
 
 	<br/>
-	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes()" />
-	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID)" />
+	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
+	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
 	<br/>
 	<script type="text/javascript">
 		init();
