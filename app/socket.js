@@ -10,16 +10,22 @@ module.exports = function(server, mysql) {
 	var nsp = io.of('/subscribe');
 
 	var roomsTable = [];
+	var numberOfPlayer = 0;
 
 	nsp.on('connection', function(socket){
 
 
 		// HANDSHAKING
 		socket.on('handshake',function(data){
-			socket.join(data);
-			console.log('user joined the room ' + data);
-			roomsTable.push(data);
+			socket.join(data.RoomID);
+			console.log('user joined the room ' + data.RoomID);
+			roomsTable.push(data.RoomID);
+			console.log(data.idGlobal);
+			socket.to(data.RoomID).emit('PlayerNumber',numberOfPlayer);
 
+			//stockage bdd
+
+			numberOfPlayer++;
 		});
 
 		//END OF TURN

@@ -10,9 +10,16 @@
 	<link rel="stylesheet" type="text/css" href="./css/pion.css">
 	<title>Monopoly</title>
 	<script>
+
 		var GameID = 1;
-		var idPlayer = Math.floor(Math.random() * 6) ;
-		console.log(idPlayer);
+		var idPlayer;
+		var idGlobal = Math.floor(Math.random() * 1000);
+
+		var data = {
+			'RoomID'  : GameID,
+			'idGlobal' : idGlobal
+		};
+
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens ){
 			if (sens == 1)
@@ -23,17 +30,22 @@
 					document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
 		}
 
-		var socket = io('http://129.194.185.13:8080/subscribe');
-		socket.emit('handshake', GameID); // tell the server which game this user is part of
+		var socket = io('http://localhost:8080/subscribe');
+		socket.emit('handshake', data); // tell the server which game this user is part of
 
 		socket.on("test",function(data){
 			console.log(data);
-
 		});
 
 		socket.on('notify',function(data){
 			receiveData(data);
 		});
+
+		socket.on('PlayerNumber',function(idLocal){
+			idPlayer = idLocal;
+			console.log(idPlayer);
+		});
+
 	</script>
 </head>
 <body>
