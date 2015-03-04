@@ -32,11 +32,11 @@
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens, parent ){
 			if (sens == 1)
-				for (var i = id; i < (id+7); i++)
+				for (var i = id; i < (id+8); i++)
 						$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
 
 			else
-				for (var i = id; i > (id-7); i--)
+				for (var i = id; i > (id-8); i--)
 					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
 		}
 
@@ -65,24 +65,24 @@
 <body>
 	<div id="plateau">
 		<div id="amérique">
-			<div id="case16" class="case-coin"></div>
-			<script> constructionCase("case-horizontal",17, 1,'amérique'); </script>
-			<div id="case24" class="case-coin"></div>
+			<div id="case17" class="case-coin"></div>
+			<script> constructionCase("case-horizontal",18, 1,'amérique'); </script>
+			<div id="case25" class="case-coin"></div>
 		</div>
 
 		<div id="asie">
-			<script> constructionCase("case-vertical", 15, 0,'asie'); </script>
+			<script> constructionCase("case-vertical", 16, 0,'asie'); </script>
 		</div>
 
 		<div id="case-centrale"></div>
 
 		<div id="europe">
-			<script> constructionCase("case-vertical", 25, 1,'europe'); </script>
+			<script> constructionCase("case-vertical", 26, 1,'europe'); </script>
 		</div>
 
 		<div id="afrique">
-			<div id="case8" class="case-coin"></div>
-			<script> constructionCase("case-horizontal", 7, 0 ,'afrique'); </script>
+			<div id="case9" class="case-coin"></div>
+			<script> constructionCase("case-horizontal", 8, 0 ,'afrique'); </script>
 			<div id="case0" class="case-coin"></div>
 		</div>
 
