@@ -4,43 +4,25 @@
 
 module.exports = function(server, connection) {
 
-	function initGame() {
-
-		var cartes;
-		var pays;
+	function initGame(callback, compteur) {
+		var cpt = 0;
 		var data = {'cartes':{},'pays' : {}} ;
 
-		var test;
-		function foo(err,rows,fields){
-			if (err) throw err;
-			cartes = rows;
-
-			return cartes;
-		}
-
 		connection.query('SELECT * FROM cartes', function(err,rows,fields){
-			test = foo(err,rows,fields);
+			if (err) throw err;
+			data.cartes = rows;
+			callback(data, ++cpt);
 		});
-
-		console.log(test);
 
 		connection.query('SELECT * FROM pays', function(err, rows, fields) {
 			if (err) throw err;
-			pays = rows;
-			data.pays = pays;
-
+			data.pays = rows;
+			callback(data, ++cpt);
 		});
-
-		return data;
-		
-
 	}
 
 	var io = require('socket.io')(server);
-
-
 	var nsp = io.of('/subscribe');
-
 	var roomsTable = [];
 	var numberOfPlayer = 0;
 
@@ -59,14 +41,12 @@ module.exports = function(server, connection) {
 			socket.join(data.RoomID);
 			console.log('user joined the room ' + data.RoomID);
 			roomsTable.push(data.RoomID);
-
-			var dataInitGame = initGame();
-			console.log(dataInitGame);
-
 			numberOfPlayer = test(data.RoomID);
-			socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
 
-			//stockage bdd
+			initGame(function(dataInitGame, cpt) {
+				if(cpt == 2)
+					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
+			});
 
 		});
 

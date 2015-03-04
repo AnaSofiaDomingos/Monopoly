@@ -30,7 +30,8 @@
 					document.write("<div id='case" + i + "' class='"+ typecase + "'></div>");
 		}
 
-		var socket = io('http://129.194.185.13:8080/subscribe');
+		var socket = io('http://localhost:8080/subscribe');
+		var dataInitGame;
 		socket.emit('handshake', data); // tell the server which game this user is part of
 
 		socket.on("test",function(data){
@@ -41,9 +42,11 @@
 			receiveData(data);
 		});
 
-		socket.on('PlayerNumber',function(idLocal){
+		socket.on('PlayerNumber',function(idLocal, data){
 			idPlayer = idLocal;
 			console.log(idPlayer);
+			dataInitGame = data;
+			console.log(dataInitGame);
 			init(idPlayer);
 		});
 
