@@ -2,7 +2,39 @@
 //        SOCKETS         //
 ////////////////////////////
 
-module.exports = function(server, mysql) {
+module.exports = function(server, connection) {
+
+	function initGame() {
+
+		var cartes;
+		var pays;
+		var data = {'cartes':{},'pays' : {}} ;
+
+		var test;
+		function foo(err,rows,fields){
+			if (err) throw err;
+			cartes = rows;
+
+			return cartes;
+		}
+
+		connection.query('SELECT * FROM cartes', function(err,rows,fields){
+			test = foo(err,rows,fields);
+		});
+
+		console.log(test);
+
+		connection.query('SELECT * FROM pays', function(err, rows, fields) {
+			if (err) throw err;
+			pays = rows;
+			data.pays = pays;
+
+		});
+
+		return data;
+		
+
+	}
 
 	var io = require('socket.io')(server);
 
@@ -28,9 +60,11 @@ module.exports = function(server, mysql) {
 			console.log('user joined the room ' + data.RoomID);
 			roomsTable.push(data.RoomID);
 
+			var dataInitGame = initGame();
+			console.log(dataInitGame);
 
 			numberOfPlayer = test(data.RoomID);
-			socket.emit('PlayerNumber',numberOfPlayer);
+			socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
 
 			//stockage bdd
 
