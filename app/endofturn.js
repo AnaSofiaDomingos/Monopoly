@@ -65,6 +65,13 @@ module.exports = function(sample, connection) {
 		console.log("Player "+id+" has "+account+" left");
 	});
 
+	//Mise à jour solde autres joueurs
+	for(var k in sample.paid) {
+		connection.query('UPDATE joueurs SET solde=solde+'+k[1]+' WHERE idJoueur='k[0], function(err, rows, fields) {
+			if (err) throw err;
+			console.log("Player "+k[0]+" has "+k[1]+" left");
+		});
+	}
 	
 
 }
