@@ -14,7 +14,7 @@
 		var GameID = 1;
 		var idPlayer;
 		var idGlobal = Math.floor(Math.random() * 1000);
-		var payspossede = {
+		var payspossede = [
 			{
 				'idPays' : 24,
 				'etatAmelioration' : 1
@@ -23,7 +23,7 @@
 				'idPays' : 12,
 				'etatAmelioration' : 2
 			}
-		};
+		];
 		var data = {
 			'RoomID'  : GameID,
 			'idGlobal' : idGlobal
@@ -37,7 +37,7 @@
 
 			else
 				for (var i = id; i > (id-7); i--)
-					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'><span class='nomPays'>Suisse</span></div>");
+					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
 		}
 
 		var socket = io('http://localhost:8080/subscribe');
@@ -52,9 +52,10 @@
 			receiveData(data);
 		});
 
-		socket.on('PlayerNumber',function(idLocal){
+		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 			console.log(idPlayer);
+			console.log(dataInitGame);
 			init(idPlayer);
 		});
 
