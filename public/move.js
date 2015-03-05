@@ -1,4 +1,4 @@
-var taillePlateau = 32;
+var taillePlateau = 36;
 var nbJoueurs = 5;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0, 0, 0, 0, 0];

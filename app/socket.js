@@ -52,14 +52,10 @@ module.exports = function(server, connection) {
 		};
 
 
-<<<<<<< HEAD
-		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur ' 
-			+ 'LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' +idJoueur + ' AND pa.idPartie = ' +idPartie, 
-			function(err, rows, fields) {
-=======
-		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' 
+
+		connection.query('SELECT solde FROM parties p LEFT JOIN participe pa ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = pa.idJoueur WHERE pa.idJoueur = ' 
 			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
->>>>>>> 5d1d92f08e25599a0a955a43686626d8d843e23c
+
 			if (err) throw err;
 
 			data.account = rows[0]["solde"];
@@ -129,6 +125,7 @@ module.exports = function(server, connection) {
 			numberOfPlayer = test(data.RoomID);
 
 			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
+				console.log(cpt);
 				if(cpt == 5)
 					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
 			});
