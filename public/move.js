@@ -19,8 +19,21 @@ function init(idPlayer) {
 	for (var i = 0; i < nbJoueurs; i++) {
 		plateau[0][i] = i;
 	}
-
+	checkUpgradeAvailible();
+	$('#btnUpgrade').disabled = true;
 	WriteAllPlayersPosition();
+}
+
+// check if btn upgrade should be enabled or not
+function checkUpgradeAvailible(){
+	console.log(localJson.owns);
+	for (var property in localJson.owns){
+		console.log("-"+property);
+		if(localJson.owns[property].country == posLocal){ // enables the btn
+			$('#btnUpgrade').disabled = false;
+			break;
+		}
+	}
 }
 
 function lancerDes(idCurrentPlayer) {
@@ -35,6 +48,8 @@ function lancerDes(idCurrentPlayer) {
 	var btn = document.getElementById("btnDes");
 	btn.setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
 	posLocal = posLocal%taillePlateau;
+
+	checkUpgradeAvailible();
 
 	transition(idCurrentPlayer, posLocal);
 

@@ -9,33 +9,26 @@ function finTour(GameID, idCurrentPlayer) {
 }
 
 function upgrade(idCurrentPlayer){
-
 	var idPays = joueurs[idCurrentPlayer];
+	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", localJson.owns[sentJson.position].level);
+		// upgrade of the country
+		sentJson.upgraded.push({
+			'country' : idPays,
+			'level' : newLvl
+		});
 
-	for (var pays in payspossede){
-		if(payspossede[pays].idPays == idPays){
-			// upgrade of the country
-			sentJson.upgraded.push({
-				'land' : idPays,
-				'level' : ++payspossede[pays].etatAmelioration
-			});
+	updateUpgrades(sentJson.upgraded);
 
-		}
-	}
-
-	updateUpgrades(sample.upgraded);
-
-	var etatAmeliorationCurrent = payspossede.
-	sample.upgraded = {}
+	var etatAmeliorationCurrent = payspossede.level;
 }
 
+// update UI
 function updateUpgrades(data){
-
-
-	$('#case'+data.Land).children('span.upgrade').remove(); // removes all the upgrades in the country
-	if(data.hasOwnProperty('level')) // if a land has been upgraded
-		for (var y = 0; y < data.level; y++)
+	for (var i = 0; i < data.length; i++){
+		$('#case'+data[i].country).children('span.upgrade').remove(); // removes all the upgrades in the country
+		for (var y = 0; y < data[i].level; y++)
 			$('#case'+i).append('<span class="upgrade"></span>');
+	}
 }
 
 function resetSentJson(){
@@ -110,9 +103,8 @@ function receiveData(data) {
 	transition(data.id,PlayerPos);
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
-	var upgraded = data.upgraded;
 
-	updateUpgrades(upgraded);
+	updateUpgrades(data.upgraded);
 
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	if(nextPlayer != idPlayer) {
