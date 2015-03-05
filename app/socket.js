@@ -53,7 +53,7 @@ module.exports = function(server, connection) {
 
 
 		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur ' 
-			+ 'LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' +idJoueur + ' AND pa.idPartie = ' +idJoueur, 
+			+ 'LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' +idJoueur + ' AND pa.idPartie = ' +idPartie, 
 			function(err, rows, fields) {
 			if (err) throw err;
 			data.account = rows[0]["solde"];
@@ -122,7 +122,7 @@ module.exports = function(server, connection) {
 			roomsTable.push(data.RoomID);
 			numberOfPlayer = test(data.RoomID);
 
-			initGame(1, data.RoomID, function(dataInitGame, cpt) {
+			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
 				if(cpt == 5)
 					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
 			});
