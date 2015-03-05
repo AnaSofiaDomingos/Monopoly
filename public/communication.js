@@ -5,30 +5,30 @@ function finTour(GameID, idCurrentPlayer) {
 
 	// Send data
 
-	var sample = {
+	var sentJson = {
 
 		"id": idCurrentPlayer,
 
-		"bought": {
+		"bought": [{
 			"land": ""
-		},
+		}],
 
-		"upgraded": {
-			"land": 24, // Suisse
+		"upgraded": [{
+			"land": 35, // Suisse
 			"level": "2"
-		},
+		}],
 
-		"sold": {
+		"sold": [{
 			"land": ""
-		},
+		}],
 
-		"loaned": {
+		"loaned": [{
 			"land": ""
-		},
+		}],
 
-		"drew": {
+		"drew": [{
 			"card": 0
-		},
+		}],
 
 		"account": 201500,
 
@@ -45,12 +45,17 @@ function upgrade(idCurrentPlayer){
 	var idPays = joueurs[idCurrentPlayer];
 
 	for (var pays in payspossede){
-		if(payspossede[pays].idPays == idPays)
+		if(payspossede[pays].idPays == idPays){
+			// upgrade of the country
 			sample.upgraded = {
 				'land' : idPays,
 				'level' : ++payspossede[pays].etatAmelioration
 			};
+
+		}
 	}
+
+	updateUpgrades(sample.upgraded);
 
 	var etatAmeliorationCurrent = payspossede.
 	sample.upgraded = {}
