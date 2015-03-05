@@ -14,6 +14,11 @@
 		var GameID = 1;
 		var idPlayer;
 		var sentJson;
+		var localJson = [{
+			"owns" : [{}],
+			"cards" : [{}],
+			"loans" : [{}]
+		}];
 		var idGlobal = Math.floor(Math.random() * 5);
 		var payspossede = [
 			{
@@ -75,9 +80,9 @@
 				"loaned": dataInitGame.loaned,
 
 				"drew": dataInitGame.drew,
-
+				"recovered" : dataInitGame.recovered,
 				"account": dataInitGame.account,
-
+				"state" : dataInitGame.state,
 				"position": joueurs[idCurrentPlayer],
 				"GameID" : GameID
 
