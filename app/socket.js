@@ -7,24 +7,23 @@ module.exports = function(server, connection) {
 	function initGame(idJoueur, idPartie, callback) {
 		var cpt = 0;
 
-		var country = [{
-			"id" : 0,
-			"level" : 0,
-			"loaned" : 0
-		}];
-
-		var card = [{
-			"id" : 0
-		}];
-
+		
 		var data = {
+			'cartes':{},
+
+			'pays' : {},
+
+			// to be send
 			'id': idJoueur,
+
+			'GameID' : idPartie,
 
 			'position': 0,
 
-			'gameID' : idPartie,
-
 			'account': 0,
+
+			'state' : 0,
+
 
 			"bought": [{
 				'country' : ""
@@ -35,71 +34,42 @@ module.exports = function(server, connection) {
 				"level": ""
 			}],
 
-			"sold": {
+			"sold": [{
 				"country": ""
-			},
+			}],
 
 			"loaned": [{
 				"country": ""
 			}],
 
-			"drew": {
-				"card": card
-			},
+			"drew": [{
+				"card": ""
+			}]
 
-			'cartes':{},
-			'pays' : {}
 		};
 
-
-
-		connection.query('SELECT solde FROM parties p LEFT JOIN participe pa ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = pa.idJoueur WHERE pa.idJoueur = ' 
+		// recupère le solde du joueur
+		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' 
 			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
-
 			if (err) throw err;
 
 			data.account = rows[0]["solde"];
 			callback(data, ++cpt);
 		});
 
+		// recupere la liste des cartes dans la base de données
 		connection.query('SELECT * FROM cartes', function(err,rows,fields){
 			if (err) throw err;
 			data.cartes = rows;
 			callback(data, ++cpt);
 		});
 
+		// recupere la liste des pays dans la base de données
 		connection.query('SELECT * FROM pays', function(err, rows, fields) {
 			if (err) throw err;
 			data.pays = rows;
 			callback(data, ++cpt);
 		});
-
-
-		connection.query('SELECT idCarte FROM possedecarte WHERE idJoueur = '+ idJoueur+' AND idPartie = '+ idPartie , function(err,rows,fields){
-			if (err) throw err;
-
-			for (var i=0; i < rows.length; i++)
-				card[i] = rows[i]["idCarte"];
-			
-			data.drew = card;
-			callback(data, ++cpt);
-		});
-
-		connection.query('SELECT idPays, etatHypotheque, etatAmelioration FROM possedepays WHERE idJoueur = '+ idJoueur+' AND idPartie = '+ idPartie , function(err,rows,fields){
-			if (err) throw err;
-
-			for (var i=0; i < rows.length; i++){
-				data.bought[i]["country"] = rows[i]["idPays"];
-				data.upgraded[i]["country"] = rows[i]["idPays"];
-				data.upgraded[i]["level"] = rows[i]["etatAmelioration"];
-				if (rows[i]["etatHypotheque"] == 1)
-					data.loaned[i]["country"] =  rows[i]["idPays"];
-			}
-			callback(data, ++cpt);
-		});
-
-
-		
 	}
 
 	var io = require('socket.io')(server);
@@ -125,8 +95,7 @@ module.exports = function(server, connection) {
 			numberOfPlayer = test(data.RoomID);
 
 			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
-				console.log(cpt);
-				if(cpt == 5)
+				if(cpt == 3)
 					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
 			});
 
