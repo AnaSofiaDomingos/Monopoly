@@ -2,14 +2,14 @@ var taillePlateau = 36;
 var nbJoueurs = 5;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0, 0, 0, 0, 0];
-var posLocal = 0;
+var posLocal = 24;
 
 function init(idPlayer) {
-	console.log(idPlayer);
-	console.log(idPlayer > 0);
+	// console.log(idPlayer);
+	// console.log(idPlayer > 0);
 	if(idPlayer > 0) {
-		var tmp = document.getElementById("btnFinTour").disabled = true;
-		tmp = document.getElementById("btnDes").disabled = true;
+		document.getElementById("btnFinTour").disabled = true;
+		document.getElementById("btnDes").disabled = true;
 	}
 
 	for (var i = 0; i<taillePlateau; i++) {
@@ -19,18 +19,20 @@ function init(idPlayer) {
 	for (var i = 0; i < nbJoueurs; i++) {
 		plateau[0][i] = i;
 	}
+
+	$('#btnUpgrade').attr("disabled", "true");
 	checkUpgradeAvailible();
-	$('#btnUpgrade').disabled = true;
+	
 	WriteAllPlayersPosition();
 }
 
 // check if btn upgrade should be enabled or not
 function checkUpgradeAvailible(){
-	console.log(localJson.owns);
-	for (var property in localJson.owns){
-		console.log("-"+property);
-		if(localJson.owns[property].country == posLocal){ // enables the btn
-			$('#btnUpgrade').disabled = false;
+	console.log();
+	for (var property in localJson[sentJson.id].owns){
+		// console.log("-"+property);
+		if(localJson[sentJson.id].owns[property].country == posLocal){ // enables the btn
+			$('#btnUpgrade').removeAttr("disabled");
 			break;
 		}
 	}
