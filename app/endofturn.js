@@ -24,7 +24,7 @@ module.exports = function(sentJson, connection) {
 							"level"   : 0
 						});
 				}			
-			}
+			});
 		}
 	}
 	
@@ -46,7 +46,7 @@ module.exports = function(sentJson, connection) {
 						for (j = 0; j < localJson.owns.length; j++)
 							if (localJson.owns[j].country == country) localJson.owns[j].level = sentJson.upgraded[i].level;
 				}			
-			}
+			});
 		}
 	}
 
