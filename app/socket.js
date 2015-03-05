@@ -39,7 +39,8 @@ module.exports = function(server, connection) {
 			}],
 
 			"loaned": [{
-				"country": ""
+				"country": "",
+				"recovered": ""
 			}],
 
 			"drew": [{
