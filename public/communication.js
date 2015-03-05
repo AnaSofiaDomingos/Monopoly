@@ -5,37 +5,7 @@ function finTour(GameID, idCurrentPlayer) {
 
 	// Send data
 
-	var sentJson = {
-
-		"id": idCurrentPlayer,
-
-		"bought": [{
-			"land": ""
-		}],
-
-		"upgraded": [{
-			"land": 35, // Suisse
-			"level": "2"
-		}],
-
-		"sold": [{
-			"land": ""
-		}],
-
-		"loaned": [{
-			"land": ""
-		}],
-
-		"drew": [{
-			"card": 0
-		}],
-
-		"account": 201500,
-
-		"position": joueurs[idCurrentPlayer],
-		"GameID" : GameID
-
-	};
+	
 
 	socket.emit('endofturn',sample);
 }

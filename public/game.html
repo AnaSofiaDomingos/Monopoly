@@ -13,15 +13,16 @@
 
 		var GameID = 1;
 		var idPlayer;
+		var sentJson;
 		var idGlobal = Math.floor(Math.random() * 5);
 		var payspossede = [
 			{
 				'idPays' : 24,
-				'etatAmelioration' : 1
+				'etatAmelioration' : 2
 			},
 			{
-				'idPays' : 12,
-				'etatAmelioration' : 2
+				'idPays' : 35,
+				'etatAmelioration' : 1
 			}
 		];
 		var data = {
@@ -55,7 +56,32 @@
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 			console.log(idPlayer);
+			dataInitGame.upgraded = [{
+				"land": 35, // Suisse
+				"level": "2"
+			}];
 			console.log(dataInitGame);
+			
+			sentJson = {
+				"id": idCurrentPlayer,
+
+				"bought": dataInitGame.bought,
+
+				"upgraded": dataInitGame.upgraded,
+
+				"sold": dataInitGame.sold,
+
+				"loaned": dataInitGame.loaned,
+
+				"drew": dataInitGame.drew,
+
+				"account": dataInitGame.account,
+
+				"position": joueurs[idCurrentPlayer],
+				"GameID" : GameID
+
+			};
+
 			init(idPlayer);
 		});
 
