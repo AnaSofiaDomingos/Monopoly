@@ -2,13 +2,106 @@
 //        SOCKETS         //
 ////////////////////////////
 
-module.exports = function(server, mysql) {
+module.exports = function(server, connection) {
+
+	function initGame(idJoueur, idPartie, callback) {
+		var cpt = 0;
+
+		var country = [{
+			"id" : 0,
+			"level" : 0,
+			"loaned" : 0
+		}];
+
+		var card = [{
+			"id" : 0
+		}];
+
+		var data = {
+			'id': idJoueur,
+
+			'position': 0,
+
+			'gameID' : idPartie,
+
+			'account': 0,
+
+			"bought": [{
+				'country' : ""
+			}],
+
+			"upgraded": [{
+				"country": "",
+				"level": ""
+			}],
+
+			"sold": {
+				"country": ""
+			},
+
+			"loaned": [{
+				"country": ""
+			}],
+
+			"drew": {
+				"card": card
+			},
+
+			'cartes':{},
+			'pays' : {}
+		};
+
+
+		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' 
+			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
+			if (err) throw err;
+
+			data.account = rows[0]["solde"];
+			callback(data, ++cpt);
+		});
+
+		connection.query('SELECT * FROM cartes', function(err,rows,fields){
+			if (err) throw err;
+			data.cartes = rows;
+			callback(data, ++cpt);
+		});
+
+		connection.query('SELECT * FROM pays', function(err, rows, fields) {
+			if (err) throw err;
+			data.pays = rows;
+			callback(data, ++cpt);
+		});
+
+
+		connection.query('SELECT idCarte FROM possedecarte WHERE idJoueur = '+ idJoueur+' AND idPartie = '+ idPartie , function(err,rows,fields){
+			if (err) throw err;
+
+			for (var i=0; i < rows.length; i++)
+				card[i] = rows[i]["idCarte"];
+			
+			data.drew = card;
+			callback(data, ++cpt);
+		});
+
+		connection.query('SELECT idPays, etatHypotheque, etatAmelioration FROM possedepays WHERE idJoueur = '+ idJoueur+' AND idPartie = '+ idPartie , function(err,rows,fields){
+			if (err) throw err;
+
+			for (var i=0; i < rows.length; i++){
+				data.bought[i]["country"] = rows[i]["idPays"];
+				data.upgraded[i]["country"] = rows[i]["idPays"];
+				data.upgraded[i]["level"] = rows[i]["etatAmelioration"];
+				if (rows[i]["etatHypotheque"] == 1)
+					data.loaned[i]["country"] =  rows[i]["idPays"];
+			}
+			callback(data, ++cpt);
+		});
+
+
+		
+	}
 
 	var io = require('socket.io')(server);
-
-
 	var nsp = io.of('/subscribe');
-
 	var roomsTable = [];
 	var numberOfPlayer = 0;
 
@@ -27,12 +120,12 @@ module.exports = function(server, mysql) {
 			socket.join(data.RoomID);
 			console.log('user joined the room ' + data.RoomID);
 			roomsTable.push(data.RoomID);
-
-
 			numberOfPlayer = test(data.RoomID);
-			socket.emit('PlayerNumber',numberOfPlayer);
 
-			//stockage bdd
+			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
+				if(cpt == 5)
+					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
+			});
 
 		});
 
@@ -40,7 +133,7 @@ module.exports = function(server, mysql) {
 		socket.on('endofturn',function(data){
 			console.log(data);
 			// end of turn==================================================================
-			require('./endofturn.js')(data, mysql);
+			require('./endofturn.js')(data, connection);
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
 		});

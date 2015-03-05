@@ -37,6 +37,13 @@ function lancerDes(idCurrentPlayer) {
 	posLocal = posLocal%taillePlateau;
 
 	transition(idCurrentPlayer, posLocal);
+
+	$('#btnUpgrade').disabled = true;
+	for (var pays in payspossede)
+		if(payspossede[pays].idPays == posLocal){ // if we're on one of our country
+			$('#btnUpgrade').disabled = false;
+		}
+
 }
 
 function transition(idCurrentPlayer,posLocal) {
