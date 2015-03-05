@@ -10,7 +10,7 @@ function finTour(GameID, idCurrentPlayer) {
 
 function upgrade(idCurrentPlayer){
 	var idPays = joueurs[idCurrentPlayer];
-	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", localJson.owns[sentJson.position].level);
+	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", localJson[sentJson.id].owns[sentJson.position].level);
 		// upgrade of the country
 		sentJson.upgraded.push({
 			'country' : idPays,
@@ -55,7 +55,7 @@ function removeItem(obj, prop, val) {
 }
 
 function receiveData(data) {
-	console.log(localJson);
+ 	console.log(localJson);
 	console.log(data);
 
 	// update list of bought countries
