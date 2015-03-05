@@ -44,7 +44,11 @@ module.exports = function(server, connection) {
 
 			"drew": [{
 				"card": ""
-			}]
+			}],
+
+			"used": [{
+				'card' : ""
+			}],
 
 		};
 
