@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 04 Mars 2015 à 13:19
+-- Généré le :  Jeu 05 Mars 2015 à 14:40
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.5.8
 
@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `cartes` (
 
 INSERT INTO `cartes` (`idCarte`, `NomCarte`, `Contenu`, `Garder`) VALUES
 (1, 'Pas Chance', 'Kim Jung pirate votre banque, vous perdez 1’000’000', 0),
-(2, 'Pas Chance', 'CableCom prend en charge votre accès à Internet : plus de connexion pendant 2 tours (c’est cadeau)\r\n', 0),
+(2, 'Pas Chance', 'CableCom prend en charge votre accès à Internet : plus de connexion pendant 2 tours (c’est cadeau)\n', 0),
 (3, 'Pas Chance', 'Un attentat a lieu dans une de vos capitales, vous donnez 200’000 aux taxes pour les réparations', 0),
-(4, 'Pas Chance', 'Les étrangers sont stigmatisés, ils se revoltent, acheter leur loyauté (100’000 par pays)\r\n', 0),
+(4, 'Pas Chance', 'Les étrangers sont stigmatisés, ils se revoltent, acheter leur loyauté (100’000 par pays)\n', 0),
 (5, 'Pas Chance', 'Une centrale nucléaire a des fuites d’Uranium 239, vous n’avez plus d’eau pendant 2 tours', 0),
 (6, 'Pas Chance', 'La NSA restreint l’accès aux sites pornographiques dans vos pays Américains et vous perdez 500’000 de recettes sur les VOD', 0),
 (7, 'Pas Chance', 'Vous avez été pris en flagrant délit de viol sur mineure, tout ça sur votre lieu de travail, vous allez en prison et vous dédommagez son père (votre voisin de gauche) de 2’000’000', 0),
@@ -72,22 +72,22 @@ CREATE TABLE IF NOT EXISTS `joueurs` (
   `pseudo` varchar(20) NOT NULL,
   `mdp` varchar(30) NOT NULL COMMENT 'Super2008 pour tous',
   `position` int(11) DEFAULT NULL,
-  `etatPrison` tinyint(1) NOT NULL,
+  `etat` varchar(20) NOT NULL,
   `solde` int(11) NOT NULL,
   PRIMARY KEY (`idJoueur`),
   UNIQUE KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Contenu de la table `joueurs`
 --
 
-INSERT INTO `joueurs` (`idJoueur`, `pseudo`, `mdp`, `position`, `etatPrison`, `solde`) VALUES
-(1, 'Ana', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 100000000),
-(2, 'Pannufle', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 201500),
-(3, 'Monstross', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 100000000),
-(4, 'MalComX', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 100000000),
-(5, 'DomKiki', '0fddc5fc3b323288bb908ad27937c2', 0, 0, 100000000);
+INSERT INTO `joueurs` (`idJoueur`, `pseudo`, `mdp`, `position`, `etat`, `solde`) VALUES
+(1, 'Ana', '0fddc5fc3b323288bb908ad27937c2', 0, '0', 100000000),
+(2, 'Pannufle', '0fddc5fc3b323288bb908ad27937c2', 0, '0', 201500),
+(3, 'Monstross', '0fddc5fc3b323288bb908ad27937c2', 0, '0', 100000000),
+(4, 'MalComX', '0fddc5fc3b323288bb908ad27937c2', 0, '0', 100000000),
+(5, 'DomKiki', '0fddc5fc3b323288bb908ad27937c2', 0, '0', 100000000);
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `parties` (
   `nbJoueurs` int(11) NOT NULL,
   `idJoueur` int(11) NOT NULL COMMENT 'Créateur de la partie',
   PRIMARY KEY (`idPartie`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `parties`
@@ -156,26 +156,26 @@ INSERT INTO `pays` (`idPays`, `NomPays`, `Prix`, `Position`, `Continent`) VALUES
 (2, 'Congo', 1.4, 2, 'Afrique'),
 (3, 'Tunisie', 2, 4, 'Afrique'),
 (4, 'Maroc', 2, 5, 'Afrique'),
-(5, 'Afrique du sud', 2.4, 6, 'Afrique'),
-(6, 'Seychelles', 2.4, 7, 'Afrique'),
-(7, 'Corée du nord', 2.8, 9, 'Asie'),
-(8, 'Afghanistan', 3, 10, 'Asie'),
-(9, 'Russie', 3.2, 12, 'Asie'),
-(10, 'Japon', 3.8, 13, 'Asie'),
-(11, 'Chine', 4.4, 15, 'Asie'),
-(12, 'Qatar', 4.8, 16, 'Asie'),
-(13, 'Colombie', 5, 18, 'Amérique'),
-(14, 'Chili', 5.2, 19, 'Amérique'),
-(15, 'Mexique', 5.8, 21, 'Amérique'),
-(16, 'USA', 6.2, 22, 'Amérique'),
-(17, 'Canada', 6.8, 24, 'Amérique'),
-(18, 'Iles Cayman', 7, 25, 'Amérique'),
-(19, 'Grèce', 7.4, 27, 'Europe'),
-(20, 'France', 8, 28, 'Europe'),
-(21, 'Espagne', 8.4, 30, 'Europe'),
-(22, 'Allemagne', 9, 31, 'Europe'),
-(23, 'Luxembourg', 9.8, 33, 'Europe'),
-(24, 'Suisse', 10, 34, 'Europe');
+(5, 'Afrique du sud', 2.4, 7, 'Afrique'),
+(6, 'Seychelles', 2.4, 8, 'Afrique'),
+(7, 'Corée du nord', 2.8, 10, 'Asie'),
+(8, 'Afghanistan', 3, 11, 'Asie'),
+(9, 'Russie', 3.2, 13, 'Asie'),
+(10, 'Japon', 3.8, 14, 'Asie'),
+(11, 'Chine', 4.4, 16, 'Asie'),
+(12, 'Qatar', 4.8, 17, 'Asie'),
+(13, 'Colombie', 5, 19, 'Amérique'),
+(14, 'Chili', 5.2, 20, 'Amérique'),
+(15, 'Mexique', 5.8, 22, 'Amérique'),
+(16, 'USA', 6.2, 23, 'Amérique'),
+(17, 'Canada', 6.8, 25, 'Amérique'),
+(18, 'Iles Cayman', 7, 26, 'Amérique'),
+(19, 'Grèce', 7.4, 28, 'Europe'),
+(20, 'France', 8, 29, 'Europe'),
+(21, 'Espagne', 8.4, 31, 'Europe'),
+(22, 'Allemagne', 9, 32, 'Europe'),
+(23, 'Luxembourg', 9.8, 34, 'Europe'),
+(24, 'Suisse', 10, 35, 'Europe');
 
 -- --------------------------------------------------------
 
