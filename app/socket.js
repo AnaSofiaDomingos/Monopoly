@@ -54,7 +54,7 @@ module.exports = function(server, connection) {
 		};
 
 		// recupère le solde du joueur
-		connection.query('SELECT solde FROM parties p LEFT JOIN participe pa ON pa.idPartie = p.idPartie LEFT JOIN joueur j ON j.idJoueur = pa.idJoueur WHERE pa.idJoueur = ' 
+		connection.query('SELECT solde FROM parties p LEFT JOIN participe pa ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = pa.idJoueur WHERE pa.idJoueur = ' 
 			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
 			if (err) throw err;
 
