@@ -52,10 +52,16 @@ module.exports = function(server, connection) {
 		};
 
 
+<<<<<<< HEAD
 		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur ' 
 			+ 'LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' +idJoueur + ' AND pa.idPartie = ' +idPartie, 
 			function(err, rows, fields) {
+=======
+		connection.query('SELECT solde FROM joueurs j LEFT JOIN participe pa ON pa.idJoueur = j.idJoueur LEFT JOIN parties p ON p.idPartie = pa.idPartie WHERE j.idJoueur = ' 
+			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
+>>>>>>> 5d1d92f08e25599a0a955a43686626d8d843e23c
 			if (err) throw err;
+
 			data.account = rows[0]["solde"];
 			callback(data, ++cpt);
 		});
