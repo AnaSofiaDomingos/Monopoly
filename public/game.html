@@ -6,7 +6,6 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="./socket.io-1.3.4.js"></script>
-	<script src="./bank.js"></script>
 	<link rel="stylesheet" type="text/css" href="./css/pion.css">
 	<title>Monopoly</title>
 	<script>
@@ -14,29 +13,122 @@
 		var GameID = 1;
 		var idPlayer;
 		var sentJson;
+
+
+		var owns = {'country' : "",'level' : ""}
+		var cards = {'card' : ""}
+		var loans = {'country' : ""}
 		var localJson = [{
-			"owns" : [{'country' : 35,'level' : 1},{'country' : 24,'level' : 2}],
-			"cards" : [{}],
-			"loans" : [{}]
+				"owns" : [owns],
+				"cards" : [cards],
+				"loans" : [loans]
 		}];
-		// console.log(localJson[0].owns);
+
 
 		var idGlobal = Math.floor(Math.random() * 4) + 1;
 		// console.log(idGlobal);
+		var payspossede = [
+			{
+				'idPays' : 24,
+				'etatAmelioration' : 2
+			},
+			{
+				'idPays' : 35,
+				'etatAmelioration' : 1
+			}
+		];
 		var data = {
 			'RoomID'  : GameID,
 			'idGlobal' : idGlobal
 		};
 
+
+		var pays = [{}];
+		var nbCase = 36;
+
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens, parent ){
 			if (sens == 1)
-				for (var i = id; i < (id+8); i++)
-						$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
-
-			else
-				for (var i = id; i > (id-8); i--)
+				for (var i = id; i < (id+8); i++){
 					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
+
+				}
+			else
+				for (var i = id; i > (id-8); i--){
+					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
+				}
+		}
+
+
+		// place le pays dans les div
+		function placeCountriesCartes(){
+			console.log("placer pays");
+			for (var i=0; i<nbCase;i++){
+				var country = findCountry(i);
+				if (country != undefined)
+					$('#case'+ i).append("<span class='case'>"+ country.NomPays +"</span>");
+			}
+
+			// taxes
+			$('#case3').append("<span class='case'>Taxes</span>");
+			$('#case12').append("<span class='case'>Taxes</span>");
+			$('#case21').append("<span class='case'>Taxes</span>");
+			$('#case30').append("<span class='case'>Taxes</span>");
+
+			// cartes 
+			$('#case6').append("<span class='case'>Carte</span>");
+			$('#case15').append("<span class='case'>Carte</span>");
+			$('#case24').append("<span class='case'>Carte</span>");
+			$('#case33').append("<span class='case'>Carte</span>");
+
+
+			// coins
+			$('#case0').append("<span class='case'>Depart</span>");
+
+			$('#case9').append("<span class='case'>Prison</span>");
+			$('#case18').append("<span class='case'>Parking</span>");
+			$('#case27').append("<span class='case'>Aller Prison</span>");
+		}
+
+		// trouve le pays correspondant à la case avec la position
+		function findCountry(id){
+			for (var i=0; i< pays.length;i++){
+				if (pays[i].Position == id)
+					return pays[i];
+
+			}
+		}
+
+
+
+		function getById(id, table){
+			if (table == 'pays'){
+				for (var i=0; i< pays.length; i++){
+					if (pays[i].idPays == id){
+
+						console.log(pays[i].NomPays);
+						return pays[i].NomPays;
+					}
+				}
+			}
+			/*else if (table == 'carte') {
+				for (var i=0; i< carte.length; i++){
+					
+				}
+			}*/
+
+		}
+		function getInfos(id){
+
+			for (var i=0; i < localJson[id].owns.length; i++){
+				$('#pays').after("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
+			}
+
+			for (var i=0; i < localJson[id].cards.length; i++)
+				$('#cartes').after("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
+
+			$('#credit').after("<p>"+ sentJson.account +"</p>"); 
+
 		}
 
 		var socket = io('http://localhost:8080/subscribe');
@@ -51,16 +143,24 @@
 			receiveData(data);
 		});
 
+		
 		socket.on('robbed', function(sample) {		
 			desherit(sample);
 		});
-		
-		var countries;
+
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 // 			console.log(idPlayer);
-// 			console.log(dataInitGame);
-			countries = dataInitGame.pays;
+			dataInitGame.upgraded = [{
+				"country": 24, // Suisse
+				"level": "2"
+			}];
+
+			// Recuperation de la liste des pays
+ 			for (var i=0; i<dataInitGame.pays.length; i++)
+ 				pays[i] = dataInitGame.pays[i];
+ 			
+
 			sentJson = {
 				"id": idPlayer,
 
@@ -81,10 +181,27 @@
 				"GameID" : GameID
 
 			};
+
+
+			owns = {
+				'country' : 24,
+				'level' : 1
+			}
+
+			localJson[idPlayer] =  {
+				"owns" : [owns],
+				"cards" : [cards],
+				"loans" : [loans]
+			};
 // 			console.log(sentJson.upgraded);
 			updateUpgrades(sentJson.upgraded);
 			init(idPlayer);
+			placeCountriesCartes();
+			getInfos(idPlayer);
 		});
+
+
+
 
 	</script>
 	<script src="bank.js" type="text/javascript"></script>
@@ -116,15 +233,31 @@
 		</div>
 
 	</div>
+	<div id='infosPays'>
+		informations pays
+	</div>
 
-	<br/>
-	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
-	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
-	<input id="btnUpgrade" type="button" value="Améliorer" onclick="upgrade(idPlayer)" />
-	<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />
-	<br/>
-	<script type="text/javascript">
+	<div class="infoAccount">
+		<label id="pays">PAYS</label>
 
-	</script>
+		<br/>
+		<label id="cartes">CARTES</label>
+
+		<br/>
+		<label id="credit">CREDIT</label>
+
+		<br/>
+	</div>
+	<br/>
+
+	<div class="actions">
+		<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
+		<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
+		<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />
+		<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />
+	
+		<br/>
+	</div>
+
 </body>
 </html>
