@@ -22,16 +22,6 @@
 
 		var idGlobal = Math.floor(Math.random() * 4) + 1;
 		// console.log(idGlobal);
-		var payspossede = [
-			{
-				'idPays' : 24,
-				'etatAmelioration' : 2
-			},
-			{
-				'idPays' : 35,
-				'etatAmelioration' : 1
-			}
-		];
 		var data = {
 			'RoomID'  : GameID,
 			'idGlobal' : idGlobal
@@ -64,15 +54,12 @@
 			desherit(sample);
 		}
 		
+		var countries;
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 // 			console.log(idPlayer);
-			dataInitGame.upgraded = [{
-				"country": 35, // Suisse
-				"level": "2"
-			}];
 // 			console.log(dataInitGame);
-
+			countries = dataInitGame.pays;
 			sentJson = {
 				"id": idPlayer,
 
@@ -99,6 +86,7 @@
 		});
 
 	</script>
+	<script src="bank.js" type="text/javascript"></script>
 	<script src="communication.js" type="text/javascript"></script>
 	<script src="move.js" type="text/javascript"></script>
 </head>
