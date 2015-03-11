@@ -1,12 +1,20 @@
 function debit(value){
-	localJson.account += value;
-}
-
-function credit(idPlayer, value){
-	if(localJson.paid[idPlayer].amount-value >= 0){
-		localJson.paid[idPlayer].amount = value;
+	//If player has enough money
+	if(sentJson.account-value >= 0){
+		sentJson.account -= value;
 		return 0;
 	}else{
-		return (localJson.paid[idPlayer].amount-value);
+		//Else we return the amount of money needed
+		return (sentJson.account-value);
+	}
+}
+
+function credit(value, idPlayer){
+	//If "idPlayer" is not specified, we credit our own account
+	if(idPlayer == undefined){
+		sentJson.account += value;
+	}else{
+		//Else we put it in the "paid" field of the json
+		sentJson.paid[idPlayer].amount = value;
 	}
 }
