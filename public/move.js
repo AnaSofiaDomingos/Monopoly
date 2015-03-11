@@ -61,6 +61,8 @@ function lancerDes(idCurrentPlayer) {
 			$('#btnUpgrade').disabled = false;
 		}
 
+	$('#btnFinTour').disabled = false;
+	
 }
 
 function transition(idCurrentPlayer,posLocal) {
@@ -102,3 +104,10 @@ function WriteAllPlayersPosition(){
 	}
 }
 
+function replay() {
+
+	$('#btnDes').disabled = false;
+	$('#btnFinTour').disabled = true;
+	return 1;
+	
+}

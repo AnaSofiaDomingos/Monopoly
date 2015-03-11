@@ -60,6 +60,10 @@
 			receiveData(data);
 		});
 
+		socket.on('robbed', sample) {		
+			desherit(sample);
+		}
+		
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 // 			console.log(idPlayer);
@@ -127,7 +131,8 @@
 	<br/>
 	<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
 	<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
-	<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />
+	<input id="btnUpgrade" type="button" value="Améliorer" onclick="upgrade(idPlayer)" />
+	<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />
 	<br/>
 	<script type="text/javascript">
 

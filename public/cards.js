@@ -5,21 +5,26 @@ function applyCard() {
 	valeurs de start :
 	-1 mort, 0 vivant, 1 prison, 
 	2 campagne publicitaire, 3 no internet
-	4 no water, 5 no electry
+	4 no water, 5 no electricity
 	*/
 
 	var backup = [{}];
 	var sum;
 	var nbTour;
+	
 	switch(idCard) {
+	
 		case 1 : // Kim Jung pirate notre banque
+		
 			sum = 1;
 			if (debitObligatoire(sum) == 0) 
 				window.alert("Player "+id+" paid 200'000");
 			else 
 				gameOver();
-		break;
+			break;
+			
 		case 2 :
+		
 			// Plus internet 2 tours
 			for(var i = 0; i<localJson.owns.length; i++){
 				window.alert("Player "+id+" have no internet for each country during 2 turn");
@@ -29,15 +34,19 @@ function applyCard() {
 				sentJson.state = 3;  // no internet
 				nbTour = 2;
 			}
-		break;
+			break;
+			
 		case 3 : // debit 200 000 aux taxes
+		
 			sum = 0.2;
 			if (debitObligatoire(sum) == 0) 
 				window.alert("Player "+id+" paid 200'000");
 			else 
 				gameOver();
-		break;
+			break;
+			
 		case 4 :
+		
 			// debit 100'000 par pays
 			for(var i = 0; i<localJson.owns.length; i++){}
 				sum = 0.1;
@@ -46,8 +55,10 @@ function applyCard() {
 				else 
 					gameOver();
 			}
-		break;
+			break;
+			
 		case 5 :
+		
 			// Plus eau 2 tours
 			for(var i = 0; i<localJson.owns.length; i++){
 				window.alert("Player "+id+" have no water for each country during 2 turn");
@@ -57,15 +68,19 @@ function applyCard() {
 				sentJson.state = 4;  // no water
 				nbtour = 2;
 			}
-		break;
+			break;
+			
 		case 6 : // debit 500 000 
+		
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
 				window.alert("Player "+id+" paid 500'000");
 			else 
 				gameOver();
-		break;
+			break;
+			
 		case 7 :
+		
 			// Viol sur mineur => debit 2 000 000
 			sum = 2;
 			if (debitObligatoire(sum) == 0) 
@@ -75,8 +90,10 @@ function applyCard() {
 
 			var idCredit = (idPlayer-1)%nbJoueurs;
 			credit(idCredit, 2);
-		break;
+			break;
+			
 		case 8 :
+		
 			//roi Burgonde installer trompe dans asie plus d'eau 2 tours
 			for(var i = 0; i<localJson.owns.length; i++){
 				window.alert("Player "+id+" have no water for each country during 2 turn");
@@ -86,21 +103,24 @@ function applyCard() {
 				sentJson.state = 4;  // no water
 				nbtour = 2;
 			}
-		break;
+			break;
+			
 		case 9 :
+		
 			// USA saisissent les ameliorations Moyen-Orient
 			window.alert("Player "+id+" have no more levels for a random country");
 				
 			var paysAleatoire = Math.floor(Math.random() * localJson.owns.length);
 			localJson.owns[paysAleatoire].level = 0;
 			grade(localJson.owns[paysAleatoire].country, localJson.owns[paysAleatoire].level);
-		break;
+			break;
+			
 		case 10 :
+		
 			// Plus d'electricite pendant 2 tour
 
 			nbtour = 2;
 			socket.emit('nolelectricity', nbtour);
-
 
 			/*for(var i = 0; i<localJson.owns.length; i++){
 				localJson.owns[i].level = 0;
@@ -110,64 +130,73 @@ function applyCard() {
 				);
 				sentJson.state = 4;  // no water
 			}*/
-		break;
+			
+			break;
 
 
 		case 11 : // debite 500 000 (Arthur Pendragon)
+		
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
 				window.alert("Player "+id+" paid 500'000");
 			else 
 				gameOver();
-		break;
+			break;
 					  
 		case 12 : // labo de meth not found => credit de 1 000 000 
+		
  			sum = 1;
 			if (credit(sum) == 0) 
 				window.alert("Player "+id+" got 1'000'000");
-		break;
+			break;
 				  
 		case 13 : // internet gratuit dans un pays
+		
 			window.alert("Player "+id+" can have internet for free");
 			grade(country, level);
-		break;
+			break;
 				  
 		case 14 : // Envahir pays de qualité inférieur si on paye 10 000 000
+		
 			window.alert("Player "+id+" can invade a country");
 			
-			if (payer){
+			if (payer) {
 				debit(10);
 				if (sentJson.position > country) 
 					inherit(country);
 			} 
-		break;
+			break;
 				  
 		case 15 : // carte sortie prison
+		
 			localJson.cards.push({'card' : 15});
 			sentJson.drew.push({'card' : 15});
 				window.alert("Player "+id+" got card 15");
 
 			if (sentJson.state == 1)
 				sentJson.state = 0;
-		break;
+			break;
 		
 		case 16 : // découverte puit vente pétrole 2 000 000
+		
 			sum = 2;
-			if (credit(sum) == 0) 
-				window.alert("Player "+id+" got 2'000'000");
-		break;
+			if (credit(sum) == 0) window.alert("Player "+id+" got 2'000'000");
+			break;
 				  
 		case 17 : // gain de 1 000 000
+		
 			sum = 1;
 			if (credit(sum) == 0) 
 				window.alert("Player "+id+" got 1'000'000");
-		break;
+			break;
 				  
 		case 18 : // rejouer
+		
 			replay();
-		break;
+			break;
 				  
 		case 19 : // debit 500 000 pour pub mais on recuperer 200 000 pdt 5 tours
+		
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) {
 				window.alert("Player "+id+" paid 500'000 for pub");
@@ -177,20 +206,20 @@ function applyCard() {
 				window.alert("Player "+id+" gained 200'000");
 				nbtour = 5;
 			}
-			else 
-				gameOver();
-		break;
+			else gameOver();
+			break;
 				  
 		case 20 : // EMS en feu
+		
 			sum = 0.3;
 			if (credit(sum) == 0) 
 				window.alert("Player "+id+" got 300'000");
-		break;
+			break;
 				  
 		case 21 : // Burgonde King
-			window.alert("Player "+id+" drew the Burgonde King");
-			
-		break;
+		
+			window.alert("Player "+id+" drew the Burgonde King");	
+			break;
 
 	}
 }
@@ -199,57 +228,73 @@ function applyCard() {
 function debitObligatoire(sum) {
 
 	while (localJson.account < sum) 
-	
 		if (localJson.countries.length > 0) localJson.account += proposeVente();
-		else {
-		
-			localJson.state = -1;
-			return -1;
-			
-		}
+		else return gameOver();
 		
 	debit(sum);
 	return 0;
 
 }
 
-function sell() {
+// Desherit a country
+function desherit(sample) {
 
-	// Code was here
-	return 1;
+	if (sample.victimID == idPlayer) {
+		removeItem(localJson[idPlayer].owns, 'country', country);
+		console.log("Player "+idPlayer+" got a country robbed");
+	}
 	
+	return 0;
+			
 }
 
-function replay() {
-
-	// Code was here
-	return 1;
-	
-}
-
+// Inherit a country
 function inherit(country) {
 
-	// Code was here
-	return 1;
+	var victimID;
+
+	for (var i = 0; i < localJson.length; i++) 
+		for (var j = 0; j < localJson[i].owns.length; j++)
+			if (localJson[i].owns[j].country == country){
+				victimID = i;
+				break;
+			}
+	
+	localJson[idPlayer].owns.push({
+		'country' : country,
+		'level'   : 0
+	});
+	
+	var sample = {
+		'country' : country,
+		'victim'  : victimID,
+		'gameID'  : gameID
+	};
+	
+	socket.emit('robbed', sample);
+	
+	console.log("Player "+idPlayer+" robbed a country from player "+victimID);
+	
+	return 0;
 
 }
-
 
 // upgarde or downgrade
 function grade(country, level) {
 
-	// Code was here
-	var sample = {
+	sentJson.upgraded.push({
 		"contry": country,
 		"level" : level
-	};
-
-	sentJson.upgraded.push(sample);
+	});
+	
 	return 1;
 
 }
 
-function gameOver(){
+function gameOver() {
+
 	window.alert("Player "+id+" out of the game");
 	sentJson.state = -1;
+	return -1;
+	
 }

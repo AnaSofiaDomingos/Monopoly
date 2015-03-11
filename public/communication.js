@@ -107,13 +107,10 @@ function receiveData(data) {
 	updateUpgrades(data.upgraded);
 
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
-	if(nextPlayer != idPlayer) {
-		var tmp = document.getElementById("btnFinTour").disabled = true;
-		tmp = document.getElementById("btnDes").disabled = true;
-	} else {
-		var tmp = document.getElementById("btnFinTour").disabled = false;
-		tmp = document.getElementById("btnDes").disabled = false;
-	}
+	
+	document.getElementById("btnFinTour").disabled = true;
+	if (nextPlayer != idPlayer) document.getElementById("btnDes").disabled = true;
+	else document.getElementById("btnDes").disabled = false;
 
 }
 

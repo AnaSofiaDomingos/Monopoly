@@ -91,7 +91,6 @@ module.exports = function(server, connection) {
 
 	nsp.on('connection', function(socket){
 
-
 		// HANDSHAKING
 		socket.on('handshake',function(data){
 			socket.join(data.RoomID);
@@ -127,7 +126,12 @@ module.exports = function(server, connection) {
 			console.log("user left room " + data);
 
 		});
-
+		
+		//ROBBED
+		socket.on('robbed', function(sample) {
+			socket.broadcast.to(sample.gameID).('robbed', sample);
+		});
 
 	});
+	
 }
