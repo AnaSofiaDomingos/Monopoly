@@ -1,7 +1,7 @@
 function finTour(GameID, idCurrentPlayer) {
 
-	var tmp = document.getElementById("btnFinTour").disabled = true;
-	tmp = document.getElementById("btnDes").disabled = true;
+	document.getElementById("btnFinTour").disabled = true;
+	document.getElementById("btnDes").disabled = true;
 
 	// Send data
 	socket.emit('endofturn',sentJson);
@@ -10,7 +10,16 @@ function finTour(GameID, idCurrentPlayer) {
 
 function upgrade(idCurrentPlayer){
 	var idPays = joueurs[idCurrentPlayer];
-	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", localJson[sentJson.id].owns[sentJson.position].level);
+	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
+	var pays;
+	// console.log(countries);
+	for(var i = 0; i<countries.length; i++) {
+		console.log(countries[i].Position+" -> " + idPays);
+		if(countries[i].Position == idPays) {
+			pays = countries[i];
+		}
+	}
+
 		// upgrade of the country
 		sentJson.upgraded.push({
 			'country' : idPays,
@@ -18,16 +27,24 @@ function upgrade(idCurrentPlayer){
 		});
 
 	updateUpgrades(sentJson.upgraded);
+}
 
-	var etatAmeliorationCurrent = payspossede.level;
+function getUpByCountry(idCountry) {
+	for(var i = 0; i<localJson[sentJson.id].owns.length; i++) {
+		if(localJson[sentJson.id].owns[i].country == idCountry)
+			return localJson[sentJson.id].owns[i].level;
+	}
+	return -1;
 }
 
 // update UI
 function updateUpgrades(data){
 	for (var i = 0; i < data.length; i++){
 		$('#case'+data[i].country).children('span.upgrade').remove(); // removes all the upgrades in the country
-		for (var y = 0; y < data[i].level; y++)
-			$('#case'+i).append('<span class="upgrade"></span>');
+		// console.log("level : "+data[i].level);
+		for (var y = 0; y < data[i].level; y++) {
+			$('#case'+data[i].country).append('<span class="upgrade"></span>');
+		}
 	}
 }
 
