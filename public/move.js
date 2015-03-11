@@ -2,9 +2,12 @@ var taillePlateau = 36;
 var nbJoueurs = 5;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0, 0, 0, 0, 0];
+var posLocal = 0;
 var posLocal = 25;
 
 function init(idPlayer) {
+	// console.log(idPlayer);
+	// console.log(idPlayer > 0);
 	if(idPlayer > 0) {
 		document.getElementById("btnFinTour").disabled = true;
 		document.getElementById("btnDes").disabled = true;
@@ -29,6 +32,9 @@ function init(idPlayer) {
 
 // check if btn upgrade should be enabled or not
 function checkUpgradeAvailible(){
+	console.log();
+	for (var property in localJson[sentJson.id].owns){
+		// console.log("-"+property);
 	console.log(localJson[sentJson.id].owns.length);
 	for (var property = 0; property < localJson[sentJson.id].owns.length; property++){
 		console.log("- "+property + " -> " + localJson[sentJson.id].owns[property].country);
