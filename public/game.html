@@ -229,8 +229,10 @@
 
 			// liste les loans
 			for (var i=0; i < localJson[idPlayer].loans.length; i++){
-				var nom = getById(localJson[idPlayer].loans[i].country, 'pays');
-				$('#pays').append("<div class='hypotheque'>" + nom + "</div>");
+				if (localJson[idPlayer].loans[i].country  != undefined){
+					var nom = getById(localJson[idPlayer].loans[i].country, 'pays');
+					$('#pays').append("<div class='hypotheque'>" + nom + "</div>");
+				}
 			}
 			
 			// liste le cartes
