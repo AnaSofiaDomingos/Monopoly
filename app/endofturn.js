@@ -7,7 +7,8 @@ module.exports = function(sentJson, connection) {
 	// Achat pays
 	for (i = 0; i < sentJson.bought.length; i++) {
 		var bought = sentJson.bought[i];
-		if (bought.country != "") {
+		console.log(bought.country);
+		if (bought.length > 0) {
 			// DataBase
 			connection.query('INSERT INTO possedepays VALUES ('+id+', ( SELECT idPays FROM pays WHERE NomPays="'+bought.country+'" ), 0, 0)', function(err, rows, fields) {
 				if (err) throw err;
@@ -31,7 +32,7 @@ module.exports = function(sentJson, connection) {
 	// Amélioration pays
 	for (i = 0; i < sentJson.upgraded.length; i++) {
 		var upgraded = sentJson.upgraded[i];
-		if (upgraded.country != "") {
+		if (upgraded.length > 0) {
 			// DataBase
 			connection.query('UPDATE possedepays SET etatAmelioration='+upgraded.level+' WHERE idJoueur='+id+' AND idPays = ( SELECT idPays FROM pays WHERE NomPays="'+upgraded.country+'" )', function(err, rows, fields) {
 				if (err) throw err;
@@ -53,7 +54,7 @@ module.exports = function(sentJson, connection) {
 	// Vente pays
 	for (i = 0; i < sentJson.sold.length; i++) {
 		var sold = sentJson.sold[i];
-		if (sold.country != "") {
+		if (sold.length  > 0) {
 			// DataBase
 			connection.query('DELETE FROM possedepays WHERE idJoueur='+id+' AND idPays = ( SELECT idPays FROM pays WHERE NomPays="'+sold.country+'" )', function(err, rows, fields) {
 				if (err) throw err;
@@ -75,7 +76,7 @@ module.exports = function(sentJson, connection) {
 	// Hypothèque pays
 	for (i = 0; i < sentJson.loaned.length; i++) {
 		var loaned = sentJson.loaned[i];
-		if (loaned.country != "") {
+		if (loaned.length > 0) {
 			// DataBase
 			connection.query('UPDATE possedepays SET etatHypotheque=1 WHERE idJoueur='+id+' AND idPays = ( SELECT idPays FROM pays WHERE NomPays="'+loaned.country+'" )', function(err, rows, fields) {
 				if (err) throw err;
@@ -103,7 +104,7 @@ module.exports = function(sentJson, connection) {
 	for (i = 0; i < sentJson.drew.length; i++) {
 		var keep = false;
 		var drew = sentJson.drew[i];
-		if (drew.card > 0) {
+		if (drew.length > 0) {
 			// DataBase
 			connection.query('SELECT garder FROM cartes WHERE idCarte='+drew.card, function(err, rows, fields) {
 				if (err) throw err;

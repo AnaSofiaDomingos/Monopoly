@@ -3,7 +3,6 @@ var nbJoueurs = 5;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0, 0, 0, 0, 0];
 var posLocal = 0;
-var posLocal = 25;
 
 function init(idPlayer) {
 	// console.log(idPlayer);
@@ -35,19 +34,25 @@ function checkUpgradeAvailible(){
 	console.log();
 	for (var property in localJson[sentJson.id].owns){
 		// console.log("-"+property);
-	console.log(localJson[sentJson.id].owns.length);
-	for (var property = 0; property < localJson[sentJson.id].owns.length; property++){
-		console.log("- "+property + " -> " + localJson[sentJson.id].owns[property].country);
-		if(localJson[sentJson.id].owns[property].country == posLocal){ // enables the btn
-			$('#btnUpgrade').removeAttr("disabled");
-			break;
-		} else {
-			$('#btnUpgrade').attr("disabled", "true");
+		console.log(localJson[sentJson.id].owns.length);
+		for (var property = 0; property < localJson[sentJson.id].owns.length; property++){
+			console.log("- "+property + " -> " + localJson[sentJson.id].owns[property].country);
+			if(localJson[sentJson.id].owns[property].country == posLocal){ // enables the btn
+				$('#btnUpgrade').removeAttr("disabled");
+				break;
+			} else {
+				$('#btnUpgrade').attr("disabled", "true");
+			}
 		}
 	}
 }
 
 function lancerDes(idCurrentPlayer) {
+
+	// Getting out of jail
+	if (jail_time == 0)
+		sentJson.state = S_ALIVE;
+
 	var tmp = document.getElementById("btnDes").disabled = true;
 
 	var de1 = Math.floor((Math.random() * 6) + 1);
@@ -55,11 +60,48 @@ function lancerDes(idCurrentPlayer) {
 
 	var posJoueur = document.getElementById("case"+joueurs[idCurrentPlayer]);
 
-	posLocal+=de1+de2;
-	var btn = document.getElementById("btnDes");
-	btn.setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
-	posLocal = posLocal%taillePlateau;
-
+	// If jailed, must do a double 
+	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
+		posLocal += de1 + de2;
+		sentJson.state = S_ALIVE;
+		document.getElementById("btnDes").setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
+	}
+	else if ((sentJson.state == S_JAILED) && (de1 != de2))
+		jail_time -= 1;
+		
+	// Salary
+	if (posLocal >= taillePlateau) {
+		posLocal %= taillePlateau;
+		if (posLocal == 0)
+			credit(SALARY*2, idPlayer);
+		else
+			credit(SALARY, idPlayer);
+	}
+	// Special positions
+	else
+		switch (posLocal) {
+		
+			// Taxes
+			case 3, 12, 21, 30 :
+				if (debitObligatoire(TAXES) == 0)
+					console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
+				break;
+				
+			// Cartes
+			case 6, 15, 24, 33 :
+				var card = tirerCarte();
+				break;
+				
+			// Aller en prison
+			case 27 :
+				sentJson.state = S_JAILED;
+				sentJson.position = 9;
+				break;
+				
+		}
+		
+	sentJson.position = posLocal;
+		
 	checkUpgradeAvailible();
 
 	transition(idCurrentPlayer, posLocal);

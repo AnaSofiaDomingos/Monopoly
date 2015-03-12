@@ -1,12 +1,17 @@
+function tirerCarte() {
+
+	var card = 0;
+	while (card == 0) card = Math.floor((Math.random() * CARDS));
+
+	sentJson.drew.push({'card' : card});
+	window.alert("Player "+id+" drew card "+card);
+	
+	if (cards[card].Garder)
+		localJson.cards.push({'card' : card});
+
+}
+
 function applyCard() {
-
-
-	/*  A VOIR COMMENT ON FAIT POUR CARTE 10
-	valeurs de start :
-	-1 mort, 0 vivant, 1 prison, 
-	2 campagne publicitaire, 3 no internet
-	4 no water, 5 no electricity
-	*/
 
 	var backup = [{}];
 	var sum;
@@ -31,7 +36,7 @@ function applyCard() {
 				backup.push(localJson.owns[i]);
 				localJson.owns[i].level = 2;
 				grade(localJson.owns[i].country, localJson.owns[i].level);
-				sentJson.state = 3;  // no internet
+				sentJson.state = S_NO_INT;  // no internet
 				nbTour = 2;
 			}
 			break;
@@ -65,7 +70,7 @@ function applyCard() {
 				backup.push(localJson.owns[i]);
 				localJson.owns[i].level = 0;
 				grade(localJson.owns[i].country, localJson.owns[i].level);
-				sentJson.state = 4;  // no water
+				sentJson.state = S_NO_WAT;  // no water
 				nbtour = 2;
 			}
 			break;
@@ -100,7 +105,7 @@ function applyCard() {
 				backup.push(localJson.owns[i]);
 				localJson.owns[i].level = 0;
 				grade(localJson.owns[i].country, localJson.owns[i].level);
-				sentJson.state = 4;  // no water
+				sentJson.state = S_NO_WAT;  // no water
 				nbtour = 2;
 			}
 			break;
@@ -120,16 +125,15 @@ function applyCard() {
 			// Plus d'electricite pendant 2 tour
 
 			nbtour = 2;
-			socket.emit('nolelectricity', nbtour);
-
-			/*for(var i = 0; i<localJson.owns.length; i++){
+			
+			for(var i = 0; i<localJson.owns.length; i++){
 				localJson.owns[i].level = 0;
 				sentJson.upgraded.push(
 					'country' : localJson.owns[i].country,
 					'level' : localJson.owns[i].level
 				);
-				sentJson.state = 4;  // no water
-			}*/
+				sentJson.state = S_NO_WAT;  // no water
+			}
 			
 			break;
 
@@ -168,13 +172,9 @@ function applyCard() {
 			break;
 				  
 		case 15 : // carte sortie prison
-		
-			localJson.cards.push({'card' : 15});
-			sentJson.drew.push({'card' : 15});
-				window.alert("Player "+id+" got card 15");
 
-			if (sentJson.state == 1)
-				sentJson.state = 0;
+			if (sentJson.state == S_JAILED)
+				sentJson.state = S_ALIVE;
 			break;
 		
 		case 16 : // découverte puit vente pétrole 2 000 000
@@ -200,7 +200,7 @@ function applyCard() {
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) {
 				window.alert("Player "+id+" paid 500'000 for pub");
-				localJson.state = 2;
+				localJson.state = S_PUBLIC;
 
 				credit(0.2);
 				window.alert("Player "+id+" gained 200'000");
@@ -222,79 +222,4 @@ function applyCard() {
 			break;
 
 	}
-}
-
-// Débite ou fait perdre le joueur
-function debitObligatoire(sum) {
-
-	while (localJson.account < sum) 
-		if (localJson.countries.length > 0) localJson.account += proposeVente();
-		else return gameOver();
-		
-	debit(sum);
-	return 0;
-
-}
-
-// Desherit a country
-function desherit(sample) {
-
-	if (sample.victimID == idPlayer) {
-		removeItem(localJson[idPlayer].owns, 'country', country);
-		console.log("Player "+idPlayer+" got a country robbed");
-	}
-	
-	return 0;
-			
-}
-
-// Inherit a country
-function inherit(country) {
-
-	var victimID;
-
-	for (var i = 0; i < localJson.length; i++) 
-		for (var j = 0; j < localJson[i].owns.length; j++)
-			if (localJson[i].owns[j].country == country){
-				victimID = i;
-				break;
-			}
-	
-	localJson[idPlayer].owns.push({
-		'country' : country,
-		'level'   : 0
-	});
-	
-	var sample = {
-		'country' : country,
-		'victim'  : victimID,
-		'gameID'  : gameID
-	};
-	
-	socket.emit('robbed', sample);
-	
-	console.log("Player "+idPlayer+" robbed a country from player "+victimID);
-	
-	return 0;
-
-}
-
-// upgarde or downgrade
-function grade(country, level) {
-
-	sentJson.upgraded.push({
-		"contry": country,
-		"level" : level
-	});
-	
-	return 1;
-
-}
-
-function gameOver() {
-
-	window.alert("Player "+id+" out of the game");
-	sentJson.state = -1;
-	return -1;
-	
 }
