@@ -40,7 +40,7 @@ function upgrade(idCurrentPlayer){
 	console.log(sentJson.account);
 	var r = debit(price);
 	if(r == 0)
-		window.alert(pays.NomPays + " amelioré !");
+		window.alert(pays.NomPays + " amelioré !"); 
 	else 
 		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
 
