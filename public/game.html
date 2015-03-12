@@ -10,6 +10,20 @@
 	<title>Monopoly</title>
 	<script>
 
+		// States
+		var S_DEAD   = -1;
+		var S_ALIVE  = 0;
+		var S_JAILED = 1;
+		var S_PUBLIC = 2;
+		var S_NO_INT = 3;
+		var S_NO_WAT = 4;
+		var S_NO_ELE = 5;
+	
+		// Constants
+		var SALARY    = 0.1;
+		var TAXES     = 0.05;
+		var CARDS     = 20; // King Burgonde not implemented (id 21)
+	
 		var GameID = 1;
 		var idGlobal = Math.floor(Math.random() * 4) + 1;
 		var idPlayer;
@@ -20,6 +34,7 @@
 				'country' : 24,
 				'level' : 2
 			},
+			
 			{
 				'country' : 22,
 				'level' : 1
