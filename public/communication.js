@@ -48,7 +48,6 @@ function upgrade(idCurrentPlayer){
 		if(localJson[idPlayer].owns[i].country == idPays)
 			localJson[idPlayer].owns[i].level = newLvl;
 	}
-	console.log(localJson);
 
 	updateUpgrades(sentJson.upgraded);
 }
@@ -141,7 +140,6 @@ function receiveData(data) {
 			if(data.loaned[i].recovered)
 				removeItem(data.loaned,'country',data.loaned[i].country);
 
-	console.log(localJson);
 
 
 

@@ -120,6 +120,7 @@
 					if (localJson[i].owns[j].country == country.idPays){
 						owned = true;
 						$('#infosPays').append("<label>Propriétaire " + i + "</label></br>");
+						$('#infosPays').append('<input class="btnSell" type="button" value="vendre" onclick="sell('+country.idPays+')" />');
 				//		break;
 					}
 				}
@@ -130,8 +131,9 @@
 
 
 			if (posLocal == position){
-				if (owned == true)
+				if (owned == true){
 					$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
+				}
 				else
 					$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
 			}
