@@ -97,7 +97,6 @@ function gameOver() {
 }
 
 function buy() {
-
 	// Checks if the player can afford the country
 	var diff = debit(countries[posLocal].Prix);
 	
@@ -120,6 +119,7 @@ function buy() {
 			'country' : posLocal
 		});
 		
+		getInfos();
 		return 0;
 		
 	}

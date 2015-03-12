@@ -8,10 +8,12 @@ function tirerCarte() {
 	
 	if (cards[card].Garder)
 		localJson.cards.push({'card' : card});
+	else
+		applyCard(card);
 
 }
 
-function applyCard() {
+function applyCard(idCrd) {
 
 	var backup = [{}];
 	var sum;

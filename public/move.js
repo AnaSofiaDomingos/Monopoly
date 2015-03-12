@@ -53,18 +53,16 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var tmp = document.getElementById("btnDes").disabled = true;
-
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
 
-	var posJoueur = document.getElementById("case"+joueurs[idCurrentPlayer]);
+	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
 	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
 		posLocal += de1 + de2;
 		sentJson.state = S_ALIVE;
-		document.getElementById("btnDes").setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
+		$("#btnDes").setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
 	}
 	else if ((sentJson.state == S_JAILED) && (de1 != de2))
 		jail_time -= 1;
@@ -106,7 +104,13 @@ function lancerDes(idCurrentPlayer) {
 
 	transition(idCurrentPlayer, posLocal);
 
-	$('#btnFinTour').disabled = false;
+	// Double --> replay
+	if (de1 == de2) 
+		replay();
+	else {
+		$('#btnFinTour').disabled = false;
+		$("#btnDes").disabled = true;
+	}
 	
 }
 
@@ -153,6 +157,5 @@ function replay() {
 
 	$('#btnDes').disabled = false;
 	$('#btnFinTour').disabled = true;
-	return 1;
 	
 }
