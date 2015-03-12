@@ -1,3 +1,4 @@
+
 function finTour(GameID, idCurrentPlayer) {
 
 	document.getElementById("btnFinTour").disabled = true;
@@ -6,19 +7,6 @@ function finTour(GameID, idCurrentPlayer) {
 	// Send data
 	socket.emit('endofturn',sentJson);
 	resetSentJson();
-}
-
-function grade(country, level) {
-
-	for (var i = 0; i < localJson.length; i++)
-		for (var j = 0; j < localJson.[idPlayer].owns.length; j++)
-			if (localJson[i].owns[j].country == country) {
-				localJson[i].owns[j].level = level;
-				sentJson.upgraded.push({
-					'country' : localJson[i].owns[j].country,
-					'level'   : 0
-				});
-
 }
 
 function upgrade(idCurrentPlayer){
@@ -108,8 +96,22 @@ function removeItem(obj, prop, val) {
         }
     }
     if(found){
-        delete obj[c];
+        obj.splice(c,1);
     }
+}
+
+function grade(country, level) {
+
+	for (var i = 0; i < localJson.length; i++)
+		for (var j = 0; j < localJson[idPlayer].owns.length; j++)
+			if (localJson[i].owns[j].country == country) {
+				localJson[i].owns[j].level = level;
+				sentJson.upgraded.push({
+					'country' : localJson[i].owns[j].country,
+					'level'   : 0
+				});
+			}
+
 }
 
 function receiveData(data) {
@@ -178,4 +180,5 @@ function receiveData(data) {
 	}
 
 }
+
 
