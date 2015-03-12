@@ -5,6 +5,7 @@ html,body{
 
 #plateau{
 	margin:auto;
+	float:left ;
 }
 
 #plateau * {
@@ -65,8 +66,22 @@ html,body{
 
 
 /* my own things */
+
+#infosPays{
+
+	margin-left: 100px;
+	border : 1px solid rgba(0,0,0,1);
+	height: : 500px;
+	width: 200px;
+	float:left ;
+}
+
 #infoAccount{
-	margin-top:20px;
+	border : 1px solid rgba(0,0,0,1);
+	margin-top:200px;
+	margin-left: 720px;
+	height: : 500px;
+	width: 500px;
 }
 
 
@@ -88,11 +103,7 @@ html,body{
 	height: :100px;
 }
 
-
-#infosPays{
-	border : 1px solid rgba(0,0,0,1);
-	height: : 500px;
-	width: 200px;
-	float:right;
+#actions{
+	margin-top: 200px;
 }
 
