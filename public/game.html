@@ -186,6 +186,7 @@
 
 		// recupere les information en fonction d'un id
 		function getMyInfos(id){
+			$("#pays").empty();
 			for (var i=0; i < localJson[id].owns.length; i++)
 				$('#pays').append("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
 			

@@ -66,17 +66,26 @@ html,body{
 
 /* my own things */
 #infoAccount{
+	margin-top:20px;
+}
 
-	border : 1px solid rgba(0,0,0,1);
-	width: :600px;
+
+#pays {
+	width: :200px;
 	height: 100px;
 }
 
+#cartes {
+	width: :200px;
+	height: 100px;
+}
+
+
 .possede{
 	border : 1px solid rgba(0,0,0,1);
-	height: :100px;
-	width: 50px;
 	display: inline-block;
+	width: 100px;
+	height: :100px;
 }
 
 
