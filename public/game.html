@@ -91,45 +91,62 @@
 
 
 		// affiche les informations de la case apres avoir cliquer dessus
-		function getInfos(position){
+		function getInfos(position, pays){
+			// empeche le click des cases spéciales
 			if (position == 0 | position == 3 | position == 6 | position == 9 | position == 12 | position == 15 |
 				position == 18 | position == 21 | position == 24 | position == 27 | position == 30 | position == 33)
 				return ;
 
 			var level, owned =false;
+			var idpays, country;
 			$('#infosPays').empty();
-
 			$('#infosPays').append("Information case</br>");
 
-			var country = findCountry(position);
-			$('#infosPays').append("<label>" + country.NomPays + "</label></br>");
 
+			// si un id pays est donnée en paramètre pas besoin d'aller chercher dans la liste des pays
+			if (pays == undefined){
+				country = findCountry(position);
+				$('#infosPays').append("<label>" + country.NomPays + "</label></br>");
+				idpays = country.idPays;
+
+			}else{
+				var nom = getById(pays, 'pays');
+				$('#infosPays').append("<label>" + nom + "</label></br>");
+				idpays = pays;
+			}
+
+
+			// affiche le level du pays
 			for (var i=0; i<localJson[idPlayer].owns.length;i++){
-				if (localJson[idPlayer].owns[i].country == country.idPays){
+				if (localJson[idPlayer].owns[i].country == idpays){
 					level = true;
 					$('#infosPays').append("<label>Level " + localJson[idPlayer].owns[i].level + "</label></br>");
-				//	break;
 				}
 			}
 
 			if (level==false)
 					$('#infosPays').append("<label>Level 0</label></br>");
 
+
+			// affiche le propriétaire du pays
 			for (var i=0;i<localJson.length;i++){
 				for (var j=0; j<localJson[i].owns.length;j++){
-					if (localJson[i].owns[j].country == country.idPays){
+					if (localJson[i].owns[j].country == idpays){
 						owned = true;
 						$('#infosPays').append("<label>Propriétaire " + i + "</label></br>");
-						$('#infosPays').append('<input class="btnSell" type="button" value="vendre" onclick="sell('+country.idPays+')" />');
-				//		break;
+						$('#infosPays').append('<input class="btnSell" type="button" value="vendre" onclick="sell('+idpays+')" />');
 					}
 				}
 			}
 
-			if (owned==false)
-					$('#infosPays').append("<label>Aucun propriétaire</label></br>");
+			if (owned==false){
+				$('#infosPays').append("<label>Aucun propriétaire</label></br>");
 
+				// affiche le prix du pays si personne ne l'a acheter
+				$('#infosPays').append("<label>Prix " + country.Prix + " millons </label></br>");
+			}
 
+			// affiche les boutons en fonction de la position locale
 			if (posLocal == position){
 				if (owned == true){
 					$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
@@ -197,8 +214,12 @@
 		// recupere les information en fonction d'un id
 		function getMyInfos(){
 			$("#pays").empty();
-			for (var i=0; i < localJson[idPlayer].owns.length; i++)
-				$('#pays').append("<div class='possede'>" + getById(localJson[idPlayer].owns[i].country, 'pays') + "</div>");
+			$("#cartes").empty();
+			$("#credit").empty();
+			for (var i=0; i < localJson[idPlayer].owns.length; i++){
+				var nom = getById(localJson[idPlayer].owns[i].country, 'pays');
+				$('#pays').append("<div class='possede' onclick='getInfos(-1,"+ localJson[idPlayer].owns[i].country+")' >" + nom + "</div>");
+			}
 			
 
 			for (var i=0; i < localJson[idPlayer].cards.length; i++)
@@ -300,7 +321,8 @@
 		<div id="cartes"></div>
 
 		<br/>
-		<label id="credit">CREDIT</label>
+		<label>CREDIT</label>
+		<div id="credit"></div>
 
 		<br/>
 	</div>
