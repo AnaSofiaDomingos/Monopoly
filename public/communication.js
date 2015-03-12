@@ -100,6 +100,20 @@ function removeItem(obj, prop, val) {
     }
 }
 
+function grade(country, level) {
+
+	for (var i = 0; i < localJson.length; i++)
+		for (var j = 0; j < localJson[idPlayer].owns.length; j++)
+			if (localJson[i].owns[j].country == country) {
+				localJson[i].owns[j].level = level;
+				sentJson.upgraded.push({
+					'country' : localJson[i].owns[j].country,
+					'level'   : 0
+				});
+			}
+
+}
+
 function receiveData(data) {
  	console.log(localJson);
 	console.log(data);
@@ -168,15 +182,3 @@ function receiveData(data) {
 }
 
 
-function grade(country, level) {
-
-	for (var i = 0; i < localJson.length; i++)
-		for (var j = 0; j < localJson.[idPlayer].owns.length; j++)
-			if (localJson[i].owns[j].country == country) {
-				localJson[i].owns[j].level = level;
-				sentJson.upgraded.push({
-					'country' : localJson[i].owns[j].country,
-					'level'   : 0
-				});
-
-}
