@@ -76,17 +76,57 @@
 		};
 
 		var nbCase = 36;
-
 		var countries, cards;
-		
+
+
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens, parent ){
 			if (sens == 1)
 				for (var i = id; i < (id+8); i++)
-					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
+					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "' onclick='getInfos("+i+")' ></div>");
 			else
 				for (var i = id; i > (id-8); i--)
-					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
+					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "' onclick='getInfos("+i+")'></div>");
+		}
+
+
+		// affiche les informations de la case apres avoir cliquer dessus
+		function getInfos(position){
+			var level, owned =false;
+			$('#infosPays').empty();
+
+			$('#infosPays').append("Information case</br>");
+
+			var country = findCountry(position);
+			$('#infosPays').append("<label>" + country.NomPays + "</label></br>");
+
+			for (var i=0; i<localJson[idPlayer].owns.length;i++){
+				if (localJson[idPlayer].owns[i].country == country.idPays){
+					level = true;
+					$('#infosPays').append("<label>Level " + localJson[idPlayer].owns[i].level + "</label></br>");
+				//	break;
+				}
+			}
+
+			if (level==false)
+					$('#infosPays').append("<label>Level 0</label></br>");
+
+			for (var i=0;i<localJson.length;i++){
+				for (var j=0; j<localJson[i].owns.length;j++){
+					if (localJson[i].owns[j].country == country.idPays){
+						owned = true;
+						$('#infosPays').append("<label>Propriétaire " + i + "</label></br>");
+				//		break;
+					}
+				}
+			}
+
+			if (owned==false)
+					$('#infosPays').append("<label>Aucun propriétaire</label></br>");
+
+			$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
+			$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
+
 		}
 
 		// place le pays dans les div
@@ -126,7 +166,8 @@
 			}
 		}
 
-		// retrouve un object en fonctino de l'id
+		/*  retrouve le nom du pays en fonction de l'id si table = pays
+			retrouve le contenu de la carte en fonction de l'ip si table = cartes*/
 		function getById(id, table){
 			if (table == 'pays'){
 				for (var i=0; i< countries.length; i++){
@@ -144,13 +185,13 @@
 		
 
 		// recupere les information en fonction d'un id
-		function getInfos(id){
+		function getMyInfos(id){
 			for (var i=0; i < localJson[id].owns.length; i++)
-				$('#pays').after("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
+				$('#pays').append("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
 			
 
 			for (var i=0; i < localJson[id].cards.length; i++)
-				$('#cartes').after("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
+				$('#cartes').append("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
 
 			$('#credit').after("<p>"+ sentJson.account +"</p>"); 
 
@@ -172,7 +213,8 @@
 			}];
 
 			countries = dataInitGame.pays;
- 			cards = dataInitGame.cartes;
+			card = dataInitGame.cartes;
+ 			
 
 			sentJson = {
 				"id": idPlayer,
@@ -198,7 +240,7 @@
 			updateUpgrades(sentJson.upgraded);
 			init(idPlayer);
 			placeCountriesCartes();
-			getInfos(idPlayer);
+			getMyInfos(idPlayer);
 		});
 
 	</script>
@@ -209,9 +251,9 @@
 <body>
 	<div id="plateau">
 		<div id="amérique">
-			<div id="case18" class="case-coin"></div>
+			<div id="case18" class="case-coin" onclick='getInfos(18)'></div>
 			<script> constructionCase("case-horizontal",19, 1,'amérique'); </script>
-			<div id="case27" class="case-coin"></div>
+			<div id="case27" class="case-coin" onclick='getInfos(27)'></div>
 		</div>
 
 		<div id="asie">
@@ -225,21 +267,22 @@
 		</div>
 
 		<div id="afrique">
-			<div id="case9" class="case-coin"></div>
+			<div id="case9" class="case-coin" onclick='getInfos(9)'></div>
 			<script> constructionCase("case-horizontal", 8, 0 ,'afrique'); </script>
-			<div id="case0" class="case-coin"></div>
+			<div id="case0" class="case-coin" onclick='getInfos(0)'></div>
 		</div>
 
 	</div>
 	<div id='infosPays'>
-		informations pays
+		</br>
 	</div>
 
 	<div id="infoAccount">
-		<label id="pays">PAYS</label>
-
+		<label>PAYS</label>
+		<div id="pays"></div>
 		<br/>
-		<label id="cartes">CARTES</label>
+		<label >CARTES</label>
+		<div id="cartes"></div>
 
 		<br/>
 		<label id="credit">CREDIT</label>
@@ -251,8 +294,6 @@
 	<div class="actions">
 		<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
 		<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
-		<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />
-		<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />
 	
 		<br/>
 	</div>
