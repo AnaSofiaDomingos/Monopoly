@@ -58,14 +58,51 @@ function lancerDes(idCurrentPlayer) {
 	posLocal+=de1+de2;
 	var btn = document.getElementById("btnDes");
 	btn.setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
-	posLocal = posLocal%taillePlateau;
-
+	
+	// Salary
+	if (posLocal >= taillePlateau) {
+		posLocal = posLocal%taillePlateau;
+		if (posLocal == 0)
+			credit(SALARY*2, idPlayer);
+		else
+			credit(SALARY, idPlayer);
+	}
+	// Special positions
+	else
+		switch (posLocal) {
+		
+			// Taxes
+			case 3, 12, 21, 30 :
+				if (debitObligatoire(TAXES) == 0)
+					console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
+				break;
+				
+			// Cartes
+			case 6, 15, 24, 33 :
+				var card = tirerCarte();
+				break;
+				
+			// Aller en prison
+			case 27 :
+				sentJson.state = S_JAILED;
+				sentJson.position = 9;
+				break;
+				
+		}
+		
 	checkUpgradeAvailible();
 
 	transition(idCurrentPlayer, posLocal);
 
 	$('#btnFinTour').disabled = false;
 	
+}
+
+function tirerCarte() {
+
+	while (var card == 0) card = Math.floor((Math.random() * CARDS));
+	return card;
+
 }
 
 function transition(idCurrentPlayer,posLocal) {

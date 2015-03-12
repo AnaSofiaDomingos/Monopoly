@@ -33,15 +33,13 @@
 			{
 				'country' : 24,
 				'level' : 2
-			},
-			
+			},	
 			{
 				'country' : 22,
 				'level' : 1
 			}
 		];
-		var cards = [{'card' : ""}]
-		var loans = [{'country' : ""}]
+		
 		var localJson = [{
 				"owns" : owns,
 				"cards" : cards,
@@ -54,9 +52,7 @@
 			'idGlobal' : idGlobal
 		};
 
-
 		var nbCase = 36;
-
 
 		var countries;
 		// fonction permettant de construire les cases de chaque pays et carte
@@ -68,7 +64,6 @@
 				for (var i = id; i > (id-8); i--)
 					$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "'></div>");
 		}
-
 
 		// place le pays dans les div
 		function placeCountriesCartes(){
@@ -216,7 +211,7 @@
 		informations pays
 	</div>
 
-	<div class="infoAccount">
+	<div id="infoAccount">
 		<label id="pays">PAYS</label>
 
 		<br/>
