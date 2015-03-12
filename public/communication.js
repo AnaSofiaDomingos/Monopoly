@@ -20,7 +20,7 @@ function upgrade(idCurrentPlayer){
 		}
 	}
 
-	console.log(pays);
+	// console.log(pays);
 
 	var price;
 	switch(parseInt(newLvl)) {
@@ -37,11 +37,14 @@ function upgrade(idCurrentPlayer){
 		break;
 	}
 	console.log(price);
+	console.log(sentJson.account);
 	var r = debit(price);
 	if(r == 0)
 		window.alert(pays.NomPays + " amelioré !");
 	else 
 		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
+
+	console.log(sentJson.account);
 
 	// upgrade of the country
 	sentJson.upgraded.push({
@@ -130,8 +133,9 @@ function receiveData(data) {
 
 	// update list of cards countries
 	if(typeof data.loaned !== [{}])
-		if(!data.loaned[i].recovered)
-			localJson[data.id].loans.push(data.loaned);
+		for (i = 0; i < data.loaned.length; i++)
+			if(!data.loaned[i].recovered)
+				localJson[data.id].loans.push(data.loaned); 
 
 	// update list of bought countries
 	if(typeof data.loaned !== [{}])
@@ -143,7 +147,7 @@ function receiveData(data) {
 
 
 
-	localJson[data.id]
+	// localJson[data.id]
 	PlayerPos = data.position;
 	transition(data.id,PlayerPos);
 	var nextPlayer = ((data.id+1)%nbJoueurs);
