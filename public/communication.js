@@ -8,6 +8,14 @@ function finTour(GameID, idCurrentPlayer) {
 	resetSentJson();
 }
 
+function grade(country, level) {
+
+	for (var i = 0; i < localJson[idPlayer].owns.length; i++)
+		if (localJson[idPlayer].owns[i].country == country)
+			localJson[idPlayer].owns[i].level = level;
+
+}
+
 function upgrade(idCurrentPlayer){
 	var posPays = joueurs[idCurrentPlayer];
 	var pays = findCountry(posPays);
