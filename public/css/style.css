@@ -63,6 +63,15 @@ html,body{
 	height: 350px;
 }	
 
+
+/* my own things */
+#infoAccount{
+
+	border : 1px solid rgba(0,0,0,1);
+	width: :600px;
+	height: 100px;
+}
+
 .possede{
 	border : 1px solid rgba(0,0,0,1);
 	height: :100px;
