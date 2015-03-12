@@ -113,8 +113,7 @@ function buy() {
 		getMyInfos();
 		return 0;
 		
-	}
-	else {
+	}else {
 	
 		alert("Vous avez besoin de "+diff+" pour terminer cette action");
 		return 1;
@@ -124,15 +123,18 @@ function buy() {
 }
 
 function sell(idCountry) {
-
 	removeItem(localJson[idPlayer].owns, 'country', idCountry);
+	console.log(localJson[idPlayer]);
+
 	sentJson.sold.push({
 		'country' : idCountry
 	});
-	credit(countries[idCountry].Prix);
-	
+
+	credit(countries[idCountry - 1].Prix); //
+
 	console.log("Player "+idPlayer+" sold country "+idCountry);
-	
+	getMyInfos();
+
 }
 
 function loan(idCountry) {
