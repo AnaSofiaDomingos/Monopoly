@@ -10,9 +10,14 @@ function finTour(GameID, idCurrentPlayer) {
 
 function grade(country, level) {
 
-	for (var i = 0; i < localJson[idPlayer].owns.length; i++)
-		if (localJson[idPlayer].owns[i].country == country)
-			localJson[idPlayer].owns[i].level = level;
+	for (var i = 0; i < localJson.length; i++)
+		for (var j = 0; j < localJson.[idPlayer].owns.length; j++)
+			if (localJson[i].owns[j].country == country) {
+				localJson[i].owns[j].level = level;
+				sentJson.upgraded.push({
+					'country' : localJson[i].owns[j].country,
+					'level'   : 0
+				});
 
 }
 
