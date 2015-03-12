@@ -1,11 +1,4 @@
 function applyCard() {
-	
-	/*  A VOIR COMMENT ON FAIT POUR CARTE 10
-	valeurs de start :
-	-1 mort, 0 vivant, 1 prison, 
-	2 campagne publicitaire, 3 no internet
-	4 no water, 5 no electricity
-	*/
 
 	var backup = [{}];
 	var sum;
