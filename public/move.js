@@ -31,7 +31,6 @@ function init(idPlayer) {
 
 // check if btn upgrade should be enabled or not
 function checkUpgradeAvailible(){
-	console.log();
 	for (var property in localJson[sentJson.id].owns){
 		// console.log("-"+property);
 		console.log(localJson[sentJson.id].owns.length);
@@ -75,28 +74,32 @@ function lancerDes(idCurrentPlayer) {
 			credit(SALARY, idPlayer);
 	}
 	// Special positions
-	else
-		switch (posLocal) {
-		
-			// Taxes
-			case 3, 12, 21, 30 :
-				if (debitObligatoire(TAXES) == 0)
-					console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
-				break;
-				
-			// Cartes
-			case 6, 15, 24, 33 :
-				var card = tirerCarte();
-				break;
-				
-			// Aller en prison
-			case 27 :
-				sentJson.state = S_JAILED;
-				sentJson.position = 9;
-				jail_time = 3;
-				break;
-				
-		}
+	switch (posLocal) {
+	
+		// Taxes
+		case 3  : 
+		case 12 :
+		case 21 :
+		case 30 :
+			if (debitObligatoire(TAXES) == 0)
+				console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
+			break;
+			
+		// Cartes
+		case 6  :
+		case 15 :
+		case 24 :
+		case 33 :
+			tirerCarte();
+			break;
+			
+		// Aller en prison
+		case 27 :
+			sentJson.state = S_JAILED;
+			sentJson.position = 9;
+			jail_time = 3;
+			break;
+	}
 		
 	sentJson.position = posLocal;
 		
@@ -107,14 +110,11 @@ function lancerDes(idCurrentPlayer) {
 	getInfos(posLocal);
 
 	// Double --> replay
-	if (de1 == de2) { 
-		console.log(de1+" = "+de2);
+	if (de1 == de2)
 		replay(); 
-	}
 	else {
 		$('#btnFinTour').attr('disabled', false);
 		$("#btnDes").attr('disabled', true);
-		console.log(de1+" != "+de2);
 	}
 	
 }
