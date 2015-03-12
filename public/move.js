@@ -61,7 +61,7 @@ function lancerDes(idCurrentPlayer) {
 	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
 		posLocal += de1 + de2;
 		sentJson.state = S_ALIVE;
-		$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2)); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2));
 	}
 	else if ((sentJson.state == S_JAILED) && (de1 != de2))
 		jail_time -= 1;
