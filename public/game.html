@@ -24,6 +24,9 @@
 		var TAXES     = 0.05;
 		var CARDS     = 20; // King Burgonde not implemented (id 21)
 	
+		// Variables
+		var jail_time = 0;
+	
 		var GameID = 1;
 		var idGlobal = Math.floor(Math.random() * 4) + 1;
 		var idPlayer;
@@ -54,7 +57,8 @@
 
 		var nbCase = 36;
 
-		var countries;
+		var countries, cards;
+		
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens, parent ){
 			if (sens == 1)
@@ -148,7 +152,7 @@
 			}];
 
 			countries = dataInitGame.pays;
- 			
+ 			cards = dataInitGame.cartes;
 
 			sentJson = {
 				"id": idPlayer,

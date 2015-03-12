@@ -1,3 +1,16 @@
+function tirerCarte() {
+
+	var card = 0;
+	while (card == 0) card = Math.floor((Math.random() * CARDS));
+
+	sentJson.drew.push({'card' : card});
+	window.alert("Player "+id+" drew card "+card);
+	
+	if (cards[card].Garder)
+		localJson.cards.push({'card' : card});
+
+}
+
 function applyCard() {
 
 	var backup = [{}];
@@ -159,10 +172,6 @@ function applyCard() {
 			break;
 				  
 		case 15 : // carte sortie prison
-		
-			localJson.cards.push({'card' : 15});
-			sentJson.drew.push({'card' : 15});
-				window.alert("Player "+id+" got card 15");
 
 			if (sentJson.state == S_JAILED)
 				sentJson.state = S_ALIVE;

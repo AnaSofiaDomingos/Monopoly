@@ -48,6 +48,11 @@ function checkUpgradeAvailible(){
 }
 
 function lancerDes(idCurrentPlayer) {
+
+	// Getting out of jail
+	if (jail_time == 0)
+		sentJson.state = S_ALIVE;
+
 	var tmp = document.getElementById("btnDes").disabled = true;
 
 	var de1 = Math.floor((Math.random() * 6) + 1);
@@ -55,13 +60,18 @@ function lancerDes(idCurrentPlayer) {
 
 	var posJoueur = document.getElementById("case"+joueurs[idCurrentPlayer]);
 
-	posLocal+=de1+de2;
-	var btn = document.getElementById("btnDes");
-	btn.setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
-	
+	// If jailed, must do a double 
+	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
+		posLocal += de1 + de2;
+		sentJson.state = S_ALIVE;
+		document.getElementById("btnDes").setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
+	}
+	else if ((sentJson.state == S_JAILED) && (de1 != de2))
+		jail_time -= 1;
+		
 	// Salary
 	if (posLocal >= taillePlateau) {
-		posLocal = posLocal%taillePlateau;
+		posLocal %= taillePlateau;
 		if (posLocal == 0)
 			credit(SALARY*2, idPlayer);
 		else
@@ -90,19 +100,14 @@ function lancerDes(idCurrentPlayer) {
 				
 		}
 		
+	sentJson.position = posLocal;
+		
 	checkUpgradeAvailible();
 
 	transition(idCurrentPlayer, posLocal);
 
 	$('#btnFinTour').disabled = false;
 	
-}
-
-function tirerCarte() {
-
-	while (var card == 0) card = Math.floor((Math.random() * CARDS));
-	return card;
-
 }
 
 function transition(idCurrentPlayer,posLocal) {
