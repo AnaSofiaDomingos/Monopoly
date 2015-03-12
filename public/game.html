@@ -15,25 +15,23 @@
 		var idPlayer;
 		var sentJson;
 
-		var owns = {'country' : "",'level' : ""}
-		var cards = {'card' : ""}
-		var loans = {'country' : ""}
-		var localJson = [{
-				"owns" : [owns],
-				"cards" : [cards],
-				"loans" : [loans]
-		}];
-
-		var payspossede = [
+		var owns = [
 			{
-				'idPays' : 24,
-				'etatAmelioration' : 2
+				'country' : 24,
+				'level' : 2
 			},
 			{
-				'idPays' : 35,
-				'etatAmelioration' : 1
+				'country' : 22,
+				'level' : 1
 			}
 		];
+		var cards = [{'card' : ""}]
+		var loans = [{'country' : ""}]
+		var localJson = [{
+				"owns" : owns,
+				"cards" : cards,
+				"loans" : loans
+		}];
 
 		// console.log(idGlobal);
 		var data = {
@@ -42,11 +40,10 @@
 		};
 
 
-		var pays = [{}];
 		var nbCase = 36;
 
 
-
+		var countries;
 		// fonction permettant de construire les cases de chaque pays et carte
 		function constructionCase(typecase, id, sens, parent ){
 			if (sens == 1)
@@ -88,9 +85,9 @@
 
 		// trouve le pays correspondant à la case avec la position
 		function findCountry(id){
-			for (var i=0; i< pays.length;i++){
-				if (pays[i].Position == id)
-					return pays[i];
+			for (var i=0; i< countries.length;i++){
+				if (countries[i].Position == id)
+					return countries[i];
 
 			}
 		}
@@ -98,9 +95,9 @@
 		// retrouve un object en fonctino de l'id
 		function getById(id, table){
 			if (table == 'pays'){
-				for (var i=0; i< pays.length; i++){
-					if (pays[i].idPays == id)
-						return pays[i].NomPays;
+				for (var i=0; i< countries.length; i++){
+					if (countries[i].idPays == id)
+						return countries[i].NomPays;
 				}
 			}
 			/*else if (table == 'carte') {
@@ -133,8 +130,6 @@
 			receiveData(data);
 		});
 
-		var countries;
-
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
 			dataInitGame.upgraded = [{
@@ -143,10 +138,6 @@
 			}];
 
 			countries = dataInitGame.pays;
-
-			// Recuperation de la liste des pays
- 			for (var i=0; i<dataInitGame.pays.length; i++)
- 				pays[i] = dataInitGame.pays[i];
  			
 
 			sentJson = {
@@ -168,18 +159,6 @@
 				"position": joueurs[idPlayer],
 				"GameID" : GameID
 
-			};
-
-
-			owns = {
-				'country' : 25,
-				'level' : 1
-			}
-
-			localJson[idPlayer] =  {
-				"owns" : [owns],
-				"cards" : [cards],
-				"loans" : [loans]
 			};
 
 			updateUpgrades(sentJson.upgraded);
