@@ -13,18 +13,46 @@ function upgrade(idCurrentPlayer){
 	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
 	var pays;
 	// console.log(countries);
+
 	for(var i = 0; i<countries.length; i++) {
-		console.log(countries[i].Position+" -> " + idPays);
 		if(countries[i].Position == idPays) {
 			pays = countries[i];
 		}
 	}
 
-		// upgrade of the country
-		sentJson.upgraded.push({
-			'country' : idPays,
-			'level' : newLvl
-		});
+	console.log(pays);
+
+	var price;
+	switch(parseInt(newLvl)) {
+		case 1 : price=pays.Prix*0.3;
+		break;
+		case 2 : price=pays.Prix*0.4;
+		break;
+		case 3 : price=pays.Prix*0.7;
+		break;
+		case 4 : price=pays.Prix*1.2;
+		break;
+		default :
+			return -1;
+		break;
+	}
+	console.log(price);
+	var r = debit(price);
+	if(r == 0)
+		window.alert(pays.NomPays + " amelioré !");
+	else 
+		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
+
+	// upgrade of the country
+	sentJson.upgraded.push({
+		'country' : idPays,
+		'level' : newLvl
+	});
+
+	for(var i = 0; i<localJson[sentJson.id].owns.length; i++) {
+		if(localJson[sentJson.id].owns[i].country == idPays)
+			localJson[sentJson.id].owns[i].level = newLvl;
+	}
 
 	updateUpgrades(sentJson.upgraded);
 }
