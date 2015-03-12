@@ -124,7 +124,6 @@ function buy() {
 
 function sell(idCountry) {
 	removeItem(localJson[idPlayer].owns, 'country', idCountry);
-	console.log(localJson[idPlayer]);
 
 	sentJson.sold.push({
 		'country' : idCountry
@@ -147,9 +146,12 @@ function loan(idCountry) {
 		'country'   : idCountry,
 		'recovered' : 0
 	});
-	credit(countries[idCountry].Prix);
+
+	credit(countries[idCountry - 1].Prix);
 	
 	console.log("Player "+idPlayer+" loaned "+idCountry);
+	getMyInfos();
+	$('#btnLoan').disabled = true;
 
 }
 
