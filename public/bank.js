@@ -1,5 +1,4 @@
-// Debits a p
-layer (if possible)
+// Debits a player (if possible)
 function debit(value){
 	//If player has enough money
 	if(sentJson.account-value >= 0){
