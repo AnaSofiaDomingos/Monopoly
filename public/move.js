@@ -104,6 +104,8 @@ function lancerDes(idCurrentPlayer) {
 
 	transition(idCurrentPlayer, posLocal);
 
+	getInfos(posLocal);
+
 	// Double --> replay
 	if (de1 == de2) { 
 		console.log(de1+" = "+de2);
