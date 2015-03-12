@@ -55,14 +55,13 @@ function lancerDes(idCurrentPlayer) {
 
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
-
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
 	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
 		posLocal += de1 + de2;
 		sentJson.state = S_ALIVE;
-		$("#btnDes").setAttribute("value", de1+" + "+de2+" = " +(de1+de2));
+		$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2)); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 	else if ((sentJson.state == S_JAILED) && (de1 != de2))
 		jail_time -= 1;
@@ -94,6 +93,7 @@ function lancerDes(idCurrentPlayer) {
 			case 27 :
 				sentJson.state = S_JAILED;
 				sentJson.position = 9;
+				jail_time = 3;
 				break;
 				
 		}
@@ -105,13 +105,21 @@ function lancerDes(idCurrentPlayer) {
 	transition(idCurrentPlayer, posLocal);
 
 	// Double --> replay
-	if (de1 == de2) 
-		replay();
+	if (de1 == de2) { 
+		console.log(de1+" = "+de2);
+		replay(); 
+	}
 	else {
-		$('#btnFinTour').disabled = false;
-		$("#btnDes").disabled = true;
+		$('#btnFinTour').attr('disabled', false);
+		$("#btnDes").attr('disabled', true);
+		console.log(de1+" != "+de2);
 	}
 	
+}
+
+function replay() {
+	$('#btnDes').attr('disabled', false);
+	$('#btnFinTour').attr('disabled', true);
 }
 
 function transition(idCurrentPlayer,posLocal) {
@@ -151,11 +159,4 @@ function WriteAllPlayersPosition(){
 		posJoueur.appendChild(pion);
 
 	}
-}
-
-function replay() {
-
-	$('#btnDes').disabled = false;
-	$('#btnFinTour').disabled = true;
-	
 }
