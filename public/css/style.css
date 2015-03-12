@@ -1,14 +1,18 @@
 html,body{
 	height: 100%;
 	width: 100%;
+
 }
 
 #plateau{
 	margin:auto;
+	float:left ;
+
 }
 
 #plateau * {
 	font-size : 1em;
+
 }
 
 .upgrade{
@@ -16,7 +20,7 @@ html,body{
 	background: rgba(41, 128, 185,1.0);
 	height: 5px;
 	width: 5px;
-	margin: 0 1px;
+	margin: 1px 1px;
 }
 
 .case{
@@ -33,6 +37,7 @@ html,body{
 
 	/* text vertical*/
 	-webkit-writing-mode: vertical-lr;
+
 }
 
 .case-vertical{
@@ -65,25 +70,51 @@ html,body{
 
 
 /* my own things */
-#infoAccount{
-
-	border : 1px solid rgba(0,0,0,1);
-	width: :600px;
-	height: 100px;
-}
-
-.possede{
-	border : 1px solid rgba(0,0,0,1);
-	height: :100px;
-	width: 50px;
-	display: inline-block;
-}
-
 
 #infosPays{
+
+	margin-left: 100px;
 	border : 1px solid rgba(0,0,0,1);
 	height: : 500px;
 	width: 200px;
-	float:right;
+	float:left ;
+}
+
+#infoAccount{
+	margin-top:200px;
+	margin-left: 720px;
+	height: : 500px;
+	width: 500px;
+}
+
+
+#pays {
+	width: :200px;
+	height: 100px;
+}
+
+#cartes {
+	width: :200px;
+	height: 100px;
+}
+
+
+.possede{
+	border : 1px solid rgba(0,0,0,1);
+	display: inline-block;
+	width: 100px;
+	height: :100px;
+}
+
+.hypotheque{
+	background: gray;
+	border : 1px solid rgba(0,0,0,1);
+	display: inline-block;
+	width: 100px;
+	height: :100px;
+}
+
+#actions{
+	margin-top: 200px;
 }
 

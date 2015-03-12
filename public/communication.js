@@ -1,3 +1,4 @@
+
 function finTour(GameID, idCurrentPlayer) {
 
 	document.getElementById("btnFinTour").disabled = true;
@@ -9,16 +10,11 @@ function finTour(GameID, idCurrentPlayer) {
 }
 
 function upgrade(idCurrentPlayer){
-	var idPays = joueurs[idCurrentPlayer];
+	var posPays = joueurs[idCurrentPlayer];
+	var pays = findCountry(posPays);
+	var idPays = pays.idPays;
 	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
-	var pays;
 	// console.log(countries);
-
-	for(var i = 0; i<countries.length; i++) {
-		if(countries[i].Position == idPays) {
-			pays = countries[i];
-		}
-	}
 
 	// console.log(pays);
 
@@ -36,15 +32,12 @@ function upgrade(idCurrentPlayer){
 			return -1;
 		break;
 	}
-	console.log(price);
-	console.log(sentJson.account);
+
 	var r = debit(price);
 	if(r == 0)
 		window.alert(pays.NomPays + " amelioré !");
 	else 
 		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
-
-	console.log(sentJson.account);
 
 	// upgrade of the country
 	sentJson.upgraded.push({
@@ -52,9 +45,9 @@ function upgrade(idCurrentPlayer){
 		'level' : newLvl
 	});
 
-	for(var i = 0; i<localJson[sentJson.id].owns.length; i++) {
-		if(localJson[sentJson.id].owns[i].country == idPays)
-			localJson[sentJson.id].owns[i].level = newLvl;
+	for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
+		if(localJson[idPlayer].owns[i].country == idPays)
+			localJson[idPlayer].owns[i].level = newLvl;
 	}
 
 	updateUpgrades(sentJson.upgraded);
@@ -71,10 +64,15 @@ function getUpByCountry(idCountry) {
 // update UI
 function updateUpgrades(data){
 	for (var i = 0; i < data.length; i++){
-		$('#case'+data[i].country).children('span.upgrade').remove(); // removes all the upgrades in the country
+		// retrieves the position of a country from it's id
+		for ( var iter = 0; iter < countries.length; iter++)
+			if(countries[iter].idPays == data[i].country)
+				var posPays = countries[iter].Position;
+
+		$('#case'+posPays).children('span.upgrade').remove(); // removes all the upgrades in the country
 		// console.log("level : "+data[i].level);
 		for (var y = 0; y < data[i].level; y++) {
-			$('#case'+data[i].country).append('<span class="upgrade"></span>');
+			$('#case'+posPays).append('<span class="upgrade"></span>');
 		}
 	}
 }
@@ -98,8 +96,22 @@ function removeItem(obj, prop, val) {
         }
     }
     if(found){
-        delete obj[c];
+        obj.splice(c,1);
     }
+}
+
+function grade(country, level) {
+
+	for (var i = 0; i < localJson.length; i++)
+		for (var j = 0; j < localJson[idPlayer].owns.length; j++)
+			if (localJson[i].owns[j].country == country) {
+				localJson[i].owns[j].level = level;
+				sentJson.upgraded.push({
+					'country' : localJson[i].owns[j].country,
+					'level'   : 0
+				});
+			}
+
 }
 
 function receiveData(data) {
@@ -143,7 +155,6 @@ function receiveData(data) {
 			if(data.loaned[i].recovered)
 				removeItem(data.loaned,'country',data.loaned[i].country);
 
-	console.log(localJson);
 
 
 
@@ -158,8 +169,16 @@ function receiveData(data) {
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	
 	document.getElementById("btnFinTour").disabled = true;
-	if (nextPlayer != idPlayer) document.getElementById("btnDes").disabled = true;
-	else document.getElementById("btnDes").disabled = false;
+	if (nextPlayer != idPlayer) {
+		document.getElementById("btnDes").disabled = true;
+		document.getElementById("btnUpgrade").disabled = true;
+		document.getElementById("btnFinTour").disabled = true;
+		document.getElementById("btnBuy").disabled = true;
+	} else {
+		document.getElementById("btnDes").disabled = false;
+		document.getElementById("btnFinTour").disabled = false;
+	}
 
 }
+
 

@@ -76,17 +76,7 @@ function inherit(country) {
 
 }
 
-// upgarde or downgrade
-function grade(country, level) {
 
-	sentJson.upgraded.push({
-		"contry": country,
-		"level" : level
-	});
-	
-	return 1;
-
-}
 
 function gameOver() {
 
@@ -97,9 +87,9 @@ function gameOver() {
 }
 
 function buy() {
-
 	// Checks if the player can afford the country
-	var diff = debit(countries[posLocal].Prix);
+	var idPays = findCountry(posLocal).idPays;
+	var diff = debit(countries[idPays].Prix);
 	
 	// Checks if the country can be bought
 	var valid = false;
@@ -112,18 +102,18 @@ function buy() {
 	if ((valid) && (diff == 0)) {
 	
 		localJson[idPlayer].owns.push({
-			'country' : posLocal,
+			'country' : idPays,
 			'level'   : 0
 		});
 		
 		sentJson.bought.push({
-			'country' : posLocal
+			'country' : idPays
 		});
 		
+		getMyInfos();
 		return 0;
 		
-	}
-	else {
+	}else {
 	
 		alert("Vous avez besoin de "+diff+" pour terminer cette action");
 		return 1;
@@ -133,15 +123,17 @@ function buy() {
 }
 
 function sell(idCountry) {
-
 	removeItem(localJson[idPlayer].owns, 'country', idCountry);
+
 	sentJson.sold.push({
 		'country' : idCountry
 	});
-	credit(countries[idCountry].Prix);
-	
+
+	credit(countries[idCountry - 1].Prix); //
+
 	console.log("Player "+idPlayer+" sold country "+idCountry);
-	
+	getMyInfos();
+
 }
 
 function loan(idCountry) {
@@ -154,9 +146,12 @@ function loan(idCountry) {
 		'country'   : idCountry,
 		'recovered' : 0
 	});
-	credit(countries[idCountry].Prix);
+
+	credit(countries[idCountry - 1].Prix);
 	
 	console.log("Player "+idPlayer+" loaned "+idCountry);
+	getMyInfos();
+	$('#btnLoan').disabled = true;
 
 }
 
