@@ -158,8 +158,15 @@ function receiveData(data) {
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	
 	document.getElementById("btnFinTour").disabled = true;
-	if (nextPlayer != idPlayer) document.getElementById("btnDes").disabled = true;
-	else document.getElementById("btnDes").disabled = false;
+	if (nextPlayer != idPlayer) {
+		document.getElementById("btnDes").disabled = true;
+		document.getElementById("btnUpgrade").disabled = true;
+		document.getElementById("btnFinTour").disabled = true;
+		document.getElementById("btnBuy").disabled = true;
+	} else {
+		document.getElementById("btnDes").disabled = false;
+		document.getElementById("btnFinTour").disabled = false;
+	}
 
 }
 
