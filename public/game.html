@@ -189,15 +189,15 @@
 		
 
 		// recupere les information en fonction d'un id
-		function getMyInfos(id){
+		function getMyInfos(){
 			$("#pays").empty();
-			for (var i=0; i < localJson[id].owns.length; i++)
-				$('#pays').append("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
+			for (var i=0; i < localJson[idPlayer].owns.length; i++)
+				$('#pays').append("<div class='possede'>" + getById(localJson[idPlayer].owns[i].country, 'pays') + "</div>");
 			
 
-			for (var i=0; i < localJson[id].cards.length; i++)
-				if (localJson[id].cards[i].card  != undefined)
-					$('#cartes').append("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
+			for (var i=0; i < localJson[idPlayer].cards.length; i++)
+				if (localJson[idPlayer].cards[i].card  != undefined)
+					$('#cartes').append("<div class='possede'>" + localJson[idPlayer].cards[i].card + "</div>");
 
 			$('#credit').after("<p>"+ sentJson.account +"</p>"); 
 
