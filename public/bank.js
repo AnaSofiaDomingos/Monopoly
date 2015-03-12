@@ -9,6 +9,7 @@ function debit(value){
 	}
 }
 
+//idPlayer optional
 function credit(value, idPlayer){
 	//If "idPlayer" is not specified, we credit our own account
 	if(idPlayer == undefined){
