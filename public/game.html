@@ -124,8 +124,12 @@
 			if (owned==false)
 					$('#infosPays').append("<label>Aucun propriétaire</label></br>");
 
-			$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
-			$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
+
+			if (posLocal == position){
+				if (owned == true)
+					$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
+				$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
+			}
 
 		}
 
@@ -192,7 +196,8 @@
 			
 
 			for (var i=0; i < localJson[id].cards.length; i++)
-				$('#cartes').append("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
+				if (localJson[id].cards[i].card  != undefined)
+					$('#cartes').append("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
 
 			$('#credit').after("<p>"+ sentJson.account +"</p>"); 
 
@@ -274,9 +279,12 @@
 		</div>
 
 	</div>
+	</br>
 	<div id='infosPays'>
+		information case
 		</br>
 	</div>
+	</br>
 
 	<div id="infoAccount">
 		<label>PAYS</label>
@@ -290,9 +298,9 @@
 
 		<br/>
 	</div>
-	<br/>
+	</br>
 
-	<div class="actions">
+	<div id="actions">
 		<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
 		<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
 	
