@@ -27,7 +27,6 @@
 				"loans" : [loans]
 		}];
 
-<<<<<<< HEAD
 		var payspossede = [
 			{
 				'idPays' : 24,
@@ -38,11 +37,9 @@
 				'etatAmelioration' : 1
 			}
 		];
-=======
 
 		var idGlobal = Math.floor(Math.random() * 4) + 1;
 		// console.log(idGlobal);
->>>>>>> 3916cf42da0e5372302ca284ee864aacede7334c
 		var data = {
 			'RoomID'  : GameID,
 			'idGlobal' : idGlobal
@@ -138,16 +135,9 @@
 			receiveData(data);
 		});
 
-		
-<<<<<<< HEAD
 	/*	socket.on('robbed', function(sample) {		
 			desherit(sample);
 		});*/
-=======
-		/* socket.on('robbed', function(sample) {		
-			desherit(sample);
-		}); */
->>>>>>> 3916cf42da0e5372302ca284ee864aacede7334c
 
 		socket.on('PlayerNumber',function(idLocal,dataInitGame){
 			idPlayer = idLocal;
