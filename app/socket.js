@@ -129,7 +129,7 @@ module.exports = function(server, connection) {
 		
 		//ROBBED
 		socket.on('robbed', function(sample) {
-			socket.broadcast.to(sample.gameID).('robbed', sample);
+			socket.broadcast.to(sample.gameID).emit('robbed', sample);
 		});
 
 	});
