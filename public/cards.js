@@ -116,7 +116,7 @@ function applyCard(idCard) {
 				nbtour = 2;
 			}
 			break;
-			
+		
 		case 9 :
 		
 			// USA saisissent les ameliorations Moyen-Orient

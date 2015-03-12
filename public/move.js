@@ -99,7 +99,6 @@ function lancerDes(idCurrentPlayer) {
 			sentJson.position = 9;
 			jail_time = 3;
 			break;
-			
 	}
 		
 	sentJson.position = posLocal;
