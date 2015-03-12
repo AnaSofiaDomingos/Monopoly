@@ -76,17 +76,7 @@ function inherit(country) {
 
 }
 
-// upgarde or downgrade
-function grade(country, level) {
 
-	sentJson.upgraded.push({
-		"contry": country,
-		"level" : level
-	});
-	
-	return 1;
-
-}
 
 function gameOver() {
 
@@ -98,7 +88,8 @@ function gameOver() {
 
 function buy() {
 	// Checks if the player can afford the country
-	var diff = debit(countries[posLocal].Prix);
+	var idPays = findCountry(posLocal).idPays;
+	var diff = debit(countries[idPays].Prix);
 	
 	// Checks if the country can be bought
 	var valid = false;
@@ -111,15 +102,15 @@ function buy() {
 	if ((valid) && (diff == 0)) {
 	
 		localJson[idPlayer].owns.push({
-			'country' : posLocal,
+			'country' : idPays,
 			'level'   : 0
 		});
 		
 		sentJson.bought.push({
-			'country' : posLocal
+			'country' : idPays
 		});
 		
-		getInfos();
+		getMyInfos();
 		return 0;
 		
 	}
