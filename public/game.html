@@ -92,6 +92,10 @@
 
 		// affiche les informations de la case apres avoir cliquer dessus
 		function getInfos(position){
+			if (position == 0 | position == 3 | position == 6 | position == 9 | position == 12 | position == 15 |
+				position == 18 | position == 21 | position == 24 | position == 27 | position == 30 | position == 33)
+				return ;
+
 			var level, owned =false;
 			$('#infosPays').empty();
 
@@ -128,9 +132,10 @@
 			if (posLocal == position){
 				if (owned == true)
 					$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
-				$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
+				else
+					$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
 			}
-
+			
 		}
 
 		// place le pays dans les div
@@ -155,7 +160,6 @@
 
 			// coins
 			$('#case0').append("<span class='case'>Depart</span>");
-
 			$('#case9').append("<span class='case'>Prison</span>");
 			$('#case18').append("<span class='case'>Parking</span>");
 			$('#case27').append("<span class='case'>Aller Prison</span>");
@@ -189,15 +193,15 @@
 		
 
 		// recupere les information en fonction d'un id
-		function getMyInfos(){
+		function getMyInfos(id){
 			$("#pays").empty();
-			for (var i=0; i < localJson[idPlayer].owns.length; i++)
-				$('#pays').append("<div class='possede'>" + getById(localJson[idPlayer].owns[i].country, 'pays') + "</div>");
+			for (var i=0; i < localJson[id].owns.length; i++)
+				$('#pays').append("<div class='possede'>" + getById(localJson[id].owns[i].country, 'pays') + "</div>");
 			
 
-			for (var i=0; i < localJson[idPlayer].cards.length; i++)
-				if (localJson[idPlayer].cards[i].card  != undefined)
-					$('#cartes').append("<div class='possede'>" + localJson[idPlayer].cards[i].card + "</div>");
+			for (var i=0; i < localJson[id].cards.length; i++)
+				if (localJson[id].cards[i].card  != undefined)
+					$('#cartes').append("<div class='possede'>" + localJson[id].cards[i].card + "</div>");
 
 			$('#credit').after("<p>"+ sentJson.account +"</p>"); 
 
