@@ -105,6 +105,8 @@ module.exports = function(server, connection) {
 
 		});
 
+		socket.emit('PlayersConnected', (numberOfPlayer+1));
+
 		//END OF TURN
 		socket.on('endofturn',function(data){
 			console.log(data);
