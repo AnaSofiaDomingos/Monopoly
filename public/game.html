@@ -158,17 +158,21 @@
 			$('#infosPays').append("</ul>");
 
 			// affiche les boutons en fonction de la position locale
-			
+			if (posLocal == position){
 				if (mine){
-					if (posLocal == position)
-						$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+
 					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
 					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 				}
-				else if (!owned) 
+				else
 					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
-			
-
+			}else{
+				if(mine){
+					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+				}
+			}
 		}
 
 		// place le pays dans les div
