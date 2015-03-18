@@ -141,11 +141,11 @@ function lancerDes(idCurrentPlayer) {
 function isPossessed(posPays) {
 
 	var country = findCountry(posPays);
-	
-	for(var i=0; i<localJson.owns.length; i++)
-		for(var j=0; j<localJson.owns[i].length; j++)
-			if(locaJson.owns[i].country == country.idPays)
-				return {'idPlayer': i, 'lvl': localJson.owns[i].level };
+	for (var y = 0; y < localJson.length; y++)
+		for(var i=0; i<localJson[y].owns.length; i++)
+			for(var j=0; j<localJson[y].owns[i].length; j++)
+				if(localJson[y].owns[i].country == country.idPays)
+					return {'idPlayer': i, 'lvl': localJson[y].owns[i].level };
 
 	return {'idPlayer':-1, 'lvl':-1};
 }
