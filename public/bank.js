@@ -204,7 +204,7 @@ function recover(idCountry) {
 	}
 	else {
 	
-		alert("Vous avez besoin de "+diff+" pour terminer cette action");
+		console.log("Vous avez besoin de "+diff+" pour terminer cette action");
 		return 1;
 		
 	}
