@@ -102,9 +102,12 @@ function buy() {
 	// Checks if country isn't already bought
 	for(var i = 0; i<localJson.length; i++) {
 		for(var j = 0; j<localJson[i].owns.length;j++) {
-			if(getCountryById(localJson[i].owns[j].country, 'pays').Position == posLocal) {
-				valid = false;
-				break;
+			if(localJson[i].owns[j].country) {
+				var c = getCountryById(localJson[i].owns[j].country); 
+				if(c.Position == posLocal) {
+					valid = false;
+					break;
+				}
 			}
 		}
 	}
