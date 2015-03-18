@@ -75,7 +75,10 @@ function lancerDes(idCurrentPlayer) {
 	}
 	// Special positions
 	switch (posLocal) {
-	
+
+		// Case départ
+		case 0	: break; 
+
 		// Taxes
 		case 3  :
 		case 12 :
@@ -99,6 +102,22 @@ function lancerDes(idCurrentPlayer) {
 			sentJson.position = 9;
 			jail_time = 3;
 			break;
+
+		// Pays
+		default	:
+			var result = isPossessed(posLocal);
+			// Country is possessed			
+			if (result.lvl >= 0)
+				// if not our country
+				if (result.idPlayer != idPlayer)	{
+					var country = findCountry(posLocal);
+					// Price defined by lvl of upgrade
+					var price = 0.2*result.lvl*country.Prix;
+					if (debitObligatoire(price) == 0)
+						credit(price, idPlayer);
+				}
+			break;
+			
 	}
 		
 	sentJson.position = posLocal;
@@ -117,6 +136,18 @@ function lancerDes(idCurrentPlayer) {
 		$("#btnDes").attr('disabled', true);
 	}
 	
+}
+
+function isPossessed(posPays) {
+
+	var country = findCountry(posPays);
+	
+	for(var i=0; i<localJson.owns.length; i++)
+		for(var j=0; j<localJson.owns[i].length; j++)
+			if(locaJson.owns[i].country == country.idPays)
+				return {'idPlayer': i, 'lvl': localJson.owns[i].level };
+
+	return {'idPlayer':-1, 'lvl':-1};
 }
 
 function replay() {
