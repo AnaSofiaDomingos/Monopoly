@@ -216,6 +216,13 @@
 			}*/
 
 		}
+
+		function getCountryById(id) {
+			for (var i=0; i< countries.length; i++){
+					if (countries[i].idPays == id)
+						return countries[i];
+				}
+		}
 		
 
 		// recupere les information en fonction d'un id
@@ -265,7 +272,7 @@
 			}];
 
 			countries = dataInitGame.pays;
-			card = dataInitGame.cartes;
+			cards = dataInitGame.cartes;
  			
 
 			sentJson = {

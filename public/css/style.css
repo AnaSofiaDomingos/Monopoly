@@ -6,14 +6,10 @@ html,body{
 
 #plateau{
 	margin:auto;
-	float:left ;
+	font-size: 0px;
 
 }
 
-#plateau * {
-	font-size : 1em;
-
-}
 
 .upgrade{
 	float: left;
@@ -25,6 +21,8 @@ html,body{
 
 .case{
 	word-wrap: break-word;
+	font-size: 14px;
+	float: left;
 }
 
 .nomPays{display: none;}
