@@ -98,6 +98,7 @@ function buy() {
 			valid = true;
 		if (valid) break;
 	}
+
 	
 	if ((valid) && (diff == 0)) {
 	

@@ -77,7 +77,7 @@ function lancerDes(idCurrentPlayer) {
 	switch (posLocal) {
 	
 		// Taxes
-		case 3  : 
+		case 3  :
 		case 12 :
 		case 21 :
 		case 30 :
