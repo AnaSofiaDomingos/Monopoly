@@ -77,6 +77,10 @@ function updateUpgrades(data){
 	}
 }
 
+function updateOwns(){
+	
+}
+
 function resetSentJson(){
 	sentJson.upgraded = [{}];
 	sentJson.bought = [{}];
@@ -115,12 +119,14 @@ function grade(country, level) {
 }
 
 function receiveData(data) {
- 	console.log(localJson);
-	console.log(data);
+
+	data.bought.splice(0,1);
 
 	// update list of bought countries
 	if(typeof data.bought !== [{}])
-		localJson[data.id].owns.push(data.bought);
+		for (var i = 0; i < data.bought.length; i++)
+			localJson[data.id].owns.push({ 'country' : data.bought[i].country , 'level' : 0}); // level is always = 0 when just bought
+
 
 	// update list of sold countries
 	if(typeof data.sold !== [{}])
@@ -131,7 +137,7 @@ function receiveData(data) {
 	if(typeof data.drew !== [{}])
 		localJson[data.id].cards.push(data.drew);
 
-	// update list of bought countries
+	// update list of owned cards
 	if(typeof data.used !== [{}])
 		for(i = 0; i < data.used.length; i++)
 			removeItem(countries.results,'card',data.used[i].card);
@@ -147,7 +153,7 @@ function receiveData(data) {
 	if(typeof data.loaned !== [{}])
 		for (i = 0; i < data.loaned.length; i++)
 			if(!data.loaned[i].recovered)
-				localJson[data.id].loans.push(data.loaned); 
+				localJson[data.id].loans.push(data.loaned);
 
 	// update list of bought countries
 	if(typeof data.loaned !== [{}])
@@ -155,16 +161,13 @@ function receiveData(data) {
 			if(data.loaned[i].recovered)
 				removeItem(data.loaned,'country',data.loaned[i].country);
 
-
-
-
-	// localJson[data.id]
 	PlayerPos = data.position;
 	transition(data.id,PlayerPos);
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
 
 	updateUpgrades(data.upgraded);
+	updateOwns();
 
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	

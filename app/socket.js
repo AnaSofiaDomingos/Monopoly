@@ -26,29 +26,21 @@ module.exports = function(server, connection) {
 
 
 			"bought": [{
-				'country' : ""
 			}],
 
 			"upgraded": [{
-				"country": "",
-				"level": ""
 			}],
 
 			"sold": [{
-				"country": ""
 			}],
 
 			"loaned": [{
-				"country": "",
-				"recovered": ""
 			}],
 
 			"drew": [{
-				"card": ""
 			}],
 
 			"used": [{
-				'card' : ""
 			}],
 
 		};

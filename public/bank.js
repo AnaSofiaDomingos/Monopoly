@@ -123,6 +123,8 @@ function buy() {
 			sentJson.bought.push({
 				'country' : idPays
 			});
+			console.log(" -- sentJSON --");
+			console.log(sentJson.bought);
 			$("#btnBuy").hide();
 			getMyInfos();
 			return 0;
