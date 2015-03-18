@@ -128,7 +128,7 @@
 			for (var i=0; i<localJson[idPlayer].owns.length;i++){
 				if (localJson[idPlayer].owns[i].country == idpays){
 					level = true;
-					$('#infosPays ul').append("<li class='titre-infopays'>lvl " + localJson[idPlayer].owns[i].level + " </li>"); 
+					$('#infosPays ul').append("<li class='data-infopays'>lvl " + localJson[idPlayer].owns[i].level + " </li>"); 
 				}
 			}
 
@@ -144,30 +144,35 @@
 						owned = true;
 						if(i == idPlayer)
 							mine = true;
-						$('#infosPays ul').append("<li class='titre-infopays'>Propriétaire " + i + "</li>");
+						$('#infosPays ul').append("<li class='data-infopays'>Propriétaire " + i + "</li>");
 					}
 				}
 			}
 
 			if (owned==false){
-				$('#infosPays ul').append("<li class='titre-infopays'>Aucun propriétaire</li>");
+				$('#infosPays ul').append("<li class='data-infopays'>Aucun propriétaire</li>");
 
 				// affiche le prix du pays si personne ne l'a acheter
-				$('#infosPays ul').append("<li class='titre-infopays'>Prix</li>");
-				$('#infosPays ul').append("<li class='data-infopays'> " + country.Prix + " millons </li>");
+				$('#infosPays ul').append("<li class='data-infopays'>Prix " + country.Prix + " millions</li>");
 			}
 			$('#infosPays').append("</ul>");
 
-
 			// affiche les boutons en fonction de la position locale
+			
+
 			if (posLocal == position){
 				if (mine){
-					$('#infosPays').append('<input id="btnUpgrade" type="button" value="améliorer" onclick="upgrade(idPlayer)" />');
-					$('#infosPays').append('<input class="btnSell" type="button" value="vendre" onclick="sell(idpays)" />');
-					$('#infosPays').append('<input class="btnLoan" type="button" value="hypothéquer" onclick="loan(idpays)" />');
+					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 				}
 				else
-					$('#infosPays').append('<input id="btnBuy" type="button" value="Acheter" onclick="buy()" />');
+					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
+			}else{
+				if(mine){
+					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+				}
 			}
 
 		}
@@ -186,7 +191,7 @@
 			$('#case21').append("<span class='case'>Taxes</span>");
 			$('#case30').append("<span class='case'>Taxes</span>");
 
-			// cartes 
+			// cartes
 			$('#case6').append("<span class='case'>Carte</span>");
 			$('#case15').append("<span class='case'>Carte</span>");
 			$('#case24').append("<span class='case'>Carte</span>");
@@ -217,9 +222,10 @@
 						return countries[i].NomPays;
 				}
 			}
+
 			/*else if (table == 'carte') {
 				for (var i=0; i< carte.length; i++){
-					
+
 				}
 			}*/
 
@@ -231,36 +237,37 @@
 						return countries[i];
 				}
 		}
-		
+
 
 		// recupere les information en fonction d'un id
 		function getMyInfos(){
 			$("#pays").empty();
+			$('#pays').append('<li class="titre-infopays capitalize">pays</li>');
 			$("#cartes").empty();
+			$('#cartes').append('<li class="titre-infopays capitalize">cartes</li>');
 			$("#credit").empty();
 
 
 			// liste les owns
 			for (var i=0; i < localJson[idPlayer].owns.length; i++){
 				var nom = getById(localJson[idPlayer].owns[i].country, 'pays');
-				$('#pays').append("<div class='possede' onclick='getInfos(-1,"+ localJson[idPlayer].owns[i].country+")' >" + nom + "</div>");
+				$('#pays').append("<li class='data-infopays' onclick='getInfos(-1,"+ localJson[idPlayer].owns[i].country+")' >" + nom + "</li>");
 			}
-			$('#pays').append("</br>");
 
 			// liste les loans
 			for (var i=0; i < localJson[idPlayer].loans.length; i++){
 				if (localJson[idPlayer].loans[i].country  != undefined){
 					var nom = getById(localJson[idPlayer].loans[i].country, 'pays');
-					$('#pays').append("<div class='hypotheque'>" + nom + "</div>");
+					$('#pays').append("<li class='data-infopays hypotheque'>" + nom + "</li>");
 				}
 			}
-			
+
 			// liste le cartes
 			for (var i=0; i < localJson[idPlayer].cards.length; i++)
 				if (localJson[idPlayer].cards[i].card  != undefined)
-					$('#cartes').append("<div class='possede'>" + localJson[idPlayer].cards[i].card + "</div>");
+					$('#cartes').append("<li class='data-infopays'>" + localJson[idPlayer].cards[i].card + "</li>");
 
-			$('#credit').append("<p>"+ sentJson.account +"</p>"); 
+			$('#credit').append("solde "+ sentJson.account); 
 
 		}
 
@@ -282,7 +289,7 @@
 
 			countries = dataInitGame.pays;
 			cards = dataInitGame.cartes;
- 			
+
 
 			sentJson = {
 				"id": idPlayer,
@@ -342,27 +349,32 @@
 
 	</div>
 
-	<div id='infosPays' class="empty">
+	<div id='infosPays' class="empty game-infos">
 	</div>
 
 
-	<div id="infoAccount">
-		<label>PAYS</label>
-		<div id="pays"></div>
-
-		<label >CARTES</label>
-		<div id="cartes"></div>
-
-		<label>CREDIT</label>
-		<div id="credit"></div>
+	<div id="infoAccount" class="game-infos capitalize" >
+		<h2>infos compte</h2>
+		<ul>
+			<li>
+				<ul id="pays">
+					<li class="titre-infopays capitalize">pays</li>
+				</ul>
+			</li>
+			<li>
+				<ul id="cartes">
+					<li class="titre-infopays capitalize">cartes</li>
+				</ul>
+			</li>
+			<li class="data-infopays padding capitalize" id="credit">solde : </li>
+		</ul>
 
 	</div>
 
 
-	<div id="actions">
-		<input id="btnDes" type="button" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
-		<input id="btnFinTour" type="button" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
-	
+	<div id="actions" class="game-infos">
+		<input id="btnDes" type="button" class="half" value="Lancer les dés" onclick="lancerDes(idPlayer)" />
+		<input id="btnFinTour" type="button" class="half" value="Fin du tour" onclick="finTour(GameID,idPlayer)" />
 	</div>
 
 </body>

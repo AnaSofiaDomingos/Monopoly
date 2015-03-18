@@ -12,9 +12,6 @@
 
 }
 
-
-
-
 @font-face {
     font-family: 'robotolight';
     src: url('../fonts/Roboto-Light-webfont.eot');
@@ -27,9 +24,6 @@
     font-style: normal;
 
 }
-
-
-
 
 @font-face {
     font-family: 'robotoregular';
@@ -77,7 +71,7 @@ html,body{
 .case-horizontal{
 	width: 50px;
 	height: 100px;
-	border: 1px solid rgba(0,0,0,1);
+	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
 
 	/* text vertical*/
@@ -88,13 +82,13 @@ html,body{
 .case-vertical{
 	width: 100px;
 	height: 50px;
-	border: 1px solid rgba(0,0,0,1);
+	border: 1px solid rgba(33,33,33,1);
 
 }
 .case-coin{
 	width: 100px;
 	height: 100px;
-	border: 1px solid rgba(0,0,0,1);
+	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
 }
 
@@ -116,16 +110,18 @@ html,body{
 
 /* my own things */
 
-#infosPays{
-  min-height: 500px;
-  width: 200px;
+.game-infos{
+  width: 250px;
   top: 2em;
   float: right;
-  right: 2em;border: 1px solid black;
+  right: 2em;
+  border: 1px solid rgba(33,33,33,1);
   position: absolute;
+  transition: 1s ease-out;
+  -webkit-transition: 1s ease-out;
 }
 
-#infosPays h2{
+.game-infos h2{
 	display: block;
 	background-color: #303F9F;
 	color: rgba(255,255,255,1);
@@ -134,56 +130,70 @@ html,body{
 	padding: 1em;
 	margin:0;
 }
-
-#infosPays ul, #infosPays li{display: block;width:100%; box-sizing : border-box;padding:0;margin:0;}
-#infosPays li{padding: 1em 0;margin:0;}
-#infosPays .titre-infopays{
+.capitalize{text-transform: capitalize;}
+.game-infos ul, .game-infos li{display: block;width:100%; box-sizing : border-box;padding:0;margin:0;}
+.game-infos li{padding: 1em 0;margin:0;}
+.game-infos .data-infopays{
 	text-align: left;
 	padding-left: 1em;
-	background-color: #FFC107;
+	border-bottom: 1px solid #B6B6B6;
 
 }
-#infosPays .data-infopays{
+.game-infos .titre-infopays{
+	display: block;
+	background-color : #FFC107;
+	color: rgba(33,33,33,1);
+	text-align:center;
+}
+.game-infos input{
+	padding:1em;
+	margin:0;
+	display: inline-block;
+	border: 0;
+	height: 50px;
+	background-color: #FFC107;
+	color: rgba(33,33,33,1);
+	transition: .5s ease-out;
+	-webkit-transition: .5s ease-out;
+}
+#infoAccount li {padding: 0;}
+#infoAccount ul#pays li, #infoAccount ul#cartes li, #infoAccount ul#credit li {padding: 1em;}
+.padding{padding: 1em!important;}
+.game-infos .full{
+	width:100%;
 	text-align: center;
 }
-
-.empty{background: rgba(33,33,33,.7);}
-
+.game-infos .third{
+	width: 33.3%;
+}
+.game-infos .half {width : 50%;}
+.game-infos .third:last-of-type{
+	border-right: 0px;
+}
+.game-infos input:hover{cursor: pointer;}
+.empty{background: rgba(33,33,33,.7);height: 200px;}
+.game-infos input:disabled{
+	background-color:#727272;
+	cursor: auto;
+}
 #infoAccount{
-	margin-top:200px;
-	margin-left: 720px;
-	height: : 500px;
-	width: 500px;
-}
-
-
-#pays {
-	width: :200px;
-	height: 100px;
-}
-
-#cartes {
-	width: :200px;
-	height: 100px;
-}
-
-
-.possede{
-	border : 1px solid rgba(0,0,0,1);
-	display: inline-block;
-	width: 100px;
-	height: :100px;
+	float: left;
+	position: absolute;
+	left: 2em;
+	top: 2em;
+	width: 300px;
 }
 
 .hypotheque{
-	background: gray;
-	border : 1px solid rgba(0,0,0,1);
-	display: inline-block;
-	width: 100px;
-	height: :100px;
+	background: #727272;
 }
 
 #actions{
-	margin-top: 200px;
+	position: absolute;
+	float:right;
+	right: 33px;
+	font-size: 0;
+	top: 280px;
+	width: 250px;
 }
 
