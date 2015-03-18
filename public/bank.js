@@ -99,72 +99,87 @@ function buy() {
 		if (valid) break;
 	}
 
-	// Checks if country isn't already bought
-	for(var i = 0; i<localJson.length; i++) {
-		for(var j = 0; j<localJson[i].owns.length;j++) {
-			if(localJson[i].owns[j].country) {
-				var c = getCountryById(localJson[i].owns[j].country); 
-				if(c.Position == posLocal) {
-					valid = false;
-					break;
+	if(diff == 0) {
+		// Checks if country isn't already bought
+		for(var i = 0; i<localJson.length; i++) {
+			for(var j = 0; j<localJson[i].owns.length;j++) {
+				if(localJson[i].owns[j].country) {
+					var c = getCountryById(localJson[i].owns[j].country); 
+					if(c.Position == posLocal) {
+						valid = false;
+						break;
+					}
 				}
 			}
 		}
-	}
-	
-	if ((valid) && (diff == 0)) {
-	
-		localJson[idPlayer].owns.push({
-			'country' : idPays,
-			'level'   : 0
-		});
 		
-		sentJson.bought.push({
-			'country' : idPays
-		});
+		if (valid) {
 		
-		getMyInfos();
-		return 0;
-		
-	}else {
-	
-		alert("Vous avez besoin de "+diff+" pour terminer cette action");
+			localJson[idPlayer].owns.push({
+				'country' : idPays,
+				'level'   : 0
+			});
+			
+			sentJson.bought.push({
+				'country' : idPays
+			});
+			$("#btnBuy").hide();
+			getMyInfos();
+			return 0;
+			
+		}else {
+			console.log("You can't buy this country");	
+		}
+	} else {
+		console.log("You don't have enough money ("+diff+")");
 		return 1;
-		
 	}
-
 }
 
 function sell(idCountry) {
-	removeItem(localJson[idPlayer].owns, 'country', idCountry);
 
-	sentJson.sold.push({
-		'country' : idCountry
-	});
+	var valid = checkActionAvailable(idCountry);
 
-	credit(countries[idCountry - 1].Prix); //
 
-	console.log("Player "+idPlayer+" sold country "+idCountry);
-	getMyInfos();
+	if(valid) {
+		removeItem(localJson[idPlayer].owns, 'country', idCountry);
+
+		sentJson.sold.push({
+			'country' : idCountry
+		});
+
+		credit(countries[idCountry - 1].Prix); //
+
+		console.log("Player "+idPlayer+" sold country "+idCountry);
+		getMyInfos();
+	} else {
+		console.log("You can't sell this country, you little hacker");
+	}
 
 }
 
 function loan(idCountry) {
 
-	removeItem(localJson[idPlayer].owns, 'country', idCountry);
-	localJson[idPlayer].loans.push({
-		'country' : idCountry
-	});
-	sentJson.loaned.push({
-		'country'   : idCountry,
-		'recovered' : 0
-	});
+	var valid = checkActionAvailable(idCountry);
 
-	credit(countries[idCountry - 1].Prix);
-	
-	console.log("Player "+idPlayer+" loaned "+idCountry);
-	getMyInfos();
-	$('#btnLoan').disabled = true;
+	if(valid) {
+		removeItem(localJson[idPlayer].owns, 'country', idCountry);
+		localJson[idPlayer].loans.push({
+			'country' : idCountry
+		});
+		sentJson.loaned.push({
+			'country'   : idCountry,
+			'recovered' : 0
+		});
+
+		credit(countries[idCountry - 1].Prix);
+		
+		console.log("Player "+idPlayer+" loaned "+idCountry);
+		getMyInfos();
+		$('#btnLoan').disabled = true;
+	} else {
+		console.log("You can't loan this country, you little hacker");
+	}
 
 }
 
@@ -194,4 +209,16 @@ function recover(idCountry) {
 		
 	}
 
+}
+
+function checkActionAvailable(id) {
+	for(var j = 0; j<localJson[sentJson.id].owns.length;j++) {
+		if(localJson[sentJson.id].owns[j].country) {
+			var c = getCountryById(localJson[sentJson.id].owns[j].country); 
+			if(c.idPays == idCountry) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
