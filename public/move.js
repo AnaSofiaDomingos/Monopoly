@@ -24,6 +24,7 @@ function init(idPlayer) {
 	}
 
 	$('#btnUpgrade').attr("disabled", "true");
+	$('#btnFinTour').attr("disabled", "true");
 	checkUpgradeAvailible();
 	
 	WriteAllPlayersPosition();
@@ -32,10 +33,7 @@ function init(idPlayer) {
 // check if btn upgrade should be enabled or not
 function checkUpgradeAvailible(){
 	for (var property in localJson[sentJson.id].owns){
-		// console.log("-"+property);
-		console.log(localJson[sentJson.id].owns.length);
 		for (var property = 0; property < localJson[sentJson.id].owns.length; property++){
-			console.log("- "+property + " -> " + localJson[sentJson.id].owns[property].country);
 			if(localJson[sentJson.id].owns[property].country == posLocal){ // enables the btn
 				$('#btnUpgrade').removeAttr("disabled");
 				break;
@@ -52,8 +50,8 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = Math.floor((Math.random() * 6) + 1);
-	var de2 = Math.floor((Math.random() * 6) + 1);
+	var de1 = 2;// Math.floor((Math.random() * 6) + 1);
+	var de2 = 2;// Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
@@ -84,8 +82,10 @@ function lancerDes(idCurrentPlayer) {
 		case 12 :
 		case 21 :
 		case 30 :
-			if (debitObligatoire(TAXES) == 0)
+			if (debit(TAXES) == 0) {
+				getMyInfos();
 				console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
+			}
 			break;
 			
 		// Cartes
@@ -132,8 +132,8 @@ function lancerDes(idCurrentPlayer) {
 	if (de1 == de2)
 		replay(); 
 	else {
-		$('#btnFinTour').attr('disabled', false);
-		$("#btnDes").attr('disabled', true);
+		$('#btnFinTour').removeAttr("disabled");
+		$("#btnDes").attr("disabled", "true");
 	}
 	
 }
@@ -151,14 +151,14 @@ function isPossessed(posPays) {
 }
 
 function replay() {
-	$('#btnDes').attr('disabled', false);
-	$('#btnFinTour').attr('disabled', true);
+	$('#btnDes').removeAttr('disabled');
+	$('#btnFinTour').attr('disabled', 'true');
 }
 
 function transition(idCurrentPlayer,posLocal) {
 	setTimeout(function() {
 		var oldPos = joueurs[idCurrentPlayer];
-		console.log(joueurs);
+		// console.log(joueurs);
 		joueurs[idCurrentPlayer] = (joueurs[idCurrentPlayer]+1)%taillePlateau;
 		WritePlayerAtPosition(idCurrentPlayer,oldPos, joueurs[idCurrentPlayer]);
 
