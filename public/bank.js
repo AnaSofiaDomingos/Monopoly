@@ -29,7 +29,11 @@ function credit(value, idPlayer){
 		sentJson.account += value;
 	}else{
 		//Else we put it in the "paid" field of the json
-		sentJson.paid[idPlayer].amount = value;
+		// sentJson.paid.amount = value;
+		sentJson.paid.push({
+			'amount' : value,
+			'player' : idPlayer
+		});
 	}
 }
 
@@ -89,6 +93,10 @@ function gameOver() {
 function buy() {
 	// Checks if the player can afford the country
 	var idPays = findCountry(posLocal).idPays;
+	
+	if(!idPays) 
+		return -1;
+
 	var diff = debit(countries[idPays].Prix);
 	
 	// Checks if the country can be bought
@@ -154,6 +162,8 @@ function sell(idCountry) {
 
 		console.log("Player "+idPlayer+" sold country "+idCountry);
 		getMyInfos();
+		$(".btnSell").hide();
+		$(".btnLoan").hide();
 	} else {
 		console.log("You can't sell this country, you little hacker");
 	}
@@ -178,7 +188,6 @@ function loan(idCountry) {
 		
 		console.log("Player "+idPlayer+" loaned "+idCountry);
 		getMyInfos();
-		$('#btnLoan').disabled = true;
 	} else {
 		console.log("You can't loan this country, you little hacker");
 	}
@@ -217,7 +226,7 @@ function checkActionAvailable(id) {
 	for(var j = 0; j<localJson[sentJson.id].owns.length;j++) {
 		if(localJson[sentJson.id].owns[j].country) {
 			var c = getCountryById(localJson[sentJson.id].owns[j].country); 
-			if(c.idPays == idCountry) {
+			if(c.idPays == id) {
 				return true;
 			}
 		}
