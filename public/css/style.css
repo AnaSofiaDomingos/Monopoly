@@ -63,6 +63,7 @@ html,body{
 	word-wrap: break-word;
 	font-size: 14px;
 	float: left;
+	text-align: center;
 }
 .case-horizontal:hover,.case-vertical:hover{cursor: pointer;}
 
@@ -71,6 +72,7 @@ html,body{
 .case-horizontal{
 	width: 50px;
 	height: 100px;
+	line-height: 50px;
 	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
 
@@ -83,18 +85,22 @@ html,body{
 	width: 100px;
 	height: 50px;
 	border: 1px solid rgba(33,33,33,1);
+	line-height: 50px;
+	text-align: center;
 
 }
 .case-coin{
 	width: 100px;
 	height: 100px;
+	line-height: 100px;
 	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
+	text-align: center;
 }
 
 #case0{
-	background: #795548;
-
+	line-height: 100px;
+	background: #C5CAE9;
 }
 
 #europe,#asie, #case-centrale{
@@ -102,9 +108,9 @@ html,body{
 }
 
 #case-centrale{
-	background: #795548;
+	background: #C5CAE9;
 	width: 415px;
-	height: 350px;
+	height: 416px;
 }
 
 
