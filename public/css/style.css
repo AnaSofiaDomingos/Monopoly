@@ -1,13 +1,59 @@
+
+@font-face {
+    font-family: 'robotobold';
+    src: url('../fonts/Roboto-Bold-webfont.eot');
+    src: url('../fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Roboto-Bold-webfont.woff2') format('woff2'),
+         url('../fonts/Roboto-Bold-webfont.woff') format('woff'),
+         url('../fonts/Roboto-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'robotolight';
+    src: url('../fonts/Roboto-Light-webfont.eot');
+    src: url('../fonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Roboto-Light-webfont.woff2') format('woff2'),
+         url('../fonts/Roboto-Light-webfont.woff') format('woff'),
+         url('../fonts/Roboto-Light-webfont.ttf') format('truetype'),
+         url('../fonts/Roboto-Light-webfont.svg#robotolight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/Roboto-Regular-webfont.eot');
+    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Roboto-Regular-webfont.woff2') format('woff2'),
+         url('../fonts/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html,body{
 	height: 100%;
 	width: 100%;
+	font-family: robotoregular;
 
 }
 
 #plateau{
-	margin:auto;
+	text-align: center;
 	font-size: 0px;
-
 }
 
 
@@ -24,6 +70,7 @@ html,body{
 	font-size: 14px;
 	float: left;
 }
+.case-horizontal:hover,.case-vertical:hover{cursor: pointer;}
 
 .nomPays{display: none;}
 
@@ -64,19 +111,43 @@ html,body{
 	background: #795548;
 	width: 415px;
 	height: 350px;
-}	
+}
 
 
 /* my own things */
 
 #infosPays{
-
-	margin-left: 100px;
-	border : 1px solid rgba(0,0,0,1);
-	height: : 500px;
-	width: 200px;
-	float:left ;
+  min-height: 500px;
+  width: 200px;
+  top: 2em;
+  float: right;
+  right: 2em;border: 1px solid black;
+  position: absolute;
 }
+
+#infosPays h2{
+	display: block;
+	background-color: #303F9F;
+	color: rgba(255,255,255,1);
+	text-align: center;
+	top:0px;
+	padding: 1em;
+	margin:0;
+}
+
+#infosPays ul, #infosPays li{display: block;width:100%; box-sizing : border-box;padding:0;margin:0;}
+#infosPays li{padding: 1em 0;margin:0;}
+#infosPays .titre-infopays{
+	text-align: left;
+	padding-left: 1em;
+	background-color: #FFC107;
+
+}
+#infosPays .data-infopays{
+	text-align: center;
+}
+
+.empty{background: rgba(33,33,33,.7);}
 
 #infoAccount{
 	margin-top:200px;
