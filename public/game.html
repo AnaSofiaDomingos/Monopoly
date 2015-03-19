@@ -158,15 +158,22 @@
 			$('#infosPays').append("</ul>");
 
 			// affiche les boutons en fonction de la position locale
+			console.log(posLocal);
+
+			console.log(position);
 			if (posLocal == position){
 				if (mine){
 					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-
 					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
 					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 				}
 				else
 					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
+			}else if ((position == -1) && (findCountry(posLocal).idPays == idpays) && mine){
+					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+				
 			}else{
 				if(mine){
 					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
