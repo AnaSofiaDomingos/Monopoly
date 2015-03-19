@@ -17,7 +17,7 @@ function getInfos(position, pays){
 		position == 18 | position == 21 | position == 24 | position == 27 | position == 30 | position == 33)
 		return ;
 
-	var level, owned =false;
+	var level, owned = false, loaned = false;
 	var idpays, country;
 	$('#infosPays').empty();
 
@@ -60,6 +60,14 @@ function getInfos(position, pays){
 				$('#infosPays ul').append("<li class='data-infopays'>Propriétaire " + i + "</li>");
 			}
 		}
+		for (var j=0; j<localJson[i].loans.length;j++){
+			if (localJson[i].loans[j].country == idpays){
+				loaned = true;
+				if(i == idPlayer)
+					mine = true;
+				$('#infosPays ul').append("<li class='data-infopays'>Propriétaire " + i + "</li>");
+			}
+		}
 	}
 
 	if (owned==false){
@@ -72,24 +80,30 @@ function getInfos(position, pays){
 
 	// affiche les boutons en fonction de la position locale
 	currentPlayer = ((sentJson.id)%nbJoueurs);
-	if (posLocal == position){
-		if (mine && (idPlayer == currentPlayer)){
-			$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-			$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
-			$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
-		}
-		else
-			$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
-	}else if ((position == -1) && (findCountry(posLocal).idPays == idpays) && mine && (idPlayer == currentPlayer)){
-			$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-			$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
-			$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+	var myturn = (idPlayer == currentPlayer);
+	if (!waiting) {
+		if (posLocal == position) 	{
+			if (mine && myturn){
+				$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+				$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+				$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+			}
+			else if (mine && loaned)
+				$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+			else
+				$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
+		}else if ((position == -1) && (findCountry(posLocal).idPays == idpays) && mine && myturn){
+				$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+				$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+				$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 
-	}else{
-		if(mine && (idPlayer == currentPlayer)){
-			$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
-			$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+		}else{
+			if (mine && myturn){
+				$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+				$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+			}
 		}
+		
 	}
 }
 

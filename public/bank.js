@@ -205,6 +205,8 @@ function buy() {
 			});
 			console.log(" -- sentJSON --");
 			console.log(sentJson.bought);
+			// To prevent from sell/upgrade/loan for 1 turn
+			waiting = true;
 			$("#btnBuy").hide();
 			getMyInfos();
 			return 0;
