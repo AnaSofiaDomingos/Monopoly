@@ -166,8 +166,9 @@ function sell(idCountry) {
 
 		console.log("Player "+idPlayer+" sold country "+idCountry);
 		getMyInfos();
-		$(".btnSell").hide();
-		$(".btnLoan").hide();
+		$("#btnSell").hide();
+		$("#btnLoan").hide();
+		$("#btnUpgrade").hide();
 	} else {
 		console.log("You can't sell this country, you little hacker");
 	}
