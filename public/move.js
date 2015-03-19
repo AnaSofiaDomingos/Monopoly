@@ -1,5 +1,5 @@
 var taillePlateau = 36;
-var nbJoueurs = 2;
+var nbJoueurs;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0];
 var posLocal = 0;
