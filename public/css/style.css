@@ -72,7 +72,6 @@ html,body{
 .case-horizontal{
 	width: 50px;
 	height: 100px;
-	line-height: 50px;
 	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
 
@@ -85,21 +84,18 @@ html,body{
 	width: 100px;
 	height: 50px;
 	border: 1px solid rgba(33,33,33,1);
-	line-height: 50px;
 	text-align: center;
 
 }
 .case-coin{
 	width: 100px;
 	height: 100px;
-	line-height: 100px;
 	border: 1px solid rgba(33,33,33,1);
 	display: inline-block;
 	text-align: center;
 }
 
 #case0{
-	line-height: 100px;
 	background: #C5CAE9;
 }
 
@@ -162,7 +158,11 @@ html,body{
 	transition: .5s ease-out;
 	-webkit-transition: .5s ease-out;
 }
+#infoSolde {float: left; left: 2em; top: 2em;width: 300px;}
 #infoAccount li {padding: 0;}
+#infoSolde .data-infopays{border-bottom: 0;}
+#infoSolde span { display: block; width: 100%; padding: 1em;}
+#infoAccount .data-infopays:hover{cursor: pointer;}
 #infoAccount ul#pays li, #infoAccount ul#cartes li, #infoAccount ul#credit li {padding: 1em;}
 .padding{padding: 1em!important;}
 .game-infos .full{
@@ -186,7 +186,7 @@ html,body{
 	float: left;
 	position: absolute;
 	left: 2em;
-	top: 2em;
+	top: 12em;
 	width: 300px;
 }
 

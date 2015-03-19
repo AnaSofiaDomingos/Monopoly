@@ -85,6 +85,10 @@ function inherit(country) {
 function gameOver() {
 
 	window.alert("Player "+id+" out of the game");
+	localJson[idPlayer].owns = [{}];
+	localJson[idPlayer].loans = [{}];
+	localJson[idPlayer].cards = [{}];
+
 	sentJson.state = -1;
 	return -1;
 	
@@ -162,8 +166,9 @@ function sell(idCountry) {
 
 		console.log("Player "+idPlayer+" sold country "+idCountry);
 		getMyInfos();
-		$(".btnSell").hide();
-		$(".btnLoan").hide();
+		$("#btnSell").hide();
+		$("#btnLoan").hide();
+		$("#btnUpgrade").hide();
 	} else {
 		console.log("You can't sell this country, you little hacker");
 	}
