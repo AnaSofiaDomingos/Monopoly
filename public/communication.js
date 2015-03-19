@@ -7,6 +7,7 @@ function finTour(GameID, idCurrentPlayer) {
 	// Send data
 	socket.emit('endofturn',sentJson);
 	resetSentJson();
+	RemoveInfos();
 }
 
 function upgrade(idCurrentPlayer){
@@ -163,7 +164,6 @@ function receiveData(data) {
 
 
 	updateUpgrades(data.upgraded);
-	updateOwns();
 
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	
@@ -176,6 +176,8 @@ function receiveData(data) {
 	} else {
 		document.getElementById("btnDes").disabled = false;
 		document.getElementById("btnFinTour").disabled = false;
+		myTurn = true;
+		waiting = false;
 	}
 
 }

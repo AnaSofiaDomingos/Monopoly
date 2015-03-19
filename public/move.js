@@ -7,6 +7,7 @@ var posLocal = 0;
 function init(idPlayer) {
 	// console.log(idPlayer);
 	// console.log(idPlayer > 0);
+	myTurn = true;
 	if(idPlayer > 0) {
 		document.getElementById("btnFinTour").disabled = true;
 		document.getElementById("btnDes").disabled = true;

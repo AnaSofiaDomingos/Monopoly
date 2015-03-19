@@ -1,3 +1,5 @@
+var myTurn;
+
 // fonction permettant de construire les cases de chaque pays et carte
 function constructionCase(typecase, id, sens, parent ){
 	if (sens == 1)
@@ -14,8 +16,10 @@ function getInfos(position, pays){
 	$('#infosPays').removeClass("empty");
 	// empeche le click des cases spéciales
 	if (position == 0 | position == 3 | position == 6 | position == 9 | position == 12 | position == 15 |
-		position == 18 | position == 21 | position == 24 | position == 27 | position == 30 | position == 33)
+		position == 18 | position == 21 | position == 24 | position == 27 | position == 30 | position == 33){
+		RemoveInfos();
 		return ;
+	}
 
 	var level, owned = false, loaned = false;
 	var idpays, country;
@@ -79,31 +83,36 @@ function getInfos(position, pays){
 	$('#infosPays').append("</ul>");
 
 	// affiche les boutons en fonction de la position locale
-	currentPlayer = ((sentJson.id)%nbJoueurs);
-	var myturn = (idPlayer == currentPlayer);
+	console.log(waiting);
 	if (!waiting) {
-		if (posLocal == position) 	{
-			if (mine && myturn){
-				$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-				$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
-				$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
-			}
-			else if (mine && loaned)
-				$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
-			else
-				$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
-		}else if ((position == -1) && (findCountry(posLocal).idPays == idpays) && mine && myturn){
-				$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-				$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
-				$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+		if (myTurn){
+			console.log(position);
+			if (posLocal == position){
+				if (mine){
+					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+				}
+				else if (mine && loaned)
+					$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+				else
+					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
+			}else if ((position == -1) && mine){
+				for (var i=0; i<localJson[idPlayer].owns.length;i++){
+					if (localJson[idPlayer].owns[i].country == idpays){
+						$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+						$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 
-		}else{
-			if (mine && myturn){
-				$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
-				$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+					}
+				}
+				
+			}else{
+				if (mine){
+					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+					$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+				}
 			}
 		}
-		
 	}
 }
 
@@ -202,4 +211,11 @@ function getMyInfos(){
 
 	$('#credit').append(sentJson.account.toFixed(4)+"M");
 
+}
+
+
+function RemoveInfos(){
+	$('#infosPays').empty();
+	$('#infosPays').addClass("empty");
+	myTurn = false;
 }
