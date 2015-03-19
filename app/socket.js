@@ -69,12 +69,19 @@ module.exports = function(server, connection) {
 		});
 	}
 
+	function getNbPlayers(idPartie, callback){
+		connection.query('SELECT nbJoueurs FROM parties WHERE idPartie = ' +idPartie, function(err, rows, fields) {
+			if (err) throw err;
+			callback(rows[0]["nbJoueurs"]);
+		});
+	}
+
 	var io = require('socket.io')(server);
 	var nsp = io.of('/subscribe');
 	var roomsTable = [];
 	var numberOfPlayer = 0;
 
-	function test(RoomID){
+	function getNbPlayersInRoom(RoomID){
 		var compteur = -1;
 		for (var socket in io.nsps['/subscribe'].adapter.rooms[RoomID] )
 			compteur++;
@@ -88,14 +95,22 @@ module.exports = function(server, connection) {
 			socket.join(data.RoomID);
 			console.log('user joined the room ' + data.RoomID);
 			roomsTable.push(data.RoomID);
-			numberOfPlayer = test(data.RoomID);
+			numberOfPlayer = getNbPlayersInRoom(data.RoomID);
 
-			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
-				if(cpt == 3)
-					socket.emit('PlayerNumber',numberOfPlayer, dataInitGame);
+			getNbPlayers(data.RoomID, function(nbplayer){
+				socket.broadcast.to(data.RoomID).emit('Loading', numberOfPlayer, nbplayer);
 			});
 
+			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
+				if(cpt == 3){
+					getNbPlayers(data.RoomID, function(nbplayer){
+						socket.emit('PlayerNumber',numberOfPlayer, dataInitGame,nbplayer);
+					});
+				}
+			});
 		});
+
+
 
 		socket.emit('PlayersConnected', (numberOfPlayer+1));
 
@@ -118,9 +133,13 @@ module.exports = function(server, connection) {
 		socket.on('disconnect', function(data){
 			// Do stuff (probably some jQuery)
 			console.log("user left room " + data);
+			numberOfPlayer = getNbPlayersInRoom(data);
+			getNbPlayers(data, function(nbplayer){
+				socket.broadcast.to(data).emit('Loading', numberOfPlayer, nbplayer);
+			});
 
 		});
-		
+
 		//ROBBED
 		socket.on('robbed', function(sample) {
 			socket.broadcast.to(sample.gameID).emit('robbed', sample);

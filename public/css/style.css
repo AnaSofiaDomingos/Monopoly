@@ -203,3 +203,31 @@ html,body{
 	width: 250px;
 }
 
+.hideit{background-color: rgba(0,0,0,0.1); z-index: -1000!important;}
+
+.display-none { display: none;}
+
+#loadingGame{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top:0;
+	left:0;
+	transition : 1s ease-out;
+	-webkit-transition : 1s ease-out;
+	background: rgba(255,255,255,1);
+	z-index: 1000;
+}
+
+#loadingGame span{
+	position: absolute;
+	display: block;
+	text-align: center;
+	top: calc( 50% - 20px );
+	margin: auto;
+	left:0;
+	right:0;
+	color: rgba(33,33,33,1);
+
+}
+
