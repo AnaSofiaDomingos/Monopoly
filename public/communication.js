@@ -77,10 +77,6 @@ function updateUpgrades(data){
 	}
 }
 
-function updateOwns(){
-	
-}
-
 function resetSentJson(){
 	sentJson.upgraded = [{}];
 	sentJson.bought = [{}];
