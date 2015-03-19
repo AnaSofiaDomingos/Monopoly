@@ -72,7 +72,7 @@ function getInfos(position, pays){
 
 	// affiche les boutons en fonction de la position locale
 	currentPlayer = ((sentJson.id)%nbJoueurs);
-	if (posLocal == position{
+	if (posLocal == position){
 		if (mine && (idPlayer == currentPlayer)){
 			$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
 			$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
