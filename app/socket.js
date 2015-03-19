@@ -133,10 +133,6 @@ module.exports = function(server, connection) {
 		socket.on('disconnect', function(data){
 			// Do stuff (probably some jQuery)
 			console.log("user left room " + data);
-			numberOfPlayer = getNbPlayersInRoom(data);
-			getNbPlayers(data, function(nbplayer){
-				socket.broadcast.to(data).emit('Loading', numberOfPlayer, nbplayer);
-			});
 
 		});
 
@@ -146,5 +142,5 @@ module.exports = function(server, connection) {
 		});
 
 	});
-	
+
 }
