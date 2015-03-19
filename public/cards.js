@@ -1,6 +1,6 @@
 function tirerCarte() {
 
-	var card = 2;//0;
+	var card = 0;
 	while ((card == 0) || (card == 19) || (card == 21))
 			card = Math.floor((Math.random() * CARDS));
 
