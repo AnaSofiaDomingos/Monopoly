@@ -105,7 +105,7 @@ function removeItem(obj, prop, val) {
 }
 
 function grade(country, level) {
-console.log("country n°"+country+" level "+level);
+
 	for (var i = 0; i < localJson.length; i++)
 		for (var j = 0; j < localJson[i].owns.length; j++)
 			if (localJson[i].owns[j].country == country) {
