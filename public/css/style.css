@@ -158,7 +158,11 @@ html,body{
 	transition: .5s ease-out;
 	-webkit-transition: .5s ease-out;
 }
+#infoSolde {float: left; left: 2em; top: 2em;width: 300px;}
 #infoAccount li {padding: 0;}
+#infoSolde .data-infopays{border-bottom: 0;}
+#infoSolde span { display: block; width: 100%; padding: 1em;}
+#infoAccount .data-infopays:hover{cursor: pointer;}
 #infoAccount ul#pays li, #infoAccount ul#cartes li, #infoAccount ul#credit li {padding: 1em;}
 .padding{padding: 1em!important;}
 .game-infos .full{
@@ -182,7 +186,7 @@ html,body{
 	float: left;
 	position: absolute;
 	left: 2em;
-	top: 2em;
+	top: 12em;
 	width: 300px;
 }
 

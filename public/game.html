@@ -158,9 +158,6 @@
 			$('#infosPays').append("</ul>");
 
 			// affiche les boutons en fonction de la position locale
-			console.log(posLocal);
-
-			console.log(position);
 			if (posLocal == position){
 				if (mine){
 					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
@@ -173,7 +170,7 @@
 					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
 					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
 					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
-				
+
 			}else{
 				if(mine){
 					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
@@ -274,7 +271,7 @@
 
 
 
-			$('#credit').append("solde "+ sentJson.account.toFixed(4)+"M"); 
+			$('#credit').append(sentJson.account.toFixed(4)+"M"); 
 
 		}
 
@@ -374,9 +371,12 @@
 					<li class="titre-infopays capitalize">cartes</li>
 				</ul>
 			</li>
-			<li class="data-infopays padding capitalize" id="credit">solde : </li>
 		</ul>
+	</div>
 
+	<div id="infoSolde" class="game-infos capitalize">
+		<h2>Solde</h2>
+		<span class="data-infopays padding capitalize" id="credit"></span>
 	</div>
 
 
