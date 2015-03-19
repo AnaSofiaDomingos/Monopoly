@@ -3,6 +3,7 @@ function debit(value){
 	//If player has enough money
 	if(sentJson.account-value >= 0){
 		sentJson.account -= value;
+		getMyInfos();
 		return 0;
 	}else{
 		//Else we return the amount of money needed
@@ -12,14 +13,81 @@ function debit(value){
 
 // Debits a player or out of the game
 function debitObligatoire(sum) {
+	$('#btnBuy').attr('disabled', 'disabled');
+	$('#btnFinTour').attr('disabled', 'disabled');
+	$('#btnSell').attr('disabled', 'disabled');
+	$('#btnUpgrade').attr('disabled', 'disabled');
 
-	while (localJson.account < sum) 
-		if (localJson.countries.length > 0) localJson.account += proposeVente();
-		else return gameOver();
-		
-	debit(sum);
+	console.log("-> "+sum + " -> " + sentJson.account);
+
+	if (sentJson.account < sum)
+		if((propertiesValue()+sentJson.account) > sum) {
+			$('#dialog').show();
+			proposeVente(sum);
+		} else
+			gameOver();
 	return 0;
 
+}
+
+function propertiesValue(){
+	var sum=0;
+	if(localJson[idPlayer].owns[0].country){
+		for(var i=0; i<localJson[idPlayer].owns.length; i++){
+			sum += getCountryById(localJson[idPlayer].owns[i].country).Prix;
+		}
+	}
+
+	return sum;
+}
+
+function proposeVente(sum){
+	if(localJson[idPlayer].owns[0].country){
+		for(var i=0; i<localJson[idPlayer].owns.length; i++){
+			var idCountry = localJson[idPlayer].owns[i].country;
+			var country = getCountryById(idCountry);
+			$('#dialog').append('<br /><input type="checkbox" onClick="setDiff('+sum+')" name="country" value="'+country.idPays+'" /> '+country.NomPays+' <br />');		
+		}
+
+		$('#dialog').append('Amount <span id="diff"></span>');
+		$('#dialog').append('<br/><input type="button" id="btnSellAll" onclick="sellMultipleCountries(); debit('+sum+')" value="Sell"/>');
+		$('#dialog').show();
+		setDiff(sum);
+	}
+}
+
+function setDiff(amountMoney){
+	var allValues = [];
+	$('#dialog :checked').each(function(){
+			allValues.push($(this).val())
+		});
+
+	var sumCountries = 0;
+	for(var i=0; i<allValues.length; i++){
+		sumCountries += getCountryById(allValues[i]).Prix;
+	}
+
+	console.log(sentJson.account+sumCountries-amountMoney);
+	$('#diff').text(sentJson.account+sumCountries-amountMoney);
+
+	if((sentJson.account+sumCountries-amountMoney) >= 0){
+		$('#btnSellAll').removeAttr("disabled");
+	}else{
+		$('#btnSellAll').attr("disabled", "disabled");
+	}
+}
+
+function sellMultipleCountries(sumToDebit){
+	var allValues = [];
+	$('#dialog :checked').each(function(){
+			allValues.push($(this).val())
+		});
+
+	for(var i=0; i<allValues.length; i++){
+		sell(allValues[i]);
+	}
+
+	$('#dialog').hide();
 }
 
 // Credits a player
