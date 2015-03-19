@@ -46,12 +46,36 @@ function checkUpgradeAvailible(){
 
 function lancerDes(idCurrentPlayer) {
 
+	// Publicitary campaign income
+	if (sentJson.state == S_PUBLIC) { 
+		credit(PUBLIC_INCOME);
+		buff_time--;
+		// State reset
+		if (buff_time == -1) sentJson.state = S_ALIVE;
+	}
+
+	// Debuff time decrease
+	if (debuff_time >= 0) {
+		debuff_time--;
+
+		// Recover backup state if debuff is over and clean
+		if (debuff_time == -1) {
+			for (var i = 0; i < backup.length; i++)
+				for (var j = 0; j < localJson[idPlayer].owns.length; j++)
+					if (localJson[idPlayer].owns[j].country == backup[i].country) {
+						localJson[idPlayer].owns[j].level = backup[i].level;
+						sentJson.upgraded.push(localJson[idPlayer].owns[j]);
+					}
+			backup = [{}];
+		}
+	}
+
 	// Getting out of jail
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = Math.floor((Math.random() * 6) + 1);
-	var de2 = Math.floor((Math.random() * 6) + 1);
+	var de1 = 4;//Math.floor((Math.random() * 6) + 1);
+	var de2 = 2;//Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
@@ -111,8 +135,8 @@ function lancerDes(idCurrentPlayer) {
 				// if not our country
 				if (result.idPlayer != idPlayer)	{
 					var country = findCountry(posLocal);
-					// Price defined by lvl of upgrade
-					var price = 0.2*result.lvl*country.Prix;
+					// Price defined by lvl of upgrade (see documentation)
+					var price = 0.2 * result.lvl * country.Prix;
 					if (debitObligatoire(price) == 0)
 						credit(price, idPlayer);
 				}
