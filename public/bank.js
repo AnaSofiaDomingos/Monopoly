@@ -218,6 +218,8 @@ function buy() {
 		console.log("You don't have enough money ("+diff+")");
 		return 1;
 	}
+
+	getInfos(posLocal);
 }
 
 function sell(idCountry) {
