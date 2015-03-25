@@ -32,6 +32,7 @@ var sentJson;
 
 var owns   = [{}];
 var backup = [{}];
+var joueurs = [0, 0, 0, 0, 0];
 
 var localJson = [{
 		"owns" : owns,
