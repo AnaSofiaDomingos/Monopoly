@@ -16,10 +16,6 @@ function upgrade(idCurrentPlayer){
 	var pays = findCountry(posPays);
 	var idPays = pays.idPays;
 	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
-	// console.log(countries);
-
-	// console.log(pays);
-
 	var price;
 	switch(parseInt(newLvl)) {
 		case 1 : price=pays.Prix*0.3;
@@ -72,7 +68,6 @@ function updateUpgrades(data){
 				var posPays = countries[iter].Position;
 
 		$('#case'+posPays).children('span.upgrade').remove(); // removes all the upgrades in the country
-		// console.log("level : "+data[i].level);
 		for (var y = 0; y < data[i].level; y++) {
 			$('#case'+posPays).append('<span class="upgrade"></span>');
 		}
@@ -166,8 +161,6 @@ function receiveData(data) {
 
 	updateUpgrades(data.upgraded);
 
-	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
-	
 	$("#btnFinTour").attr('disabled' , true);
 
 	if (nextPlayer != idPlayer) {
