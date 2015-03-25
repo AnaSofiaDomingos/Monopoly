@@ -198,12 +198,12 @@ function getMyInfos(){
 	for (var i=0; i < localJson[idPlayer].cards.length; i++){
 		var card = localJson[idPlayer].cards[i].card;
 		if ( card != undefined)
-			$('#cartes').append("<li class='data-infopays' onclick='applyCard("+ card +")'>" + card + "</li>");
+			$('#cartes').append("<li class='data-infopays' onclick='useCard("+card+")'>" + card + "</li>");
 	}
 
 
 
-	$('#credit').append(sentJson.account.toFixed(4)+"M");
+	$('#credit').append(sentJson.account.toString().substring(0.4)+"M");
 
 }
 
@@ -217,4 +217,10 @@ function RemoveInfos(){
 	$('#infosPays').empty();
 	$('#infosPays').addClass("empty");
 	myTurn = false;
+}
+
+function useCard(idCarte){
+	updateLogs(idPlayer + " use card " + idCarte);
+	applyCard(idCarte);
+	removeItem(localJson[idPlayer].cards, "card", idCarte);
 }

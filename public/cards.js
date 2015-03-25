@@ -28,7 +28,7 @@ function applyCard(idCard) {
 			// Kim Jung pirate notre banque
 			sum = 1;
 			if (debitObligatoire(sum) == 0) 
-				console.log("Player "+idPlayer+" paid 200'000");
+				updateLogs("Player "+idPlayer+" paid 200'000");
 			else 
 				gameOver();
 			break;
@@ -45,7 +45,7 @@ function applyCard(idCard) {
 				debuff_time = 2;
 				
 			}
-			console.log("Player "+idPlayer+" has no internet for 2 turn");
+			updateLogs("Player "+idPlayer+" has no internet for 2 turn");
 			break;
 			
 		case 3 : 
@@ -53,7 +53,7 @@ function applyCard(idCard) {
 			// Debit 200 000 aux taxes
 			sum = 0.2;
 			if (debitObligatoire(sum) == 0) 
-				console.log("Player "+idPlayer+" paid 200'000");
+				updateLogs("Player "+idPlayer+" paid 200'000");
 			else 
 				gameOver();
 			break;
@@ -64,7 +64,7 @@ function applyCard(idCard) {
 			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 				sum = 0.1 ;
 				if (debitObligatoire(sum) == 0) 
-					console.log("Player "+idPlayer+" paid 100'000");
+					updateLogs("Player "+idPlayer+" paid 100'000");
 				else 
 					gameOver();
 			}
@@ -81,7 +81,7 @@ function applyCard(idCard) {
 				debuff_time = 2;
 				
 			}
-			console.log("Player "+idPlayer+" has no water for 2 turn");
+			updateLogs("Player "+idPlayer+" has no water for 2 turn");
 			break;
 			
 		case 6 : 
@@ -89,7 +89,7 @@ function applyCard(idCard) {
 			// Debit 500 000 
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
-				console.log("Player "+idPlayer+" paid 500'000");
+				updateLogs("Player "+idPlayer+" paid 500'000");
 			else 
 				gameOver();
 			break;
@@ -99,13 +99,13 @@ function applyCard(idCard) {
 			// Viol sur mineur => debit 2 000 000
 			sum = 2;
 			if (debitObligatoire(sum) == 0) 
-				console.log("Player "+idPlayer+" paid 2 000'000");
+				updateLogs("Player "+idPlayer+" paid 2 000'000");
 			else 
 				gameOver();
 
 			var idCredit = (idPlayer - 1 + nbJoueurs) % nbJoueurs;
 			credit(idCredit, 2);
-			console.log("Player "+idCredit+" got'em");
+			updateLogs("Player "+idCredit+" got'em");
 			break;
 			
 		case 8 :
@@ -120,17 +120,17 @@ function applyCard(idCard) {
 				debuff_time = 2;
 				
 			}
-			console.log("Player "+idPlayer+" has no water in Asia for 2 turn");
+			updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
 			break;
 		
 		case 9 :
 		
 			// USA saisissent les ameliorations Moyen-Orient
-			console.log("Player "+idPlayer+" have no more levels for a random country");
+			updateLogs("Player "+idPlayer+" have no more levels for a random country");
 			if (localJson[idPlayer].owns.length > 0) {
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
-				console.log("Country "+localJson[idPlayer].owns[paysAleatoire].country+" got robbed by the USA");
+				updateLogs("Country "+localJson[idPlayer].owns[paysAleatoire].country+" got robbed by the USA");
 			}
 			break;
 			
@@ -146,7 +146,7 @@ function applyCard(idCard) {
 				debuff_time = 2;
 				
 			}
-			console.log("Player "+idPlayer+" has no electricity for 2 turns");
+			updateLogs("Player "+idPlayer+" has no electricity for 2 turns");
 			break;
 
 
@@ -155,7 +155,7 @@ function applyCard(idCard) {
 			// Debite 500 000 (Arthur Pendragon)
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
-				console.log("Player "+idPlayer+" paid 500'000");
+				updateLogs("Player "+idPlayer+" paid 500'000");
 			else 
 				gameOver();
 			break;
@@ -165,13 +165,13 @@ function applyCard(idCard) {
 			// Labo de meth not found => credit de 1 000 000 
  			sum = 1;
 			if (credit(sum) == 0) 
-				console.log("Player "+idPlayer+" got 1'000'000");
+				updateLogs("Player "+idPlayer+" got 1'000'000");
 			break;
 				  
 		case 13 : 
 		
 			// Internet gratuit dans un pays
-			console.log("Player "+idPlayer+" can have internet for free");
+			updateLogs("Player "+idPlayer+" can have internet for free");
 			grade(country, UP_INT);
 			break;
 				  
@@ -180,7 +180,7 @@ function applyCard(idCard) {
 			// Envahir pays de qualité inférieur si on paye 10 000 000
 			if (sentJson.position > 1) {
 				var	country = Math.ceil(Math.random() * sentJson.position) + 1;		
-				console.log("Player "+idPlayer+" invades country "+country);
+				updateLogs("Player "+idPlayer+" invades country "+country);
 				if (debit(10) == 0) {
 					inherit(country);
 					for (var i = 0; i < localJson[idPlayer].cards.length; i++)
@@ -201,7 +201,7 @@ function applyCard(idCard) {
 		
 			// Découverte puit vente pétrole 2 000 000
 			sum = 2;
-			if (credit(sum) == 0) console.log("Player "+id+" got 2'000'000");
+			if (credit(sum) == 0) updateLogs("Player "+id+" got 2'000'000");
 			break;
 				  
 		case 17 : 
@@ -209,7 +209,7 @@ function applyCard(idCard) {
 			// Gain de 1 000 000
 			sum = 1;
 			if (credit(sum) == 0) 
-				console.log("Player "+id+" got 1'000'000");
+				updateLogs("Player "+id+" got 1'000'000");
 			break;
 				  
 		case 18 : 
@@ -223,10 +223,10 @@ function applyCard(idCard) {
 			// Debit 500 000 pour pub mais on recuperer 200 000 pdt 5 tours
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) {
-				console.log("Player "+id+" paid 500'000 for pub");
+				updateLogs("Player "+id+" paid 500'000 for pub");
 				localJson.state = S_PUBLIC;
 				credit(0.2);
-				console.log("Player "+id+" gained 200'000");
+				updateLogs("Player "+id+" gained 200'000");
 				buff_time = 5;
 			}
 			else gameOver();
@@ -237,13 +237,13 @@ function applyCard(idCard) {
 			// EMS en feu
 			sum = 0.3;
 			if (credit(sum) == 0) 
-				console.log("Player "+id+" got 300'000");
+				updateLogs("Player "+id+" got 300'000");
 			break;
 				  
 		case 21 : 
 		
 			// Burgonde King
-			console.log("Player "+id+" drew the Burgonde King");	
+			updateLogs("Player "+id+" drew the Burgonde King");	
 			break;
 
 	}
