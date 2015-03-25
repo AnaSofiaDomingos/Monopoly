@@ -19,6 +19,7 @@ function tirerCarte() {
 function applyCard(idCard) {
 
 	var sum;
+	console.log("player used card " + idCard);
 	
 	switch(idCard) {
 	
