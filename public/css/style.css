@@ -183,6 +183,7 @@ html,body{
 	background-color:#727272;
 	cursor: auto;
 }
+
 #infoAccount{
 	float: left;
 	position: absolute;
@@ -202,6 +203,16 @@ html,body{
 	font-size: 0;
 	top: 280px;
 	width: 250px;
+}
+
+#logs{
+	position: absolute;
+	float: right;
+	right: 33px;
+	top: 400px;
+	width: 250px;
+	height: 200px;
+	overflow-y : auto;
 }
 
 .hideit{background-color: rgba(0,0,0,0.1); z-index: -1000!important;}
