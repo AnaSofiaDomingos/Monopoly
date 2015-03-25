@@ -111,7 +111,7 @@ function lancerDes(idCurrentPlayer) {
 		case 30 :
 			if (debit(TAXES) == 0) {
 				getMyInfos();
-				udapteLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
+				updateLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
 			}
 			break;
 			
