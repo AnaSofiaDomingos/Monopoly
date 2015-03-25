@@ -282,6 +282,7 @@ function recover(idCountry) {
 			'country'   : idCountry,
 			'recovered' : 1
 		});
+		removeItem(localJson[idPlayer].loans,'country',idCountry);
 		
 		return 0;
 		
