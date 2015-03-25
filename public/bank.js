@@ -46,13 +46,20 @@ function proposeVente(sum){
 		for(var i=0; i<localJson[idPlayer].owns.length; i++){
 			var idCountry = localJson[idPlayer].owns[i].country;
 			var country = getCountryById(idCountry);
-			$('#dialog').append('<br /><input type="checkbox" onClick="setDiff('+sum+')" name="country" value="'+country.idPays+'" /> '+country.NomPays+' <br />');		
+			$('#listSell').append('<br /><input type="checkbox" onClick="setDiff('+sum+')" name="country" value="'+country.idPays+'" /> '+country.NomPays+' <br />');		
 		}
 
-		$('#dialog').append('Amount <span id="diff"></span>');
-		$('#dialog').append('<br/><input type="button" id="btnSellAll" onclick="sellMultipleCountries(); debit('+sum+')" value="Sell"/>');
+		$('#listSell').append('Amount <span id="diff"></span>');
+		$('#listSell').append('<br/><input type="button" id="btnSellAll" onclick="sellMultipleCountries(); debit('+sum+')" value="Sell"/>');
+
+		//Center div vertically
+		var heightDiv = $('#listSell').height();
+		var heightWindow = $(window).height();
+		var calc = ((heightWindow/2)-(heightDiv/2)); 			
+		$('#listSell').css({ 'top': calc});
+	
 		$('#dialog').show();
-		setDiff(sum);
+		setDiff(sum); //Shows money needed, based on the amount you got
 	}
 }
 
@@ -170,7 +177,7 @@ function buy() {
 	if(!idPays) 
 		return -1;
 
-	var diff = debit(country.Prix);
+	var diff = debit(countries[idPays].Prix);
 	
 	// Checks if the country can be bought
 	var valid = false;
