@@ -24,6 +24,8 @@ function debitObligatoire(sum) {
 			proposeVente(sum);
 		} else
 			gameOver();
+
+	getMyInfos();
 	return 0;
 
 }
@@ -214,10 +216,12 @@ function buy() {
 			$("#btnBuy").hide();
 			getMyInfos();
 			getInfos(posLocal);
+
+			updateLogs("Player " + idPlayer + " bought " + country.NomPays);	
 			return 0;
 			
 		}else {
-			updateLogs("You can't buy this country");	
+			updateLogs("You can't buy" + country.NomPays);	
 		}
 	} else {
 		updateLogs("You don't have enough money ("+diff+")");
