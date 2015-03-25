@@ -8,6 +8,11 @@ function constructionCase(typecase, id, sens, parent ){
 	else
 		for (var i = id; i > (id-8); i--)
 			$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "' onclick='getInfos("+i+")'></div>");
+
+
+
+//	localJson[idPlayer].cards = {'card' : 15};
+//	getMyInfos();
 }
 
 
@@ -83,10 +88,8 @@ function getInfos(position, pays){
 	$('#infosPays').append("</ul>");
 
 	// affiche les boutons en fonction de la position locale
-	console.log(waiting);
 	if (!waiting) {
 		if (myTurn){
-			console.log(position);
 			if (posLocal == position){
 				if (mine){
 					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
@@ -203,9 +206,11 @@ function getMyInfos(){
 	}
 
 	// liste le cartes
-	for (var i=0; i < localJson[idPlayer].cards.length; i++)
-		if (localJson[idPlayer].cards[i].card  != undefined)
-			$('#cartes').append("<li class='data-infopays'>" + localJson[idPlayer].cards[i].card + "</li>");
+	for (var i=0; i < localJson[idPlayer].cards.length; i++){	
+		var card = localJson[idPlayer].cards[i].card;
+		if ( card != undefined)
+			$('#cartes').append("<li class='data-infopays' onclick='applyCard("+ card +")'>" + card + "</li>");
+	}
 
 
 

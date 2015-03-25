@@ -209,6 +209,7 @@ function buy() {
 			waiting = true;
 			$("#btnBuy").hide();
 			getMyInfos();
+			getInfos(posLocal);
 			return 0;
 			
 		}else {
@@ -219,7 +220,6 @@ function buy() {
 		return 1;
 	}
 
-	getInfos(posLocal);
 }
 
 function sell(idCountry) {
