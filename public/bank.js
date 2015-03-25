@@ -164,12 +164,13 @@ function gameOver() {
 
 function buy() {
 	// Checks if the player can afford the country
-	var idPays = findCountry(posLocal).idPays;
-	
+	var country = findCountry(posLocal);
+	var idPays = country.idPays;	
+
 	if(!idPays) 
 		return -1;
 
-	var diff = debit(countries[idPays].Prix);
+	var diff = debit(country.Prix);
 	
 	// Checks if the country can be bought
 	var valid = false;
