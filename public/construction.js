@@ -206,7 +206,7 @@ function getMyInfos(){
 	}
 
 	// liste le cartes
-	for (var i=0; i < localJson[idPlayer].cards.length; i++){	
+	for (var i=0; i < localJson[idPlayer].cards.length; i++){
 		var card = localJson[idPlayer].cards[i].card;
 		if ( card != undefined)
 			$('#cartes').append("<li class='data-infopays' onclick='applyCard("+ card +")'>" + card + "</li>");
@@ -218,6 +218,11 @@ function getMyInfos(){
 
 }
 
+function updateLogs(log){
+	var liElem = '<li class="data-infopays">';
+	var liElemClose = '</li>';
+	$('#logs-list').append(liElem + log + liElemClose);
+}
 
 function RemoveInfos(){
 	$('#infosPays').empty();

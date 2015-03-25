@@ -183,6 +183,7 @@ html,body{
 	background-color:#727272;
 	cursor: auto;
 }
+
 #infoAccount{
 	float: left;
 	position: absolute;
@@ -201,6 +202,14 @@ html,body{
 	right: 33px;
 	font-size: 0;
 	top: 280px;
+	width: 250px;
+}
+
+#logs{
+	position: absolute;
+	float: right;
+	right: 33px;
+	top: 400px;
 	width: 250px;
 }
 
