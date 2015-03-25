@@ -5,7 +5,7 @@ function tirerCarte() {
 			card = Math.floor((Math.random() * CARDS));
 
 	sentJson.drew.push({'card' : card});
-	console.log("Player "+idPlayer+" drew card "+card);
+	udapteLogs("Player "+idPlayer+" drew card "+card);
 	
 	if (cards[card-1].Garder) {
 		localJson[idPlayer].cards.push({'card' : card});
