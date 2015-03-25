@@ -67,3 +67,9 @@ var data = {
 
 var nbCase = 36;
 var countries, cards;
+
+function updateLogs(log){
+	var liElem = '<li class="data-infopays">';
+	var liElemClose = '</li>';
+	$('#logs-list').append(liElem + log + liElemClose);
+}

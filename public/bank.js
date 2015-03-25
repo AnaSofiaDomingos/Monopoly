@@ -261,6 +261,7 @@ function loan(idCountry) {
 		
 		updateLogs("Player "+idPlayer+" loaned "+idCountry);
 		getMyInfos();
+		getInfos(-1,idCountry);
 	} else {
 		updateLogs("You can't loan this country, you little hacker");
 	}
@@ -282,7 +283,11 @@ function recover(idCountry) {
 			'country'   : idCountry,
 			'recovered' : 1
 		});
+
 		removeItem(localJson[idPlayer].loans,'country',idCountry);
+
+		getMyInfos();
+		getInfos(-1,idCountry);
 		
 		return 0;
 		
