@@ -112,13 +112,14 @@ function applyCard(idCard) {
 		
 			// Roi Burgonde installé en Asie plus d'eau 2 tours (amélioration 0)
 			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
-			
-				// Backup state
-				backup.push(localJson[idPlayer].owns[i]);
-				if (countries[localJson[idPlayer].owns[i].country].Continent.equals("Asie"))
-					grade(localJson[idPlayer].owns[i].country, 0);
-				debuff_time = 2;
-				
+				if(localJson[idPlayer].owns[i]){
+					// Backup state
+					backup.push(localJson[idPlayer].owns[i]);
+
+					if (countries[localJson[idPlayer].owns[i].country].Continent.equals("Asie"))
+						grade(localJson[idPlayer].owns[i].country, 0);
+					debuff_time = 2;
+				}
 			}
 			updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
 			break;
