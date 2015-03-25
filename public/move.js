@@ -89,10 +89,14 @@ function lancerDes(idCurrentPlayer) {
 	// Salary
 	if (posLocal >= taillePlateau) {
 		posLocal %= taillePlateau;
+
+		udapteLogs("Player "+idPlayer+" got the salary");
 		if (posLocal == 0)
 			credit(SALARY*2, idPlayer);
 		else
 			credit(SALARY, idPlayer);
+
+		getMyInfos();
 	}
 	// Special positions
 	switch (posLocal) {
@@ -121,6 +125,7 @@ function lancerDes(idCurrentPlayer) {
 			
 		// Aller en prison
 		case 27 :
+			udapteLogs("Player "+idPlayer+" goes to jail");
 			sentJson.state = S_JAILED;
 			sentJson.position = 9;
 			jail_time = 3;
@@ -175,10 +180,12 @@ function isPossessed(posPays) {
 }
 
 function replay() {
+	waiting = false;
+	myTurn = true;
+	replays = true;
 	$('#btnDes').removeAttr('disabled');
 	$('#btnFinTour').attr('disabled', 'true');
 }
-
 function transition(idCurrentPlayer,posLocal) {
 	setTimeout(function() {
 		var oldPos = joueurs[idCurrentPlayer];

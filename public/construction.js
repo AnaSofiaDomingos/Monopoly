@@ -83,13 +83,18 @@ function getInfos(position, pays){
 	$('#infosPays').append("</ul>"); // est-ce que c'est juste ?
 
 	// affiche les boutons en fonction de la position locale
+	if (replays)
+		waiting = false;
+
 	if (!waiting) {
 		if (myTurn){
 			if (posLocal == position){
 				if (mine && !loaned){
-					$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
-					$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
-					$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+					if (!replays){
+						$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+						$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+						$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+					}
 				}
 				else if (mine && loaned)
 					$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
@@ -98,21 +103,24 @@ function getInfos(position, pays){
 			}else if ((position == -1) && mine){ // quand clique sur infoCompte
 				for (var i=0; i<localJson[idPlayer].owns.length;i++){
 					if (localJson[idPlayer].owns[i].country == idpays){
+						if (!replays){
+							if (loaned)
+								$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+							else{
+								$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+								$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+							}
+						}
+					}
+				}
+			}else{
+				if (!replays){
+					if (mine && loaned)
+						$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+					else if (mine){
 						$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
 						$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 					}
-				}
-				for (var i=0; i<localJson[idPlayer].loans.length;i++)
-					if (localJson[idPlayer].loans[i].country == idpays)
-						$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
-					
-				
-			}else{
-				if (mine && loaned)
-					$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
-				else if (mine){
-					$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
-					$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 				}
 			}
 		}

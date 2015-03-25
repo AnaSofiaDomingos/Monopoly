@@ -67,6 +67,7 @@ var data = {
 
 var nbCase = 36;
 var countries, cards;
+var replays = false;
 
 function updateLogs(log){
 	var liElem = '<li class="data-infopays">';

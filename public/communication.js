@@ -9,6 +9,8 @@ function finTour(GameID, idCurrentPlayer) {
 	socket.emit('endofturn',sentJson);
 	resetSentJson();
 	RemoveInfos();
+	myTurn = false;
+	replays = false;
 }
 
 function upgrade(idCurrentPlayer){
