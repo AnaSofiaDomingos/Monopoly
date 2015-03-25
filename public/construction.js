@@ -8,11 +8,6 @@ function constructionCase(typecase, id, sens, parent ){
 	else
 		for (var i = id; i > (id-8); i--)
 			$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "' onclick='getInfos("+i+")'></div>");
-
-
-
-//	localJson[idPlayer].cards = {'card' : 15};
-//	getMyInfos();
 }
 
 
@@ -164,13 +159,6 @@ function getById(id, table){
 				return countries[i].NomPays;
 		}
 	}
-
-	/*else if (table == 'carte') {
-		for (var i=0; i< carte.length; i++){
-
-		}
-	}*/
-
 }
 
 function getCountryById(id) {
@@ -183,6 +171,7 @@ function getCountryById(id) {
 
 // recupere les information en fonction d'un id
 function getMyInfos(){
+
 	$("#pays").empty();
 	$('#pays').append('<li class="titre-infopays capitalize">pays</li>');
 	$("#cartes").empty();
