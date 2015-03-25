@@ -89,7 +89,7 @@ function lancerDes(idCurrentPlayer) {
 	if (posLocal >= taillePlateau) {
 		posLocal %= taillePlateau;
 
-		udapteLogs("Player "+idPlayer+" got the salary");
+		updateLogs("Player "+idPlayer+" got the salary");
 		if (posLocal == 0)
 			credit(SALARY*2, idPlayer);
 		else
@@ -124,7 +124,7 @@ function lancerDes(idCurrentPlayer) {
 			
 		// Aller en prison
 		case 27 :
-			udapteLogs("Player "+idPlayer+" goes to jail");
+			updateLogs("Player "+idPlayer+" goes to jail");
 			sentJson.state = S_JAILED;
 			sentJson.position = 9;
 			jail_time = 3;
