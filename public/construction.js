@@ -37,7 +37,8 @@ function getInfos(position, pays){
 		idpays = country.idPays;
 
 	}else{
-		var nom = getById(pays, 'pays');
+		var country = getCountryById(pays);
+		var nom = country.NomPays;
 		$('#infosPays').append("<h2>" + nom + "</h2>");
 		idpays = pays;
 	}
@@ -167,28 +168,25 @@ function findCountry(id){
 	}
 }
 
-/*  retrouve le nom du pays en fonction de l'id si table = pays
-	retrouve le contenu de la carte en fonction de l'ip si table = cartes*/
-function getById(id, table){
-	if (table == 'pays'){
-		for (var i=0; i< countries.length; i++){
-			if (countries[i].idPays == id)
-				return countries[i].NomPays;
-		}
+//retrouve le pays en fonction de l'id 
+function getCountryById(id) {
+	for (var i=0; i< countries.length; i++){
+		if (countries[i].idPays == id)
+			return countries[i];
 	}
 }
 
-function getCountryById(id) {
-	for (var i=0; i< countries.length; i++){
-			if (countries[i].idPays == id)
-				return countries[i];
-		}
+// retourve la carte en fonction de l'id
+function getCardById(id) {
+	for (var i=0; i< cards.length; i++){
+		if (cards[i].idCarte == id)
+			return cards[i];
+	}
 }
 
 
 // recupere les information en fonction d'un id
 function getMyInfos(){
-
 	$("#pays").empty();
 	$('#pays').append('<li class="titre-infopays capitalize">pays</li>');
 	$("#cartes").empty();
@@ -198,16 +196,17 @@ function getMyInfos(){
 
 	// liste les owns
 	for (var i=0; i < localJson[idPlayer].owns.length; i++){
-		var nom = getById(localJson[idPlayer].owns[i].country, 'pays');
-		if (nom)
-			$('#pays').append("<li class='data-infopays' onclick='getInfos(-1,"+ localJson[idPlayer].owns[i].country+")' >" + nom + "</li>");
+		var country = getCountryById(localJson[idPlayer].owns[i].country);
+		if (country)
+			$('#pays').append("<li class='data-infopays' onclick='getInfos(-1,"+ localJson[idPlayer].owns[i].country+")' >" + country.NomPays + "</li>");
 	}
 
 	// liste les loans
 	for (var i=0; i < localJson[idPlayer].loans.length; i++){
 		if (localJson[idPlayer].loans[i].country  != undefined){
-			var nom = getById(localJson[idPlayer].loans[i].country, 'pays');
-			$('#pays').append("<li class='data-infopays hypotheque' onclick='getInfos(-1,"+ localJson[idPlayer].loans[i].country+")'>" + nom + "</li>");
+			var country = getCountryById(localJson[idPlayer].owns[i].country);
+			var nom = country.NomPays;
+			$('#pays').append("<li class='data-infopays hypotheque'>" + nom + "</li>");
 		}
 	}
 
@@ -218,10 +217,7 @@ function getMyInfos(){
 			$('#cartes').append("<li class='data-infopays' onclick='useCard("+card+")'>" + card + "</li>");
 	}
 
-
-
 	$('#credit').append(sentJson.account.toString().substring(0.4)+"M");
-
 }
 
 
@@ -236,4 +232,5 @@ function useCard(idCarte){
 	updateLogs(idPlayer + " use card " + idCarte);
 	applyCard(idCarte);
 	removeItem(localJson[idPlayer].cards, "card", idCarte);
+	getMyInfos();
 }

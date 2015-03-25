@@ -5,7 +5,7 @@ function tirerCarte() {
 			card = Math.floor((Math.random() * CARDS));
 
 	sentJson.drew.push({'card' : card});
-	updateLogs("Player "+idPlayer+" drew card "+card);
+	updateLogs("Player "+idPlayer+" drew card "+card + " : " + getCardById(card).Contenu);
 	
 	if (cards[card-1].Garder) {
 		localJson[idPlayer].cards.push({'card' : card});
@@ -19,7 +19,6 @@ function tirerCarte() {
 function applyCard(idCard) {
 
 	var sum;
-	console.log("player used card " + idCard);
 	
 	switch(idCard) {
 	
