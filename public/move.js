@@ -5,8 +5,6 @@ var joueurs = [0, 0];
 var posLocal = 0;
 
 function init(idPlayer) {
-	// console.log(idPlayer);
-	// console.log(idPlayer > 0);
 	myTurn = true;
 	if(idPlayer > 0) {
 		document.getElementById("btnFinTour").disabled = true;
@@ -109,7 +107,7 @@ function lancerDes(idCurrentPlayer) {
 		case 30 :
 			if (debit(TAXES) == 0) {
 				getMyInfos();
-				console.log("Player "+idPlayer+" paid "+TAXES+" of taxes");
+				udapteLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
 			}
 			break;
 			
@@ -152,6 +150,7 @@ function lancerDes(idCurrentPlayer) {
 	transition(idCurrentPlayer, posLocal);
 
 	getInfos(posLocal);
+	getMyInfos();
 
 	// Double --> replay
 	if (de1 == de2)
@@ -183,7 +182,6 @@ function replay() {
 function transition(idCurrentPlayer,posLocal) {
 	setTimeout(function() {
 		var oldPos = joueurs[idCurrentPlayer];
-		// console.log(joueurs);
 		joueurs[idCurrentPlayer] = (joueurs[idCurrentPlayer]+1)%taillePlateau;
 		WritePlayerAtPosition(idCurrentPlayer,oldPos, joueurs[idCurrentPlayer]);
 

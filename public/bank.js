@@ -18,8 +18,6 @@ function debitObligatoire(sum) {
 	$('#btnSell').attr('disabled', 'disabled');
 	$('#btnUpgrade').attr('disabled', 'disabled');
 
-	console.log("-> "+sum + " -> " + sentJson.account);
-
 	if (sentJson.account < sum)
 		if((propertiesValue()+sentJson.account) > sum) {
 			$('#dialog').show();
@@ -74,7 +72,6 @@ function setDiff(amountMoney){
 		sumCountries += getCountryById(allValues[i]).Prix;
 	}
 
-	console.log(sentJson.account+sumCountries-amountMoney);
 	$('#diff').text(sentJson.account+sumCountries-amountMoney);
 
 	if((sentJson.account+sumCountries-amountMoney) >= 0){
@@ -117,7 +114,7 @@ function desherit(sample) {
 
 	if (sample.victimID == idPlayer) {
 		removeItem(localJson[idPlayer].owns, 'country', country);
-		console.log("Player "+idPlayer+" got a country robbed");
+		updateLogs("Player "+idPlayer+" got a country robbed");
 	}
 	
 	return 0;
@@ -149,7 +146,7 @@ function inherit(country) {
 	
 	socket.emit('robbed', sample);
 	
-	console.log("Player "+idPlayer+" robbed a country from player "+victimID);
+	updateLogs("Player "+idPlayer+" robbed a country from player "+victimID);
 	
 	return 0;
 
@@ -211,8 +208,6 @@ function buy() {
 			sentJson.bought.push({
 				'country' : idPays
 			});
-			console.log(" -- sentJSON --");
-			console.log(sentJson.bought);
 			// To prevent from sell/upgrade/loan for 1 turn
 			waiting = true;
 			$("#btnBuy").hide();
@@ -221,10 +216,10 @@ function buy() {
 			return 0;
 			
 		}else {
-			console.log("You can't buy this country");	
+			updateLogs("You can't buy this country");	
 		}
 	} else {
-		console.log("You don't have enough money ("+diff+")");
+		updateLogs("You don't have enough money ("+diff+")");
 		return 1;
 	}
 
@@ -244,13 +239,13 @@ function sell(idCountry) {
 
 		credit(countries[idCountry - 1].Prix); //
 
-		console.log("Player "+idPlayer+" sold country "+idCountry);
+		updateLogs("Player "+idPlayer+" sold country "+idCountry);
 		getMyInfos();
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
 		$("#btnUpgrade").hide();
 	} else {
-		console.log("You can't sell this country, you little hacker");
+		updateLogs("You can't sell this country, you little hacker");
 	}
 
 }
@@ -271,10 +266,10 @@ function loan(idCountry) {
 
 		credit(countries[idCountry - 1].Prix);
 		
-		console.log("Player "+idPlayer+" loaned "+idCountry);
+		updateLogs("Player "+idPlayer+" loaned "+idCountry);
 		getMyInfos();
 	} else {
-		console.log("You can't loan this country, you little hacker");
+		updateLogs("You can't loan this country, you little hacker");
 	}
 
 }
@@ -294,13 +289,14 @@ function recover(idCountry) {
 			'country'   : idCountry,
 			'recovered' : 1
 		});
+		removeItem(localJson[idPlayer].loans,'country',idCountry);
 		
 		return 0;
 		
 	}
 	else {
 	
-		console.log("Vous avez besoin de "+diff+" pour terminer cette action");
+		updateLogs("Vous avez besoin de "+diff+" pour terminer cette action");
 		return 1;
 		
 	}
