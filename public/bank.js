@@ -205,6 +205,8 @@ function buy() {
 			});
 			console.log(" -- sentJSON --");
 			console.log(sentJson.bought);
+			// To prevent from sell/upgrade/loan for 1 turn
+			waiting = true;
 			$("#btnBuy").hide();
 			getMyInfos();
 			return 0;
@@ -216,6 +218,8 @@ function buy() {
 		console.log("You don't have enough money ("+diff+")");
 		return 1;
 	}
+
+	getInfos(posLocal);
 }
 
 function sell(idCountry) {

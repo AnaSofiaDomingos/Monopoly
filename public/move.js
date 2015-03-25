@@ -1,5 +1,5 @@
 var taillePlateau = 36;
-var nbJoueurs = 2;
+var nbJoueurs;
 var plateau = new Array(taillePlateau);
 var joueurs = [0, 0];
 var posLocal = 0;
@@ -7,6 +7,7 @@ var posLocal = 0;
 function init(idPlayer) {
 	// console.log(idPlayer);
 	// console.log(idPlayer > 0);
+	myTurn = true;
 	if(idPlayer > 0) {
 		document.getElementById("btnFinTour").disabled = true;
 		document.getElementById("btnDes").disabled = true;

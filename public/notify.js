@@ -1,11 +1,8 @@
 //var socket = io('http://129.194.185.13:8080/subscribe');
 var socket = io('http://localhost:8080/subscribe');
-
 socket.emit('handshake', data); // tell the server which game this user is part of
 
 socket.on('Loading', function(nbPlayer, totalPlayer){
-	console.log( nbPlayer + "/" + totalPlayer);
-	nbTotalPlayer = totalPlayer;
 	nbPlayer += 1;
 	$('#loading').empty();
 	$('#loading').append( nbPlayer  + "/" + totalPlayer );
@@ -21,7 +18,6 @@ socket.on('notify',function(data){
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
-	console.log(idPlayer + " " + totalPlayer);
 	$('#loading').append((idPlayer + 1) + "/" + totalPlayer);
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
@@ -31,6 +27,7 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 		"level": "2"
 	}];
 
+	nbJoueurs = totalPlayer;
 	countries = dataInitGame.pays;
 	cards = dataInitGame.cartes;
 
@@ -62,3 +59,4 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	placeCountriesCartes();
 	getMyInfos(idPlayer);
 });
+

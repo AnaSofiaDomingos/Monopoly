@@ -8,6 +8,7 @@ function finTour(GameID, idCurrentPlayer) {
 	// Send data
 	socket.emit('endofturn',sentJson);
 	resetSentJson();
+	RemoveInfos();
 }
 
 function upgrade(idCurrentPlayer){
@@ -175,7 +176,14 @@ function receiveData(data) {
 		$("#btnFinTour").attr('disabled' , true);
 		$("#btnBuy").attr('disabled' , true);
 	} else {
+<<<<<<< HEAD
 		$("#btnDes").attr('disabled' , false);
+=======
+		document.getElementById("btnDes").disabled = false;
+		document.getElementById("btnFinTour").disabled = false;
+		myTurn = true;
+		waiting = false;
+>>>>>>> 88a0bdba6d4f8a20ed567cc2f822a4e5ad692326
 	}
 
 }
