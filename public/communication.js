@@ -1,8 +1,9 @@
 
 function finTour(GameID, idCurrentPlayer) {
 
-	document.getElementById("btnFinTour").disabled = true;
-	document.getElementById("btnDes").disabled = true;
+	$("#btnFinTour").attr('disabled' , true);
+	$("#btnDes").attr('value', 'Lancer les dés');
+	$("#btnDes").attr('disabled' , true);
 
 	// Send data
 	socket.emit('endofturn',sentJson);
@@ -163,19 +164,18 @@ function receiveData(data) {
 
 
 	updateUpgrades(data.upgraded);
-	updateOwns();
 
 	console.log("data player "+data.id+" and next is "+nextPlayer+" and i m "+idPlayer);
 	
-	document.getElementById("btnFinTour").disabled = true;
+	$("#btnFinTour").attr('disabled' , true);
+
 	if (nextPlayer != idPlayer) {
-		document.getElementById("btnDes").disabled = true;
-		document.getElementById("btnUpgrade").disabled = true;
-		document.getElementById("btnFinTour").disabled = true;
-		document.getElementById("btnBuy").disabled = true;
+		$("#btnDes").attr('disabled' , true);
+		$("#btnUpgrade").attr('disabled' , true);
+		$("#btnFinTour").attr('disabled' , true);
+		$("#btnBuy").attr('disabled' , true);
 	} else {
-		document.getElementById("btnDes").disabled = false;
-		document.getElementById("btnFinTour").disabled = false;
+		$("#btnDes").attr('disabled' , false);
 	}
 
 }
