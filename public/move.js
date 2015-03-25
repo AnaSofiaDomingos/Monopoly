@@ -152,6 +152,7 @@ function lancerDes(idCurrentPlayer) {
 	transition(idCurrentPlayer, posLocal);
 
 	getInfos(posLocal);
+	getMyInfos();
 
 	// Double --> replay
 	if (de1 == de2)
