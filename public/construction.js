@@ -1,5 +1,9 @@
 var myTurn;
 
+$(window).bind('beforeunload', function(){
+  return 'Are you sure you want to leave?';
+});
+
 // fonction permettant de construire les cases de chaque pays et carte
 function constructionCase(typecase, id, sens, parent ){
 	if (sens == 1)
