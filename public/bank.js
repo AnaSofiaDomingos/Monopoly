@@ -174,7 +174,7 @@ function buy() {
 	if(!idPays) 
 		return -1;
 
-	var diff = debit(countries[idPays].Prix);
+	var diff = sentJson.account-country.Prix;
 	
 	// Checks if the country can be bought
 	var valid = false;
@@ -184,7 +184,7 @@ function buy() {
 		if (valid) break;
 	}
 
-	if(diff == 0) {
+	if(diff > 0) {
 		// Checks if country isn't already bought
 		for(var i = 0; i<localJson.length; i++) {
 			for(var j = 0; j<localJson[i].owns.length;j++) {
@@ -209,6 +209,7 @@ function buy() {
 				'country' : idPays
 			});
 			// To prevent from sell/upgrade/loan for 1 turn
+			debit(country.Prix)
 			waiting = true;
 			$("#btnBuy").hide();
 			getMyInfos();
