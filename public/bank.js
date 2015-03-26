@@ -259,7 +259,7 @@ function sell(idCountry) {
 		//updateUI
 		var paysTest = getCountryById(idCountry);
 		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
-		
+
 	} else {
 		updateLogs("You can't sell this country, you little hacker");
 	}
