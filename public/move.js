@@ -72,8 +72,8 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = 10;// Math.floor((Math.random() * 6) + 1);
-	var de2 = 8;// Math.floor((Math.random() * 6) + 1);
+	var de1 = Math.floor((Math.random() * 6) + 1);
+	var de2 = Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
