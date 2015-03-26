@@ -111,7 +111,7 @@ function lancerDes(idCurrentPlayer) {
 		case 12 :
 		case 21 :
 		case 30 :
-			if (debit(TAXES) == 0) {
+			if (debitObligatoire(TAXES) == 0) {
 				getMyInfos();
 				updateLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
 			}
@@ -153,10 +153,10 @@ function lancerDes(idCurrentPlayer) {
 				if (result.idPlayer != idPlayer)	{
 					var country = findCountry(posLocal);
 					// Price defined by lvl of upgrade (see documentation)
-					var price = 0.2 * result.lvl * country.Prix;
+					var price = 0.2 * (result.lvl + 1) * country.Prix;
 					if (debitObligatoire(price) == 0){
 						credit(price, result.idPlayer);
-						getMyInfos;
+						getMyInfos();
 					}
 				}
 			break;
@@ -229,8 +229,10 @@ function WritePlayerAtPosition(idCurrentPlayer,oldPos, newPos){
 	var posJoueur = document.getElementById("case"+oldPos);
 	var pion = document.getElementById("player"+(idCurrentPlayer+1));
 	posJoueur.removeChild(pion);
-	posJoueur = document.getElementById("case"+newPos);
-	posJoueur.appendChild(pion);
+	if(sentJson.state != S_DEAD) {
+		posJoueur = document.getElementById("case"+newPos);
+		posJoueur.appendChild(pion);
+	}
 }
 
 function WriteAllPlayersPosition(){
