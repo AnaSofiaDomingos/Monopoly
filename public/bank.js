@@ -2,7 +2,9 @@
 function debit(value){
 	//If player has enough money
 	if(sentJson.account-value >= 0){
+		console.log(sentJson.account);
 		sentJson.account -= value;
+		console.log(sentJson.account);
 		getMyInfos();
 		return 0;
 	}else{
@@ -24,6 +26,8 @@ function debitObligatoire(sum) {
 			proposeVente(sum);
 		} else
 			return gameOver();
+	else
+		debit(sum);
 
 	getMyInfos();
 	return 0;
