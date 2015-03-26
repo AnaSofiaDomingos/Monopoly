@@ -72,8 +72,8 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = Math.floor((Math.random() * 6) + 1);
-	var de2 = Math.floor((Math.random() * 6) + 1);
+	var de1 = 10;// Math.floor((Math.random() * 6) + 1);
+	var de2 = 8;// Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 
 	// If jailed, must do a double 
@@ -128,6 +128,17 @@ function lancerDes(idCurrentPlayer) {
 			sentJson.state = S_JAILED;
 			sentJson.position = 9;
 			jail_time = 3;
+			break;
+
+		// Case parking
+		case 18:
+			var r = Math.random();
+			if(r < 1/nbJoueurs) {
+				updateLogs("You win 2M at the lottery");
+				credit(2);
+			} else {
+				updateLogs("You havn't won the lottery");
+			}
 			break;
 
 		// Pays
