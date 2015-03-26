@@ -75,15 +75,18 @@ function lancerDes(idCurrentPlayer) {
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
+	posLocal += de1 + de2;
+	sentJson.state = S_ALIVE;
+	$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2));
 
 	// If jailed, must do a double 
-	if ((sentJson.state != S_JAILED) || ((sentJson.state == S_JAILED) && (de1 == de2))) {
-		posLocal += de1 + de2;
-		sentJson.state = S_ALIVE;
-		$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2));
+	if (((sentJson.state == S_JAILED) && (de1 == de2))) {
+		updateLogs("Player "+ idPlayer + " got out of jail");
 	}
-	else if ((sentJson.state == S_JAILED) && (de1 != de2))
+	else if ((sentJson.state == S_JAILED) && (de1 != de2)){
+		updateLogs("Player "+ idPlayer + " stays in jail");
 		jail_time -= 1;
+	}
 		
 	// Salary
 	if (posLocal >= taillePlateau) {
@@ -91,9 +94,9 @@ function lancerDes(idCurrentPlayer) {
 
 		updateLogs("Player "+idPlayer+" got the salary");
 		if (posLocal == 0)
-			credit(SALARY*2, idPlayer);
+			credit(SALARY*2);
 		else
-			credit(SALARY, idPlayer);
+			credit(SALARY);
 
 		getMyInfos();
 	}
@@ -126,7 +129,7 @@ function lancerDes(idCurrentPlayer) {
 		case 27 :
 			updateLogs("Player "+idPlayer+" goes to jail");
 			sentJson.state = S_JAILED;
-			sentJson.position = 9;
+			posLocal = 9;
 			jail_time = 3;
 			break;
 
@@ -151,8 +154,10 @@ function lancerDes(idCurrentPlayer) {
 					var country = findCountry(posLocal);
 					// Price defined by lvl of upgrade (see documentation)
 					var price = 0.2 * result.lvl * country.Prix;
-					if (debitObligatoire(price) == 0)
-						credit(price, idPlayer);
+					if (debitObligatoire(price) == 0){
+						credit(price, result.idPlayer);
+						getMyInfos;
+					}
 				}
 			break;
 			
