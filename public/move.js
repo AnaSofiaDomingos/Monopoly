@@ -211,6 +211,7 @@ function replay() {
 	$('#btnDes').removeAttr('disabled');
 	$('#btnFinTour').attr('disabled', 'true');
 }
+
 function transition(idCurrentPlayer,posLocal) {
 	setTimeout(function() {
 		var oldPos = joueurs[idCurrentPlayer];

@@ -77,12 +77,13 @@ function updateUpgrades(data){
 }
 
 function resetSentJson(){
-	sentJson.upgraded = [{}];
-	sentJson.bought = [{}];
-	sentJson.sold = [{}];
-	sentJson.drew = [{}];
-	sentJson.loaned = [{}];
-	sentJson.used = [{}];
+	sentJson.upgraded = [];
+	sentJson.bought = [];
+	sentJson.sold = [];
+	sentJson.drew = [];
+	sentJson.loaned = [];
+	sentJson.used = [];
+	sentJson.paid = [];
 }
 
 //function to remove a value from the json array
