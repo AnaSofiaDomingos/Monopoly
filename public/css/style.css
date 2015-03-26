@@ -252,6 +252,11 @@ html,body{
 	height: 20px;
 	border-radius: 10px;
 	-webkit-border-radius : 10px;
-	top: 650px;
+	margin-top: 20px;
+}
+#whoareyou:before{
+	content:"Vous êtes le pion ";
+	text-indent: -140px;
+	display: block;
 }
 

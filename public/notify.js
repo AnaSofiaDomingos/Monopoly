@@ -18,6 +18,7 @@ socket.on('notify',function(data){
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
+	$('#whoareyou').addClass('player' + idPlayer);
 	$('#loading').append((idPlayer + 1) + "/" + totalPlayer);
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
