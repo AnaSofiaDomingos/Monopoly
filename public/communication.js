@@ -167,6 +167,14 @@ function receiveData(data) {
 			if(data.loaned[i].recovered)
 				removeItem(data.loaned,'country',data.loaned[i].country);
 
+	if(typeof data.paid !== [{}])
+		for(i = 0; i < data.paid.length; i++)
+			if(data.paid[i])
+				if(data.paid[i].player == idPlayer) {
+					updateLogs("Player " +data.id+" paid you "+data.paid[i].amount);
+					credit(data.paid[i].amount);
+				}
+
 	PlayerPos = data.position;
 	transition(data.id,PlayerPos);
 	var nextPlayer = ((data.id+1)%nbJoueurs);
