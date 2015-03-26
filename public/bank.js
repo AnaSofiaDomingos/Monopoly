@@ -127,29 +127,29 @@ function desherit(sample) {
 function inherit(country) {
 
 	var victimID;
-
-	for (var i = 0; i < localJson.length; i++) 
-		for (var j = 0; j < localJson[i].owns.length; j++)
-			if (localJson[i].owns[j].country == country){
-				victimID = i;
-				break;
-			}
-	
-	localJson[idPlayer].owns.push({
-		'country' : country,
-		'level'   : 0
-	});
-	
-	var sample = {
-		'country' : country,
-		'victim'  : victimID,
-		'gameID'  : GameID
-	};
-	
-	socket.emit('robbed', sample);
-	
-	updateLogs("Player "+idPlayer+" robbed a country from player "+victimID);
-	
+	if (localJson.length > 0){
+		for (var i = 0; i < localJson.length; i++) 
+			for (var j = 0; j < localJson[i].owns.length; j++)
+				if (localJson[i].owns[j].country == country){
+					victimID = i;
+					break;
+				}
+		
+		localJson[idPlayer].owns.push({
+			'country' : country,
+			'level'   : 0
+		});
+		
+		var sample = {
+			'country' : country,
+			'victim'  : victimID,
+			'gameID'  : GameID
+		};
+		
+		socket.emit('robbed', sample);
+		
+		updateLogs("Player "+idPlayer+" robbed a country from player "+victimID);
+	}
 	return 0;
 
 }

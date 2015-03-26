@@ -33,18 +33,19 @@ function applyCard(idCard) {
 			break;
 			
 		case 2 :
-		
-			// Plus internet 2 tours (back to electricity)
-			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
-			
-				// Backup the state
-				backup.push(localJson[idPlayer].owns[i]);
-				if (localJson[idPlayer].owns[i].level >= UP_INT)
-					grade(localJson[idPlayer].owns[i].country, UP_ELE);	
-				debuff_time = 2;
+			if (localJson[idPlayer].owns.length > 0){
+				// Plus internet 2 tours (back to electricity)
+				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 				
+					// Backup the state
+					backup.push(localJson[idPlayer].owns[i]);
+					if (localJson[idPlayer].owns[i].level >= UP_INT)
+						grade(localJson[idPlayer].owns[i].country, UP_ELE);	
+					debuff_time = 2;
+					
+				}
+				updateLogs("Player "+idPlayer+" has no internet for 2 turn");
 			}
-			updateLogs("Player "+idPlayer+" has no internet for 2 turn");
 			break;
 			
 		case 3 : 
@@ -58,29 +59,33 @@ function applyCard(idCard) {
 			break;
 			
 		case 4 :
-		
+			
 			// Debit 100'000 par pays
-			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
-				sum = 0.1 ;
-				if (debitObligatoire(sum) == 0) 
-					updateLogs("Player "+idPlayer+" paid 100'000");
-				else 
-					gameOver();
+			if (localJson[idPlayer].owns.length > 0){
+				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
+					sum = 0.1 ;
+					if (debitObligatoire(sum) == 0) 
+						updateLogs("Player "+idPlayer+" paid 100'000");
+					else 
+						gameOver();
+				}
 			}
 			break;
 			
 		case 5 :
-		
+			
 			// Plus eau 2 tours (amélioration niveau 0)
-			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
-				
-				// Backup state
-				backup.push(localJson[idPlayer].owns[i]);
-				grade(localJson[idPlayer].owns[i].country, 0);
-				debuff_time = 2;
-				
+			if (localJson[idPlayer].owns.length > 0){
+				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
+					
+					// Backup state
+					backup.push(localJson[idPlayer].owns[i]);
+					grade(localJson[idPlayer].owns[i].country, 0);
+					debuff_time = 2;
+					
+				}
+				updateLogs("Player "+idPlayer+" has no water for 2 turn");
 			}
-			updateLogs("Player "+idPlayer+" has no water for 2 turn");
 			break;
 			
 		case 6 : 
@@ -110,25 +115,27 @@ function applyCard(idCard) {
 		case 8 :
 		
 			// Roi Burgonde installé en Asie plus d'eau 2 tours (amélioration 0)
-			for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
-				if(localJson[idPlayer].owns[i]){
-					// Backup state
-					backup.push(localJson[idPlayer].owns[i]);
-					// bug when player haven't got any country in asia
-					// Date : 26.03.2015 !!
-					if (countries[localJson[idPlayer].owns[i].country].Continent.equals("Asie"))
-						grade(localJson[idPlayer].owns[i].country, 0);
-					debuff_time = 2;
+			if (localJson[idPlayer].owns.length > 0){
+				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
+					if(localJson[idPlayer].owns[i]){
+						// Backup state
+						backup.push(localJson[idPlayer].owns[i]);
+						// bug when player haven't got any country in asia
+						// Date : 26.03.2015 !!
+						if (countries[localJson[idPlayer].owns[i].country].Continent.equals("Asie"))
+							grade(localJson[idPlayer].owns[i].country, 0);
+						debuff_time = 2;
+					}
 				}
+				updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
 			}
-			updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
 			break;
 		
 		case 9 :
 		
 			// USA saisissent les ameliorations Moyen-Orient
-			updateLogs("Player "+idPlayer+" have no more levels for a random country");
 			if (localJson[idPlayer].owns.length > 0) {
+				updateLogs("Player "+idPlayer+" have no more levels for a random country");
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
 				updateLogs("Country "+localJson[idPlayer].owns[paysAleatoire].country+" got robbed by the USA");
@@ -136,18 +143,20 @@ function applyCard(idCard) {
 			break;
 			
 		case 10 :
-		
-			// Plus d'electricite pendant 2 tours
-			for (var i = 0; i < localJson[idPlayer].owns.length; i++){
 			
-				// Backup the state
-				backup.push(localJson[idPlayer].owns[i]);
-				if (localJson[idPlayer].owns[i].level >= UP_ELE)
-					grade(localJson[idPlayer].owns[i].country, UP_WAT);	
-				debuff_time = 2;
+			// Plus d'electricite pendant 2 tours
+			if (localJson[idPlayer].owns.length > 0) {
+				for (var i = 0; i < localJson[idPlayer].owns.length; i++){
 				
+					// Backup the state
+					backup.push(localJson[idPlayer].owns[i]);
+					if (localJson[idPlayer].owns[i].level >= UP_ELE)
+						grade(localJson[idPlayer].owns[i].country, UP_WAT);	
+					debuff_time = 2;
+					
+				}
+				updateLogs("Player "+idPlayer+" has no electricity for 2 turns");
 			}
-			updateLogs("Player "+idPlayer+" has no electricity for 2 turns");
 			break;
 
 
@@ -180,7 +189,7 @@ function applyCard(idCard) {
 		
 			// Envahir pays de qualité inférieur si on paye 10 000 000
 			if (sentJson.position > 1) {
-				var	country = Math.ceil(Math.random() * sentJson.position) + 1;		
+				var	country = Math.ceil(Math.random() * findCountry(sentJson.position)) + 1;		
 				updateLogs("Player "+idPlayer+" invades country "+country);
 				if (debit(10) == 0) {
 					inherit(country);
