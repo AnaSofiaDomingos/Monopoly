@@ -153,10 +153,10 @@ function lancerDes(idCurrentPlayer) {
 				if (result.idPlayer != idPlayer)	{
 					var country = findCountry(posLocal);
 					// Price defined by lvl of upgrade (see documentation)
-					var price = 0.2 * result.lvl * country.Prix;
+					var price = 0.2 * (result.lvl + 1) * country.Prix;
 					if (debitObligatoire(price) == 0){
 						credit(price, result.idPlayer);
-						getMyInfos;
+						getMyInfos();
 					}
 				}
 			break;
