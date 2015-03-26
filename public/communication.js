@@ -174,6 +174,7 @@ function receiveData(data) {
 					if(data.paid[i].player == idPlayer) {
 						updateLogs("Player " +data.id+" paid you "+data.paid[i].amount);
 						credit(data.paid[i].amount);
+						removeItem(data.paid[i], 'player', idPlayer);
 					}
 
 		PlayerPos = data.position;
