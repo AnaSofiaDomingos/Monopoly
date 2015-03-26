@@ -165,8 +165,8 @@ function gameOver() {
 
 	sentJson.state = S_DEAD;
 
-	// finGame();
 	finTour(1, idPlayer);
+	finGame();
 
 	return -1;
 	
