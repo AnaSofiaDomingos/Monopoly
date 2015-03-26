@@ -243,3 +243,20 @@ html,body{
 
 }
 
+#whoareyou{
+	right: 0;
+	left: 0;
+	margin: auto;
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	-webkit-border-radius : 10px;
+	margin-top: 20px;
+}
+#whoareyou:before{
+	content:"Vous êtes le pion ";
+	text-indent: -140px;
+	display: block;
+}
+

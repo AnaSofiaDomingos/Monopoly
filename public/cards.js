@@ -114,7 +114,8 @@ function applyCard(idCard) {
 				if(localJson[idPlayer].owns[i]){
 					// Backup state
 					backup.push(localJson[idPlayer].owns[i]);
-
+					// bug when player haven't got any country in asia
+					// Date : 26.03.2015 !!
 					if (countries[localJson[idPlayer].owns[i].country].Continent.equals("Asie"))
 						grade(localJson[idPlayer].owns[i].country, 0);
 					debuff_time = 2;

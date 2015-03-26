@@ -143,7 +143,7 @@ function inherit(country) {
 	var sample = {
 		'country' : country,
 		'victim'  : victimID,
-		'gameID'  : gameID
+		'gameID'  : GameID
 	};
 	
 	socket.emit('robbed', sample);
@@ -222,6 +222,11 @@ function buy() {
 			getInfos(posLocal);
 
 			updateLogs("Player " + idPlayer + " bought " + country.NomPays);	
+
+			//updateUI
+			var paysTest = getCountryById(idPays);
+			$('#case'+paysTest.Position).addClass("player"+ idPlayer);
+
 			return 0;
 			
 		}else {
@@ -232,6 +237,7 @@ function buy() {
 		updateLogs("You don't have enough money ("+diff+")");
 		return 1;
 	}
+
 
 }
 
@@ -254,9 +260,14 @@ function sell(idCountry) {
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
 		$("#btnUpgrade").hide();
+		//updateUI
+		var paysTest = getCountryById(idCountry);
+		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
+
 	} else {
 		updateLogs("You can't sell this country, you little hacker");
 	}
+
 
 }
 

@@ -14,7 +14,6 @@ function constructionCase(typecase, id, sens, parent ){
 			$('#'+parent).append("<div id='case" + i + "' class='"+ typecase + "' onclick='getInfos("+i+")'></div>");
 }
 
-
 // affiche les informations de la case apres avoir cliquer dessus
 function getInfos(position, pays){
 	$('#infosPays').removeClass("empty");
@@ -91,11 +90,9 @@ function getInfos(position, pays){
 	if (replays)
 		waiting = false;
 
-	console.log("posLocal : "+posLocal+"; position : "+position+"; mine : "+mine+"; loaned : "+loaned+";");
-
-	if (!waiting) {
-		if (myTurn){
+	if (!waiting && myTurn){
 			if (posLocal == position){
+
 				if (mine && !loaned){
 					if (!replays){
 						$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
@@ -105,13 +102,16 @@ function getInfos(position, pays){
 				}
 				else if (mine && loaned)
 					$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+
 				else if (!loaned)
 					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
+
 			}else if ((position == -1) && mine){ // quand clique sur infoCompte
+
 				for (var i=0; i<localJson[idPlayer].owns.length;i++){
 					if (localJson[idPlayer].owns[i].country == idpays){
 						if (!replays){
-							console.log((findCountry(pays).Position+1));
+
 							if(posLocal == (findCountry(pays).Position+1)) {
 								$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
 								if (loaned)
@@ -123,6 +123,7 @@ function getInfos(position, pays){
 							} else {
 								if (loaned)
 									$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+
 								else{
 									$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
 									$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
@@ -135,13 +136,14 @@ function getInfos(position, pays){
 				if (!replays){
 					if (mine && loaned)
 						$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+
 					else if (mine){
 						$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
 						$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
 					}
 				}
 			}
-		}
+		
 	}
 }
 
@@ -226,14 +228,22 @@ function getMyInfos(){
 	// liste le cartes
 	for (var i=0; i < localJson[idPlayer].cards.length; i++){
 		var card = localJson[idPlayer].cards[i].card;
-		if ( card != undefined)
-			$('#cartes').append("<li class='data-infopays' onclick='useCard("+card+")'>" + card + "</li>");
+		if ( card != undefined){
+			$('#cartes').append("<li id='"+card+"' class='data-infopays' onclick='getInfosCartes("+ card+")'>n° " + card + "</li>");
+		}
 	}
 
 	$('#credit').append(sentJson.account.toString().substring(0.4)+"M");
 }
 
 
+function getInfosCartes(idCarte){
+	$('#infosCartes').empty();
+	$('#infosCartes').toggle();
+	$('#' + idCarte).append('<div id="infosCartes">');
+	$('#infosCartes').append("<span>"+ getCardById(idCarte).Contenu  +"</span>");
+	$('#infosCartes').append('<input id="btnUseCard" class="full" type="button" value="utiliser" onclick="useCard('+idCarte+')" />');
+}
 
 function RemoveInfos(){
 	$('#infosPays').empty();
