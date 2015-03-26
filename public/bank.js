@@ -23,7 +23,7 @@ function debitObligatoire(sum) {
 			$('#dialog').show();
 			proposeVente(sum);
 		} else
-			gameOver();
+			return gameOver();
 
 	getMyInfos();
 	return 0;
@@ -99,11 +99,11 @@ function sellMultipleCountries(sumToDebit){
 // Credits a player
 function credit(value, idPlayer){
 	//If "idPlayer" is not specified, we credit our own account
-	if(idPlayer == undefined){
+	if (idPlayer == undefined){
 		sentJson.account += value;
-	}else{
-		//Else we put it in the "paid" field of the json
-		// sentJson.paid.amount = value;
+	}
+	else {
+		// Else we put it in the "paid" field of the json
 		sentJson.paid.push({
 			'amount' : value,
 			'player' : idPlayer
