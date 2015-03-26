@@ -14,7 +14,7 @@ var UP_INT = 3;
 var UP_NUC = 4;
 
 // Constants
-var SALARY    = 0.1;
+var SALARY    = 0.5;
 var TAXES     = 0.05;
 var CARDS     = 20; // King Burgonde not implemented (id 21)
 
