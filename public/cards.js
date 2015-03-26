@@ -186,6 +186,7 @@ function applyCard(idCard) {
 					for (var i = 0; i < localJson[idPlayer].cards.length; i++)
 						if (localJson[idPlayer].cards[i].card == country)
 							localJson[idPlayer].cards.splice(i, 1);
+					getMyInfos();
 				}
 			}
 			break;
