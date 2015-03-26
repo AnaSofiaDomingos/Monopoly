@@ -221,6 +221,7 @@ function buy() {
 			return 0;
 			
 		}else {
+			$("#btnBuy").hide();
 			updateLogs("You can't buy" + country.NomPays);	
 		}
 	} else {
