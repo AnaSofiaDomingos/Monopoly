@@ -72,8 +72,8 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = Math.floor((Math.random() * 6) + 1);
-	var de2 = Math.floor((Math.random() * 6) + 1);
+	var de1 = 2;// Math.floor((Math.random() * 6) + 1);
+	var de2 = 1;// Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 	posLocal += de1 + de2;
 	sentJson.state = S_ALIVE;
@@ -111,7 +111,7 @@ function lancerDes(idCurrentPlayer) {
 		case 12 :
 		case 21 :
 		case 30 :
-			if (debit(TAXES) == 0) {
+			if (debitObligatoire(TAXES) == 0) {
 				getMyInfos();
 				updateLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
 			}
@@ -229,8 +229,10 @@ function WritePlayerAtPosition(idCurrentPlayer,oldPos, newPos){
 	var posJoueur = document.getElementById("case"+oldPos);
 	var pion = document.getElementById("player"+(idCurrentPlayer+1));
 	posJoueur.removeChild(pion);
-	posJoueur = document.getElementById("case"+newPos);
-	posJoueur.appendChild(pion);
+	if(sentJson.state != S_DEAD) {
+		posJoueur = document.getElementById("case"+newPos);
+		posJoueur.appendChild(pion);
+	}
 }
 
 function WriteAllPlayersPosition(){

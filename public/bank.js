@@ -158,12 +158,16 @@ function inherit(country) {
 
 function gameOver() {
 
-	window.alert("Player "+id+" out of the game");
+	console.log("Player "+idPlayer+" out of the game");
 	localJson[idPlayer].owns = [{}];
 	localJson[idPlayer].loans = [{}];
 	localJson[idPlayer].cards = [{}];
 
-	sentJson.state = -1;
+	sentJson.state = S_DEAD;
+
+	// finGame();
+	finTour(1, idPlayer);
+
 	return -1;
 	
 }
