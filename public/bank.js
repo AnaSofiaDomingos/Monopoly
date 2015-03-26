@@ -143,7 +143,7 @@ function inherit(country) {
 	var sample = {
 		'country' : country,
 		'victim'  : victimID,
-		'gameID'  : gameID
+		'gameID'  : GameID
 	};
 	
 	socket.emit('robbed', sample);
