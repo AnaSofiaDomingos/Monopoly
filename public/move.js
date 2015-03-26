@@ -72,8 +72,8 @@ function lancerDes(idCurrentPlayer) {
 	if (jail_time == 0)
 		sentJson.state = S_ALIVE;
 
-	var de1 = 2;// Math.floor((Math.random() * 6) + 1);
-	var de2 = 1;// Math.floor((Math.random() * 6) + 1);
+	var de1 = Math.floor((Math.random() * 6) + 1);
+	var de2 = Math.floor((Math.random() * 6) + 1);
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 	posLocal += de1 + de2;
 	sentJson.state = S_ALIVE;
