@@ -155,6 +155,7 @@ function lancerDes(idCurrentPlayer) {
 					// Price defined by lvl of upgrade (see documentation)
 					var price = 0.2 * (result.lvl + 1) * country.Prix;
 					if (debitObligatoire(price) == 0){
+						updateLogs("Player " + idPlayer +" paided to "+result.idPlayer);
 						credit(price, result.idPlayer);
 						getMyInfos();
 					}
@@ -183,7 +184,10 @@ function lancerDes(idCurrentPlayer) {
 }
 
 function isPossessed(posPays) {
-
+	if (posPays == 0 | posPays == 3 | posPays == 6 | posPays == 9 | posPays == 12 | posPays == 15 |
+	posPays == 18 | posPays == 21 | posPays == 24 | posPays == 27 | posPays == 30 | posPays == 33){
+		return ;
+	}
 	var country = findCountry(posPays);
 	for (var p = 0; p < localJson.length; p++)
 		for (var i = 0; i < localJson[p].owns.length; i++)

@@ -107,7 +107,7 @@ function applyCard(idCard) {
 			else 
 				gameOver();
 
-			var idCredit = (idPlayer - 1 + nbJoueurs) % nbJoueurs;
+			var idCredit = (idPlayer + 1) % nbJoueurs;
 			credit(idCredit, 2);
 			updateLogs("Player "+idCredit+" got'em");
 			break;
@@ -189,7 +189,7 @@ function applyCard(idCard) {
 		
 			// Envahir pays de qualité inférieur si on paye 10 000 000
 			if (sentJson.position > 1) {
-				var	country = Math.ceil(Math.random() * findCountry(sentJson.position)) + 1;		
+				var	country = Math.ceil(Math.random() * sentJson.position) + 1;		
 				updateLogs("Player "+idPlayer+" invades country "+country);
 				if (debit(10) == 0) {
 					inherit(country);
@@ -202,7 +202,7 @@ function applyCard(idCard) {
 			break;
 				  
 		case 15 : 
-
+			updateLogs("Player "+id+" got out of jail");
 			// Sortie prison
 			if (sentJson.state == S_JAILED)
 				sentJson.state = S_ALIVE;
@@ -226,6 +226,7 @@ function applyCard(idCard) {
 		case 18 : 
 		
 			// Rejouer
+			updateLogs("Player "+id+" replays");
 			replay();
 			break;
 				  
