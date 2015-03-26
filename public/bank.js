@@ -23,7 +23,7 @@ function debitObligatoire(sum) {
 			$('#dialog').show();
 			proposeVente(sum);
 		} else
-			gameOver();
+			return gameOver();
 
 	getMyInfos();
 	return 0;
@@ -99,11 +99,11 @@ function sellMultipleCountries(sumToDebit){
 // Credits a player
 function credit(value, idPlayer){
 	//If "idPlayer" is not specified, we credit our own account
-	if(idPlayer == undefined){
+	if (idPlayer == undefined){
 		sentJson.account += value;
-	}else{
-		//Else we put it in the "paid" field of the json
-		// sentJson.paid.amount = value;
+	}
+	else {
+		// Else we put it in the "paid" field of the json
 		sentJson.paid.push({
 			'amount' : value,
 			'player' : idPlayer
@@ -218,15 +218,22 @@ function buy() {
 			getInfos(posLocal);
 
 			updateLogs("Player " + idPlayer + " bought " + country.NomPays);	
+
+			//updateUI
+			var paysTest = getCountryById(idPays);
+			$('#case'+paysTest.Position).addClass("player"+ idPlayer);
+
 			return 0;
 			
 		}else {
+			$("#btnBuy").hide();
 			updateLogs("You can't buy" + country.NomPays);	
 		}
 	} else {
 		updateLogs("You don't have enough money ("+diff+")");
 		return 1;
 	}
+
 
 }
 
@@ -249,9 +256,14 @@ function sell(idCountry) {
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
 		$("#btnUpgrade").hide();
+		//updateUI
+		var paysTest = getCountryById(idCountry);
+		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
+
 	} else {
 		updateLogs("You can't sell this country, you little hacker");
 	}
+
 
 }
 

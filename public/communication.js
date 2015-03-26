@@ -36,7 +36,7 @@ function upgrade(idCurrentPlayer){
 	var r = debit(price);
 	if(r == 0)
 		window.alert(pays.NomPays + " amelioré !");
-	else 
+	else
 		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
 
 	// upgrade of the country
@@ -115,46 +115,65 @@ function grade(country, level) {
 
 function receiveData(data) {
 
-	data.bought.splice(0,1);
+	//data.bought.splice(0,1);
 
 	// update list of bought countries
-	if(typeof data.bought !== [{}])
-		for (var i = 0; i < data.bought.length; i++)
-			localJson[data.id].owns.push({ 'country' : data.bought[i].country , 'level' : 0}); // level is always = 0 when just bought
-
+	if(typeof data.bought !== [])
+		for (var i = 0; i < data.bought.length; i++){
+			if (typeof data.bought[i].country !== 'undefined') {
+				localJson[data.id].owns.push({ 'country' : data.bought[i].country , 'level' : 0}); // level is always = 0 when just bought
+				//updateUI
+				var paysTest = getCountryById(data.bought[i].country);
+				$('#case'+paysTest.Position).addClass("player"+ data.id);
+			}
+		}
 
 	// update list of sold countries
-	if(typeof data.sold !== [{}])
-		for(var i = 0; i < data.sold.length; i++)
-			removeItem(countries.owns,'country',data.sold[i].country);
+	if(typeof data.sold !== [])
+		for(var i = 0; i < data.sold.length; i++){
+			//updateUI
 
+			if (typeof data.sold[i].country !== 'undefined') {
+				var paysTest = getCountryById(data.sold[i].country);
+				$('#case'+paysTest.Position).removeClass("player" + data.id);
+				removeItem(countries.owns,'country',data.sold[i].country);
+			}
+		}
 	// update list of cards countries
-	if(typeof data.drew !== [{}])
+	if(typeof data.drew !== [])
 		localJson[data.id].cards.push(data.drew);
 
 	// update list of owned cards
-	if(typeof data.used !== [{}])
+	if(typeof data.used !== [])
 		for(i = 0; i < data.used.length; i++)
 			removeItem(countries.results,'card',data.used[i].card);
 
 	// update list of level of countries countries
-	if(typeof data.upgraded !== [{}])
+	if(typeof data.upgraded !== [])
 		for (i = 0; i < localJson[data.id].owns.length; i++)
 			for (var y = 0; y < data.upgraded.length; y++)
 				if(localJson[data.id].owns[i].country == data.upgraded[y].country)
 					localJson[data.id].owns[i].level = data.upgraded[y].level;
 
 	// update list of cards countries
-	if(typeof data.loaned !== [{}])
+	if(typeof data.loaned !== [])
 		for (i = 0; i < data.loaned.length; i++)
 			if(!data.loaned[i].recovered)
 				localJson[data.id].loans.push(data.loaned);
 
 	// update list of bought countries
-	if(typeof data.loaned !== [{}])
+	if(typeof data.loaned !== [])
 		for(i = 0; i < data.loaned.length; i++)
 			if(data.loaned[i].recovered)
 				removeItem(data.loaned,'country',data.loaned[i].country);
+
+	if(typeof data.paid !== [{}])
+		for(i = 0; i < data.paid.length; i++)
+			if(data.paid[i])
+				if(data.paid[i].player == idPlayer) {
+					updateLogs("Player " +data.id+" paid you "+data.paid[i].amount);
+					credit(data.paid[i].amount);
+				}
 
 	PlayerPos = data.position;
 	transition(data.id,PlayerPos);
@@ -171,11 +190,12 @@ function receiveData(data) {
 		$("#btnFinTour").attr('disabled' , true);
 		$("#btnBuy").attr('disabled' , true);
 	} else {
-		
+
 		$("#btnDes").attr('disabled' , false);
 
 		myTurn = true;
 		waiting = false;
+		getMyInfos();
 	}
 
 }

@@ -7,31 +7,31 @@
 }
 
 #player1{
-	background-color: red;
+	background-color: #F44336;
 }
 
 #player2{
-	background-color: blue;
+	background-color: #E91E63;
 }
 
 #player3{
-	background-color: green;
+	background-color: #1976D2;
 }
 #player4{
-	background-color: yellow;
+	background-color: #4CAF50;
 }
 #player5{
-	background-color: pink;
+	background-color: #FFC107;
 }
 #player6{
-	background-color: black;
+	background-color: #795548;
 }
 
-.player1 #player1, .player2 #player2,.player3 #player3, .player4 #player4, .player5 #player5, .player6 #player6{border: 1px solid black;}
+.player0 #player1,.player1 #player2, .player2 #player3,.player3 #player4, .player4 #player5, .player5 #player6{border: 1px solid black;}
 
-.player1{background-color: #FF0000;}
-.player2{background-color: #0000FF;}
-.player3{background-color: #008000;}
-.player4{background-color: #FFFF00;}
-.player5{background-color: #FFC0CB;}
-.player6{background-color: #000000;}
+.player0{background-color: #F44336;}
+.player1{background-color: #E91E63;}
+.player2{background-color: #1976D2;}
+.player3{background-color: #4CAF50;}
+.player4{background-color: #FFC107;}
+.player5{background-color: #795548;}

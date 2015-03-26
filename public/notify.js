@@ -18,6 +18,7 @@ socket.on('notify',function(data){
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
+	$('#whoareyou').addClass('player' + idPlayer);
 	$('#loading').append((idPlayer + 1) + "/" + totalPlayer);
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
@@ -30,7 +31,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	nbJoueurs = totalPlayer;
 	countries = dataInitGame.pays;
 	cards = dataInitGame.cartes;
-
 
 	sentJson = {
 		"id": idPlayer,
@@ -51,7 +51,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 		"position": joueurs[idPlayer],
 		"GameID" : GameID,
 		"paid" : [{}]
-
 	};
 
 	updateUpgrades(sentJson.upgraded);
