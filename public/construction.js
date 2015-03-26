@@ -1,8 +1,8 @@
 var myTurn;
 
-$(window).bind('beforeunload', function(){
+/* $(window).bind('beforeunload', function(){
   return 'Are you sure you want to leave?';
-});
+}); */
 
 // fonction permettant de construire les cases de chaque pays et carte
 function constructionCase(typecase, id, sens, parent ){
@@ -91,6 +91,8 @@ function getInfos(position, pays){
 	if (replays)
 		waiting = false;
 
+	console.log("posLocal : "+posLocal+"; position : "+position+"; mine : "+mine+"; loaned : "+loaned+";");
+
 	if (!waiting) {
 		if (myTurn){
 			if (posLocal == position){
@@ -109,11 +111,22 @@ function getInfos(position, pays){
 				for (var i=0; i<localJson[idPlayer].owns.length;i++){
 					if (localJson[idPlayer].owns[i].country == idpays){
 						if (!replays){
-							if (loaned)
-								$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
-							else{
-								$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
-								$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+							console.log((findCountry(pays).Position+1));
+							if(posLocal == (findCountry(pays).Position+1)) {
+								$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
+								if (loaned)
+									$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+								else{
+									$('#infosPays').append('<input id="btnSell" class="third" type="button" value="vendre" onclick="sell('+idpays+')" />');
+									$('#infosPays').append('<input id="btnLoan" class="third" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+								}
+							} else {
+								if (loaned)
+									$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
+								else{
+									$('#infosPays').append('<input id="btnSell" class="half" type="button" value="vendre" onclick="sell('+idpays+')" />');
+									$('#infosPays').append('<input id="btnLoan" class="half" type="button" value="hypothéquer" onclick="loan('+idpays+')" />');
+								}
 							}
 						}
 					}
