@@ -218,6 +218,11 @@ function buy() {
 			getInfos(posLocal);
 
 			updateLogs("Player " + idPlayer + " bought " + country.NomPays);	
+
+			//updateUI
+			var paysTest = getCountryById(idPays);
+			$('#case'+paysTest.Position).addClass("player"+ idPlayer);
+
 			return 0;
 			
 		}else {
@@ -229,9 +234,6 @@ function buy() {
 		return 1;
 	}
 
-	//updateUI
-	var paysTest = getCountryById(idPays);console.log(paysTest);
-	$('#case'+paysTest.Position).addClass("player"+ (idPlayer + 1));
 
 }
 
@@ -254,13 +256,14 @@ function sell(idCountry) {
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
 		$("#btnUpgrade").hide();
+		//updateUI
+		var paysTest = getCountryById(idCountry);
+		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
+		
 	} else {
 		updateLogs("You can't sell this country, you little hacker");
 	}
 
-	//updateUI
-	var paysTest = getCountryById(idCountry);
-	$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
 
 }
 
