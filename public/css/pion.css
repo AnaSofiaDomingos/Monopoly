@@ -27,11 +27,11 @@
 	background-color: black;
 }
 
-.player1 #player1, .player2 #player2,.player3 #player3, .player4 #player4, .player5 #player5, .player6 #player6{border: 1px solid black;}
+.player0 #player1,.player1 #player2, .player2 #player3,.player3 #player4, .player4 #player5, .player5 #player6{border: 1px solid black;}
 
-.player1{background-color: #FF0000;}
-.player2{background-color: #0000FF;}
-.player3{background-color: #008000;}
-.player4{background-color: #FFFF00;}
-.player5{background-color: #FFC0CB;}
-.player6{background-color: #000000;}
+.player0{background-color: #FF0000;}
+.player1{background-color: #0000FF;}
+.player2{background-color: #008000;}
+.player3{background-color: #FFFF00;}
+.player4{background-color: #FFC0CB;}
+.player5{background-color: #000000;}

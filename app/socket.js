@@ -25,23 +25,17 @@ module.exports = function(server, connection) {
 			'state' : 0,
 
 
-			"bought": [{
-			}],
+			"bought": [],
 
-			"upgraded": [{
-			}],
+			"upgraded": [],
 
-			"sold": [{
-			}],
+			"sold": [],
 
-			"loaned": [{
-			}],
+			"loaned": [],
 
-			"drew": [{
-			}],
+			"drew": [],
 
-			"used": [{
-			}],
+			"used": [],
 
 		};
 

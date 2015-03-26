@@ -31,7 +31,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	countries = dataInitGame.pays;
 	cards = dataInitGame.cartes;
 
-
 	sentJson = {
 		"id": idPlayer,
 
@@ -51,7 +50,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 		"position": joueurs[idPlayer],
 		"GameID" : GameID,
 		"paid" : [{}]
-
 	};
 
 	updateUpgrades(sentJson.upgraded);
