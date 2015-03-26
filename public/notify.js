@@ -16,6 +16,24 @@ socket.on('notify',function(data){
 	receiveData(data);
 });
 
+function finPlayer(){
+
+	var data = {
+		'GameID' : GameID,
+		'idPlayer' : idPlayer
+	};
+
+	socket.emit("ILost",data);
+	nbJoueurs--;
+	terminateGame();
+}
+
+socket.on("SomebodyLost",function(idLooser){
+	updateLogs("player " + idLooser + " lost !");
+	nbJoueurs--;
+	terminateGame();
+});
+
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
 	$('#whoareyou').addClass('player' + idPlayer);

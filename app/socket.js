@@ -116,6 +116,10 @@ module.exports = function(server, connection) {
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
 		});
+		
+		socket.on('ILost',function(data){
+			socket.broadcast.to(data.GameID).emit('SomebodyLost',data.idPlayer);
+		});
 
 		// ERROR HANDLER
 		socket.on('error',function(err){
