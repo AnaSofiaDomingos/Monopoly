@@ -103,7 +103,7 @@ function getInfos(position, pays){
 				}
 				else if (mine && loaned)
 					$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
-				else
+				else if (!loaned)
 					$('#infosPays').append('<input id="btnBuy" class="full" type="button" value="Acheter" onclick="buy()" />');
 			}else if ((position == -1) && mine){ // quand clique sur infoCompte
 				for (var i=0; i<localJson[idPlayer].owns.length;i++){
