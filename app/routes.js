@@ -31,7 +31,7 @@ module.exports = function(app, mysql) {
 	// Date : 18.02.2015
 	// -----------------
 	app.get('/', function (req, res) {
-		res.redirect("/game.html");
+		res.redirect("/index.html");
 	});
 
 }
