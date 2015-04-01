@@ -186,7 +186,10 @@ function lancerDes(idCurrentPlayer) {
 function isPossessed(posPays) {
 	if (posPays == 0 | posPays == 3 | posPays == 6 | posPays == 9 | posPays == 12 | posPays == 15 |
 	posPays == 18 | posPays == 21 | posPays == 24 | posPays == 27 | posPays == 30 | posPays == 33){
-		return ;
+		return {
+		     'idPlayer' : -1, 
+			 'lvl'      : -1
+		   };
 	}
 	var country = findCountry(posPays);
 	for (var p = 0; p < localJson.length; p++)

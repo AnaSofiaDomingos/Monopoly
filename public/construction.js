@@ -233,7 +233,7 @@ function getMyInfos(){
 		}
 	}
 
-	$('#credit').append(sentJson.account.toString().substring(0.4)+"M");
+	$('#credit').append(sentJson.account.toString().substring(0, 2)+"M");
 }
 
 

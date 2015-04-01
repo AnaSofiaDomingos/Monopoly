@@ -108,7 +108,7 @@ function applyCard(idCard) {
 				gameOver();
 
 			var idCredit = (idPlayer + 1) % nbJoueurs;
-			credit(idCredit, 2);
+			credit(2, idCredit);
 			updateLogs("Player "+idCredit+" got'em");
 			break;
 			
