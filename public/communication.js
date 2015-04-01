@@ -143,7 +143,7 @@ function receiveData(data) {
 			}
 		// update list of cards countries
 		if(typeof data.drew !== [])
-			localJson[data.id].cards.push(data.drew);
+			localJson[data.id].cards.push({'card' : data.drew});
 
 		// update list of owned cards
 		if(typeof data.used !== [])
@@ -173,7 +173,7 @@ function receiveData(data) {
 			for(i = 0; i < data.paid.length; i++)
 				if(data.paid[i])
 					if(data.paid[i].player == idPlayer) {
-						updateLogs("Player " +data.id+" paid you "+data.paid[i].amount);
+						updateLogs("Player " +data.id+" paid you "+data.paid[i].amount.toString().substring(0,6));
 						credit(data.paid[i].amount);
 						removeItem(data.paid[i], 'player', idPlayer);
 					}

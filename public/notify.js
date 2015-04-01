@@ -45,6 +45,14 @@ socket.on("SomebodyLost",function(idLooser){
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
+
+	for (var i = 0; i < totalPlayer;i++)
+		localJson.push({
+			"owns" :  [],
+			"cards" : [}],
+			"loans" : []
+		});
+
 	$('#whoareyou').addClass('player' + idPlayer);
 	$('#loading').append((idPlayer + 1) + "/" + totalPlayer);
 	if((idPlayer + 1) == totalPlayer)
