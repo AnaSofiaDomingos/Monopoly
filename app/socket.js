@@ -7,7 +7,7 @@ module.exports = function(server, connection) {
 	function initGame(idJoueur, idPartie, callback) {
 		var cpt = 0;
 
-		
+
 		var data = {
 			'cartes':{},
 
@@ -72,11 +72,11 @@ module.exports = function(server, connection) {
 
 	var io = require('socket.io')(server);
 	var nsp = io.of('/subscribe');
-	var roomsTable = [];
+	var allPlayers = null;
 	var numberOfPlayer = 0;
 
 	function getNbPlayersInRoom(RoomID){
-		var compteur = -1;
+		var compteur = 0;
 		for (var socket in io.nsps['/subscribe'].adapter.rooms[RoomID] )
 			compteur++;
 		return compteur;
@@ -88,10 +88,13 @@ module.exports = function(server, connection) {
 		socket.on('handshake',function(data){
 			socket.join(data.RoomID);
 			console.log('user joined the room ' + data.RoomID);
-			roomsTable.push(data.RoomID);
+			allPlayers = [];
+			allPlayers.push({"socket" : socket, "roomID" : data.RoomID});
+
 			numberOfPlayer = getNbPlayersInRoom(data.RoomID);
 
 			getNbPlayers(data.RoomID, function(nbplayer){
+				console.log(numberOfPlayer);
 				socket.broadcast.to(data.RoomID).emit('Loading', numberOfPlayer, nbplayer);
 			});
 
@@ -106,7 +109,7 @@ module.exports = function(server, connection) {
 
 
 
-		socket.emit('PlayersConnected', (numberOfPlayer+1));
+		socket.emit('PlayersConnected', (numberOfPlayer));
 
 		//END OF TURN
 		socket.on('endofturn',function(data){
@@ -130,7 +133,27 @@ module.exports = function(server, connection) {
 		//DISCONNECTING
 		socket.on('disconnect', function(data){
 			// Do stuff (probably some jQuery)
-			console.log("user left room " + data);
+
+			if(allPlayers != null && allPlayers[0] !== undefined){
+
+				var i = allPlayers.indexOf(socket);
+				var index = -1;
+
+				for (var i = 0; i < allPlayers.length; i++){
+					if(allPlayers[i].socket === socket)
+						index = i;
+				}
+
+				var roomID = allPlayers[index].roomID; // save the room ID
+				allPlayers.splice(index, 1); // removes the player from the list
+				numberOfPlayer = getNbPlayersInRoom(roomID);
+
+				getNbPlayers(roomID, function(nbplayer){
+					socket.broadcast.to(roomID).emit('somebodyLeft',numberOfPlayer,nbplayer);
+				});
+
+				console.log("user left room " + data);
+			}
 
 		});
 
