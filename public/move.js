@@ -43,9 +43,6 @@ function checkUpgradeAvailible(){
 }
 
 function lancerDes(idCurrentPlayer) {
-
-	tirerCarte();
-
 	// Publicitary campaign income
 	if (sentJson.state == S_PUBLIC) { 
 		credit(PUBLIC_INCOME);
