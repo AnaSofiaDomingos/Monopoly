@@ -164,4 +164,33 @@ module.exports = function(server, connection) {
 
 	});
 
+	var acc = io.of('/account');
+	
+	acc.on('connection', function(socket){
+		socket.on('register', function(account) {
+			getPseudoExists(account, function(exists){
+				console.log(""+exists);
+				socket.emit("loginExists", exists);
+				if(!exists) {
+					connection.query('INSERT INTO joueurs (pseudo, mdp, position, etat, solde) VALUES (\''+account.login+'\', md5(\''+account.pass+'\'), 0, 0, 0)', function(err, rows, fields) {
+						if (err) throw err;
+					});
+				}
+			});
+			
+		});
+	});
+
+	function getPseudoExists(account, callback) {
+		connection.query('SELECT pseudo FROM joueurs WHERE pseudo = \''+account.login+'\'', function(err, rows, fields) {
+				if (err) throw err;
+				if(rows[0]) {
+					callback(true);
+				} else {
+					callback(false);
+				}
+			});
+	}
+
+
 }
