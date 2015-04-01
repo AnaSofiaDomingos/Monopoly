@@ -49,7 +49,7 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	for (var i = 0; i < totalPlayer;i++)
 		localJson.push({
 			"owns" :  [],
-			"cards" : [}],
+			"cards" : [],
 			"loans" : []
 		});
 

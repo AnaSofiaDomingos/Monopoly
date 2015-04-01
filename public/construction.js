@@ -87,10 +87,8 @@ function getInfos(position, pays){
 	$('#infosPays').append("</ul>"); // est-ce que c'est juste ?
 
 	// affiche les boutons en fonction de la position locale
-	if (replays)
-		waiting = false;
 
-	if (!waiting && myTurn){
+	if (myTurn){
 			if (posLocal == position){
 
 				if (mine && !loaned){
