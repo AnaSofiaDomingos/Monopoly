@@ -3,7 +3,15 @@ var socket = io('http://localhost:8080/subscribe');
 socket.emit('handshake', data); // tell the server which game this user is part of
 
 socket.on('Loading', function(nbPlayer, totalPlayer){
-	nbPlayer += 1;
+	$('#loading').empty();
+	$('#loading').append( nbPlayer  + "/" + totalPlayer );
+	if(nbPlayer == totalPlayer)
+		$('#loadingGame').addClass("hideit");
+	else
+		$('#loadingGame').removeClass("hideit");
+});
+
+socket.on("somebodyLeft",function(nbPlayer,totalPlayer){
 	$('#loading').empty();
 	$('#loading').append( nbPlayer  + "/" + totalPlayer );
 	if(nbPlayer == totalPlayer)
@@ -33,6 +41,7 @@ socket.on("SomebodyLost",function(idLooser){
 	nbJoueurs--;
 	terminateGame();
 });
+
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;

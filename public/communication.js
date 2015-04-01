@@ -1,5 +1,5 @@
 
-function finTour(GameID, idCurrentPlayer) {
+function finTour() {
 
 	$("#btnFinTour").attr('disabled' , true);
 	$("#btnDes").attr('value', 'Lancer les dés');
@@ -198,7 +198,7 @@ function receiveData(data) {
 			var posJoueur = document.getElementById("case"+data.position);
 			var pion = document.getElementById("player"+(data.id+1));
 			posJoueur.removeChild(pion);
-			finTour(1, idPlayer);
+			finTour();
 		} else {
 			$("#btnDes").attr('disabled' , false);
 

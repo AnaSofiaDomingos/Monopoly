@@ -169,17 +169,17 @@ function gameOver() {
 
 	sentJson.state = S_DEAD;
 
-	finTour(1, idPlayer);
+	finTour();
 	finGame();
 
 	return -1;
-	
+
 }
 
 function buy() {
 	// Checks if the player can afford the country
 	var country = findCountry(posLocal);
-	var idPays = country.idPays;	
+	var idPays = country.idPays;
 
 	if(!idPays) 
 		return -1;
