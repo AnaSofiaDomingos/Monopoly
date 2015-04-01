@@ -30,8 +30,8 @@ var idGlobal = Math.floor(Math.random() * 4) + 1;
 var idPlayer;
 var sentJson;
 
-var owns   = [{}];
-var backup = [{}];
+var owns   = [];
+var backup = [];
 var joueurs = [0, 0, 0, 0, 0];
 
 var localJson = [];
