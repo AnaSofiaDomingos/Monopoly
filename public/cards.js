@@ -1,6 +1,6 @@
 function tirerCarte() {
 
-	var card = 0;
+	var card = 9;
 	while ((card == 0) || (card == 19) || (card == 21))
 			card = Math.floor((Math.random() * CARDS));
 
@@ -33,7 +33,7 @@ function applyCard(idCard) {
 			break;
 			
 		case 2 :
-			if (localJson[idPlayer].owns.length > 0){
+			if (localJson[idPlayer].owns.length > 1){
 				// Plus internet 2 tours (back to electricity)
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 				
@@ -45,7 +45,8 @@ function applyCard(idCard) {
 					
 				}
 				updateLogs("Player "+idPlayer+" has no internet for 2 turn");
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 			
 		case 3 : 
@@ -61,7 +62,7 @@ function applyCard(idCard) {
 		case 4 :
 			
 			// Debit 100'000 par pays
-			if (localJson[idPlayer].owns.length > 0){
+			if (localJson[idPlayer].owns.length > 1){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					sum = 0.1 ;
 					if (debitObligatoire(sum) == 0) 
@@ -69,13 +70,14 @@ function applyCard(idCard) {
 					else 
 						gameOver();
 				}
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 			
 		case 5 :
 			
 			// Plus eau 2 tours (amélioration niveau 0)
-			if (localJson[idPlayer].owns.length > 0){
+			if (localJson[idPlayer].owns.length > 1){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					
 					// Backup state
@@ -85,7 +87,8 @@ function applyCard(idCard) {
 					
 				}
 				updateLogs("Player "+idPlayer+" has no water for 2 turn");
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 			
 		case 6 : 
@@ -115,7 +118,7 @@ function applyCard(idCard) {
 		case 8 :
 		
 			// Roi Burgonde installé en Asie plus d'eau 2 tours (amélioration 0)
-			if (localJson[idPlayer].owns.length > 0){
+			if (localJson[idPlayer].owns.length > 1){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					if(localJson[idPlayer].owns[i]){
 						// Backup state
@@ -128,24 +131,25 @@ function applyCard(idCard) {
 					}
 				}
 				updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 		
 		case 9 :
-		
 			// USA saisissent les ameliorations Moyen-Orient
-			if (localJson[idPlayer].owns.length > 0) {
-				updateLogs("Player "+idPlayer+" have no more levels for a random country");
+			if (localJson[idPlayer].owns.length > 1) {
+				updateLogs("Player "+idPlayer+" have no more levels for a random country"); 
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
 				updateLogs("Country "+localJson[idPlayer].owns[paysAleatoire].country+" got robbed by the USA");
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 			
 		case 10 :
 			
 			// Plus d'electricite pendant 2 tours
-			if (localJson[idPlayer].owns.length > 0) {
+			if (localJson[idPlayer].owns.length > 1) {
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++){
 				
 					// Backup the state
@@ -156,7 +160,8 @@ function applyCard(idCard) {
 					
 				}
 				updateLogs("Player "+idPlayer+" has no electricity for 2 turns");
-			}
+			}else
+				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
 			break;
 
 
@@ -178,34 +183,45 @@ function applyCard(idCard) {
 				updateLogs("Player "+idPlayer+" got 1'000'000");
 			break;
 				  
-		case 13 : 
-		
-			// Internet gratuit dans un pays
-			updateLogs("Player "+idPlayer+" can have internet for free");
-			grade(country, UP_INT);
+		case 13 : // garder
+			if (localJson[idPlayer].owns.length > 1) {
+				// Internet gratuit dans un pays
+				updateLogs("Player "+idPlayer+" can have internet for free");
+				removeItem(localJson[idPlayer].cards, "card", 13);
+				grade(country, UP_INT);
+			}else
+				updateLogs("Player "+idPlayer+" can't use that card");
 			break;
 				  
-		case 14 : 
+		case 14 :  // garder
 		
 			// Envahir pays de qualité inférieur si on paye 10 000 000
 			if (sentJson.position > 1) {
 				var	country = Math.ceil(Math.random() * sentJson.position) + 1;		
-				updateLogs("Player "+idPlayer+" invades country "+country);
 				if (debit(10) == 0) {
+					updateLogs("Player "+idPlayer+" invades country "+country);
 					inherit(country);
 					for (var i = 0; i < localJson[idPlayer].cards.length; i++)
 						if (localJson[idPlayer].cards[i].card == country)
 							localJson[idPlayer].cards.splice(i, 1);
+
+					removeItem(localJson[idPlayer].cards, "card", 14);
 					getMyInfos();
-				}
+				}else
+					updateLogs("Player "+idPlayer+" don't have enough money");
 			}
 			break;
 				  
-		case 15 : 
-			updateLogs("Player "+id+" got out of jail");
-			// Sortie prison
-			if (sentJson.state == S_JAILED)
-				sentJson.state = S_ALIVE;
+		case 15 :  // garder
+			if (sentJson.state == S_ALIVE)
+				updateLogs("You are not in jail");
+			else{
+				// Sortie prison
+				if (sentJson.state == S_JAILED)
+					sentJson.state = S_ALIVE;
+				updateLogs("Player "+id+" got out of jail");
+				removeItem(localJson[idPlayer].cards, "card", 15);
+			}
 			break;
 		
 		case 16 : 

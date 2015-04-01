@@ -34,31 +34,7 @@ var owns   = [{}];
 var backup = [{}];
 var joueurs = [0, 0, 0, 0, 0];
 
-var localJson = [{
-		"owns" : owns,
-		"cards" : [{}],
-		"loans" : [{}]
-}, {
-		"owns" : [{}],
-		"cards" : [{}],
-		"loans" : [{}]
-}, {
-		"owns" : [{}],
-		"cards" : [{}],
-		"loans" : [{}]
-}, {
-		"owns" : [{}],
-		"cards" : [{}],
-		"loans" : [{}]
-}, {
-		"owns" : [{}],
-		"cards" : [{}],
-		"loans" : [{}]
-}, {
-		"owns" : [{}],
-		"cards" : [{}],
-		"loans" : [{}]
-}];
+var localJson = [];
 
 // console.log(idGlobal);
 var data = {

@@ -44,6 +44,8 @@ function checkUpgradeAvailible(){
 
 function lancerDes(idCurrentPlayer) {
 
+	tirerCarte();
+
 	// Publicitary campaign income
 	if (sentJson.state == S_PUBLIC) { 
 		credit(PUBLIC_INCOME);
@@ -193,12 +195,15 @@ function isPossessed(posPays) {
 	}
 	var country = findCountry(posPays);
 	for (var p = 0; p < localJson.length; p++)
-		for (var i = 0; i < localJson[p].owns.length; i++)
-			if (localJson[p].owns[i].country == country.idPays) 
-				return { 
-						 'idPlayer': p, 
-				         'lvl'     : localJson[p].owns[i].level 
-					   };
+		if(localJson[p].owns == null)
+			continue;
+		else
+			for (var i = 0; i < localJson[p].owns.length; i++)
+				if (localJson[p].owns[i].country == country.idPays) 
+					return { 
+							 'idPlayer': p, 
+					         'lvl'     : localJson[p].owns[i].level 
+						   };
 
 	return {
 		     'idPlayer' : -1, 

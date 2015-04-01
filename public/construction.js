@@ -232,16 +232,17 @@ function getMyInfos(){
 		}
 	}
 
-	$('#credit').append(sentJson.account.toString().substring(0, 2)+"M");
+	$('#credit').append(sentJson.account.toString().substring(0, 6)+"M");
 }
 
 
 function getInfosCartes(idCarte){
-	$('#infosCartes').empty();
-	$('#infosCartes').toggle();
-	$('#' + idCarte).append('<div id="infosCartes">');
-	$('#infosCartes').append("<span>"+ getCardById(idCarte).Contenu  +"</span>");
-	$('#infosCartes').append('<input id="btnUseCard" class="full" type="button" value="utiliser" onclick="useCard('+idCarte+')" />');
+	console.log(idCarte);
+	$('#infosCartes'+idCarte).empty();
+	$('#infosCartes'+idCarte).toggle();
+	$('#' + idCarte).append('<div id="infosCartes'+idCarte+'">');
+	$('#infosCartes'+idCarte).append("<span>"+ getCardById(idCarte).Contenu  +"</span>");
+	$('#infosCartes'+idCarte).append('<input id="btnUseCard" class="full" type="button" value="utiliser" onclick="useCard('+idCarte+')" />');
 }
 
 function RemoveInfos(){
@@ -253,6 +254,5 @@ function RemoveInfos(){
 function useCard(idCarte){
 	updateLogs(idPlayer + " use card " + idCarte);
 	applyCard(idCarte);
-	removeItem(localJson[idPlayer].cards, "card", idCarte);
 	getMyInfos();
 }
