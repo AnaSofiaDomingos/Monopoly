@@ -111,8 +111,7 @@ function getInfos(position, pays){
 				for (var i=0; i<localJson[idPlayer].owns.length;i++){
 					if (localJson[idPlayer].owns[i].country == idpays){
 						if (!replays){
-
-							if(posLocal == (findCountry(pays).Position+1)) {
+							if(posLocal == getCountryById(idpays).Position) {
 								$('#infosPays').append('<input id="btnUpgrade" class="third" type="button" value="améliorer" onclick="upgrade('+idPlayer+')" />');
 								if (loaned)
 									$('#infosPays').append('<input id="btnRecover" class="full" type="button" value="récupérer" onclick="recover('+idpays+')" />');
@@ -175,9 +174,9 @@ function placeCountriesCartes(){
 }
 
 // trouve le pays correspondant à la case avec la position
-function findCountry(id){
+function findCountry(position){
 	for (var i=0; i< countries.length;i++){
-		if (countries[i].Position == id)
+		if (countries[i].Position == position)
 			return countries[i];
 
 	}
