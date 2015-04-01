@@ -101,7 +101,7 @@ module.exports = function(server, connection) {
 			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
 				if(cpt == 3){
 					getNbPlayers(data.RoomID, function(nbplayer){
-						socket.emit('PlayerNumber',numberOfPlayer, dataInitGame,nbplayer);
+						socket.emit('PlayerNumber',numberOfPlayer-1, dataInitGame,nbplayer);
 					});
 				}
 			});
