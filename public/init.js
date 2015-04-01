@@ -50,5 +50,7 @@ function updateLogs(log){
 	var liElem = '<li class="data-infopays">';
 	var liElemClose = '</li>';
 	$('#logs-list').append(liElem + log + liElemClose);
-	$('#logs-list').scrollTop($('#logs-list').attr('scrollHeight'));
+	var height = $('#logs').prop('scrollHeight');
+	console.log(height);
+	$('#logs').scrollTop(height);
 }
