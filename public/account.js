@@ -57,7 +57,7 @@ function login() {
 			}
 		});
 	}
-
+	
 	socket.emit('whoami', infosConnect.pseudo);
 }
 
