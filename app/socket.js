@@ -72,11 +72,6 @@ module.exports = function(server, connection) {
 		connection.query('SELECT * FROM joueurs WHERE pseudo = \''+account.login+'\' AND mdp = \''+account.pass+'\'', function(err, rows, fields) {
 			if (err) throw err;
 			callback(rows[0]);
-			/*if(rows[0]) {
-				callback(rows[0]);
-			} else {
-				callback(false);
-			} */
 		});
 	}
 
@@ -203,22 +198,23 @@ module.exports = function(server, connection) {
 				socket.emit("loginSuccess", infos);
 		 	});
 		});
-	});
 
-	salon.on('connection', function(socket){
-		//création de partie
-		//var login = 'Ana';
+
 		socket.on('whoami', function(login){
-			getIdFromPseudo(login, function(id){
-				socket.on('createGame', function(nbplayers){
-					connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ')' ,function(err, rows, fields) {
-						if (err) throw err;
-					}); 
+
+			salon.on('connection', function(socket){
+				//création de partie
+				getIdFromPseudo(login, function(id){
+					socket.on('createGame', function(nbplayers){
+						connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ', 0)' ,function(err, rows, fields) {
+							if (err) throw err;
+							console.log("game created");
+						}); 
+					});
 				});
 			});
 		});
 	});
-
 }
 
 

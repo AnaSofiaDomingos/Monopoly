@@ -42,9 +42,9 @@ function login() {
 		socket.emit('login', {'login':pseudo, 'pass':pass});
 
 		socket.on('loginSuccess', function(success){
-			console.log(success);
 			if(success) {
 				infosConnect = success;
+				socket.emit('whoami', infosConnect.pseudo);
 				$('#errorsLogin').css("color", "green");
 				$('#errorsLogin').text("Login success");
 				$('#login, #register').hide();
@@ -58,7 +58,6 @@ function login() {
 		});
 	}
 	
-	socket.emit('whoami', infosConnect.pseudo);
 }
 
 function logout() {

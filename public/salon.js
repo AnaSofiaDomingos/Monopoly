@@ -1,9 +1,7 @@
-var socket = io('http://localhost:8080/salon');
-
 function createGame(){
-	socket.emit('whoami', , infosConnect.pseudo);
+	var socketSalon = io('http://localhost:8080/salon');
 	var nbplayers = $('#nbPlayers').val();
-	socket.emit('createGame', nbplayers);
+	socketSalon.emit('createGame', nbplayers);
 }
 
 function salon(){
