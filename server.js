@@ -28,8 +28,6 @@ connection.connect();
 require('./app/routes.js')(app, connection);
 // socket ======================================================================
 require('./app/socket.js')(server, connection);
-// salon ======================================================================
-require('./app/salon.js')(server, connection);
 
 
 app.use(methodOverride());

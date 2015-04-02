@@ -153,14 +153,15 @@ module.exports = function(server, connection) {
 					if(allPlayers[i].socket === socket)
 						index = i;
 				}
+				if (index != -1) {
+					var roomID = allPlayers[index].roomID; // save the room ID
+					allPlayers.splice(index, 1); // removes the player from the list
+					numberOfPlayer = getNbPlayersInRoom(roomID);
 
-				var roomID = allPlayers[index].roomID; // save the room ID
-				allPlayers.splice(index, 1); // removes the player from the list
-				numberOfPlayer = getNbPlayersInRoom(roomID);
-
-				getNbPlayers(roomID, function(nbplayer){
-					socket.broadcast.to(roomID).emit('somebodyLeft',numberOfPlayer,nbplayer);
-				});
+					getNbPlayers(roomID, function(nbplayer){
+						socket.broadcast.to(roomID).emit('somebodyLeft',numberOfPlayer,nbplayer);
+					});
+				}
 
 				console.log("user left room " + data);
 			}
@@ -206,12 +207,14 @@ module.exports = function(server, connection) {
 
 	salon.on('connection', function(socket){
 		//création de partie
-		var login = 'Ana';
-		getIdFromPseudo(login, function(id){
-			socket.on('createGame', function(nbplayers){
-				connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ')' ,function(err, rows, fields) {
-					if (err) throw err;
-				}); 
+		//var login = 'Ana';
+		socket.on('whoami', function(login){
+			getIdFromPseudo(login, function(id){
+				socket.on('createGame', function(nbplayers){
+					connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ')' ,function(err, rows, fields) {
+						if (err) throw err;
+					}); 
+				});
 			});
 		});
 	});
