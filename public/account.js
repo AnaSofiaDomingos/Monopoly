@@ -1,11 +1,16 @@
 
 var socket = io('http://localhost:8080/account');
 
+var infosConnect;
+
 function register() {
 	// Verify passwords
 	var pass1 = $('#password1').val();
 	var pass2 = $('#password2').val();
 	var login = $('#loginRegister').val();
+
+	$('#errorsRegister').css("color", "red");
+
 	if(pass1 == pass2) {
 		if(login) {
 			if(pass1) {
@@ -30,5 +35,24 @@ function register() {
 }
 
 function login() {
+	var pseudo = $('#pseudoLogin').val();
+	var pass = $.md5($('#passLogin').val());
+	$('#errorsLogin').css("color", "red");
+	if(pseudo && pass) {
+		socket.emit('login', {'login':pseudo, 'pass':pass});
 
+		socket.on('loginSuccess', function(success){
+			console.log(success);
+			if(success) {
+				infosConnect = success;
+				$('#errorsLogin').css("color", "green");
+				$('#errorsLogin').text("Login success");
+				$('#login, #register').hide();
+				$('#pseudoTitle').text(infosConnect.pseudo);
+				$('#accInfos').show();
+			} else {
+				$('#errorsLogin').text("Login failed");
+			}
+		});
+	}
 }

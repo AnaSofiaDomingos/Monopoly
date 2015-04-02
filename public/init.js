@@ -34,6 +34,8 @@ var owns   = [];
 var backup = [];
 var joueurs = [0, 0, 0, 0, 0];
 
+var domain = "localhost:8080";
+
 var localJson = [];
 
 // console.log(idGlobal);

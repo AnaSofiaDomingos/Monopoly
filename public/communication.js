@@ -12,7 +12,11 @@ function finTour() {
 	myTurn = false;
 	replays = false;
 }
-
+function terminateGame(){
+	if(nbJoueurs == 1){ // game is over and will be terminated
+		window.location.href = domain + "/index.html";
+	}
+}
 function upgrade(idCurrentPlayer){
 	var posPays = joueurs[idCurrentPlayer];
 	var pays = findCountry(posPays);
