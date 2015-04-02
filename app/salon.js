@@ -16,13 +16,14 @@ module.exports = function(server, connection) {
 		var login = 'Ana';
 		getIdFromPseudo(login, function(id){
 
-		console.log(id);
-		socket.on('createGame', function(nbplayers){
+			console.log(id);
+			socket.on('createGame', function(nbplayers){
 
-			console.log(nbplayers);
-			connection.query('INSERT INTO parties  (nbJoueurs, idJoueur) VALUES (' +
-								nbplayers + ", " + id ,function(err, rows, fields) {
-				if (err) throw err;
+				console.log(nbplayers);
+				connection.query('INSERT INTO parties  (nbJoueurs, idJoueur) VALUES (' +
+									nbplayers + ", " + id ,function(err, rows, fields) {
+					if (err) throw err;
+				});
 			});
 		});
 	});
