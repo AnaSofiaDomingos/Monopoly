@@ -50,9 +50,19 @@ function login() {
 				$('#login, #register').hide();
 				$('#pseudoTitle').text(infosConnect.pseudo);
 				$('#accInfos').show();
+				$('#pseudoLogin').val("");
+				$('#passLogin').val("")
 			} else {
 				$('#errorsLogin').text("Login failed");
 			}
 		});
 	}
 }
+
+function logout() {
+	$('#accInfos, #register').hide();
+	$('#login').show();
+	infosConnect = {};
+}
+
+
