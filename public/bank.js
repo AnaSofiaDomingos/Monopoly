@@ -167,7 +167,6 @@ function buy() {
 	var country = findCountry(posLocal);
 	var idPays = country.idPays;
 
-	gameOver(); // SHOULD BE DELETED
 
 	if(!idPays) 
 		return -1;
