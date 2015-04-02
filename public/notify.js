@@ -1,5 +1,6 @@
 //var socket = io('http://129.194.185.13:8080/subscribe');
-var socket = io(domain + '/subscribe');
+
+var socket = io('http://' + domain + ':' + port +  '/subscribe');
 socket.emit('handshake', data); // tell the server which game this user is part of
 
 socket.on('Loading', function(nbPlayer, totalPlayer){
@@ -24,17 +25,7 @@ socket.on('notify',function(data){
 	receiveData(data);
 });
 
-function finPlayer(){
 
-	var data = {
-		'GameID' : GameID,
-		'idPlayer' : idPlayer
-	};
-
-	socket.emit("ILost",data);
-	nbJoueurs--;
-	terminateGame();
-}
 
 socket.on("SomebodyLost",function(idLooser){
 	updateLogs("player " + idLooser + " lost !");
@@ -45,7 +36,7 @@ socket.on("SomebodyLost",function(idLooser){
 
 socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	idPlayer = idLocal;
-
+	nbJoueurs = totalPlayer;
 	for (var i = 0; i < totalPlayer;i++)
 		localJson.push({
 			"owns" :  [],

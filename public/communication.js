@@ -12,11 +12,7 @@ function finTour() {
 	myTurn = false;
 	replays = false;
 }
-function terminateGame(){
-	if(nbJoueurs == 1){ // game is over and will be terminated
-		window.location.href = domain + "/index.html";
-	}
-}
+
 function upgrade(idCurrentPlayer){
 	var posPays = joueurs[idCurrentPlayer];
 	var pays = findCountry(posPays);
@@ -185,14 +181,22 @@ function receiveData(data) {
 		PlayerPos = data.position;
 		transition(data.id,PlayerPos);
 	}
+
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
 
 	updateUpgrades(data.upgraded);
 
+	console.log(data.state);
+	if(data.state == S_DEAD){ // if somebody lost we check if the game is over
+		nbJoueurs--;
+		terminateGame();
+	}
+
 	$("#btnFinTour").attr('disabled' , true);
 
 	if (nextPlayer != idPlayer) {
+		terminateGame();
 		$("#btnDes").attr('disabled' , true);
 		$("#btnUpgrade").attr('disabled' , true);
 		$("#btnFinTour").attr('disabled' , true);
