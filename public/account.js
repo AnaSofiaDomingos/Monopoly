@@ -44,14 +44,15 @@ function login() {
 		socket.on('loginSuccess', function(success){
 			if(success) {
 				infosConnect = success;
-				socket.emit('whoami', infosConnect.pseudo);
 				$('#errorsLogin').css("color", "green");
 				$('#errorsLogin').text("Login success");
 				$('#login, #register').hide();
 				$('#pseudoTitle').text(infosConnect.pseudo);
 				$('#accInfos').show();
 				$('#pseudoLogin').val("");
-				$('#passLogin').val("")
+				$('#passLogin').val("");
+
+				salon();
 			} else {
 				$('#errorsLogin').text("Login failed");
 			}

@@ -83,6 +83,14 @@ module.exports = function(server, connection) {
 		});
 	}
 
+	// recupère la liste des parties
+	function listGames(callback){
+		connection.query('SELECT * FROM parties p JOIN joueurs j ON p.idJoueur = j.idJoueur WHERE p.finie = -1', function(err, rows, fields){
+			if (err) throw err;
+			callback(rows);
+		});
+	}
+
 	var io = require('socket.io')(server);	
 	var nsp = io.of('/subscribe');		// jeu
 	var acc = io.of('/account');		// comptes
@@ -198,24 +206,24 @@ module.exports = function(server, connection) {
 				socket.emit("loginSuccess", infos);
 		 	});
 		});
+	});
 
-
+	salon.on('connection', function(socket){
 		socket.on('whoami', function(login){
-
-			salon.on('connection', function(socket){
-				//création de partie
-				getIdFromPseudo(login, function(id){
-					socket.on('createGame', function(nbplayers){
-						connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ', 0)' ,function(err, rows, fields) {
-							if (err) throw err;
-							console.log("game created");
-						}); 
-					});
+			console.log(login);
+			//création de partie
+			getIdFromPseudo(login, function(id){
+				socket.on('createGame', function(nbplayers){
+					connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ', -1)' ,function(err, rows, fields) {
+						if (err) throw err;
+						console.log("game created");
+					}); 
 				});
 			});
 		});
+
+		listGames(function(list){
+			socket.emit("listGames", list);
+		});
 	});
 }
-
-
-
