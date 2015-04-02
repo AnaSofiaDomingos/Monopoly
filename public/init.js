@@ -29,12 +29,14 @@ var GameID = 1;
 var idGlobal = Math.floor(Math.random() * 4) + 1;
 var idPlayer;
 var sentJson;
+var nbJoueurs;
 
 var owns   = [];
 var backup = [];
 var joueurs = [0, 0, 0, 0, 0];
 
-var domain = "localhost:8080";
+var domain = "localhost";
+var port = "8080";
 
 var localJson = [];
 
@@ -55,3 +57,4 @@ function updateLogs(log){
 	var height = $('#logs').prop('scrollHeight');
 	$('#logs').scrollTop(height);
 }
+

@@ -160,26 +160,14 @@ function inherit(country) {
 
 
 
-function gameOver() {
 
-	console.log("Player "+idPlayer+" out of the game");
-	localJson[idPlayer].owns = [{}];
-	localJson[idPlayer].loans = [{}];
-	localJson[idPlayer].cards = [{}];
-
-	sentJson.state = S_DEAD;
-
-	finTour();
-	finGame();
-
-	return -1;
-
-}
 
 function buy() {
 	// Checks if the player can afford the country
 	var country = findCountry(posLocal);
 	var idPays = country.idPays;
+
+	gameOver(); // SHOULD BE DELETED
 
 	if(!idPays) 
 		return -1;
@@ -242,7 +230,7 @@ function buy() {
 		return 1;
 	}
 
-
+	
 }
 
 function sell(idCountry) {
