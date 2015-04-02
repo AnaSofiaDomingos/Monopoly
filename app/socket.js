@@ -4,49 +4,25 @@
 
 module.exports = function(server, connection) {
 
+
+	// récupère les informations initiale pour le commencement d'une partie
 	function initGame(idJoueur, idPartie, callback) {
 		var cpt = 0;
-
-
 		var data = {
-			'cartes':{},
-
-			'pays' : {},
-
-			// to be send
+			'cartes':{},	// liste de tout les pays dans la base de données
+			'pays' : {},	// liste de toutes les cartes dans la base de données
 			'id': idJoueur,
-
 			'GameID' : idPartie,
-
 			'position': 0,
-
-			'account': 0,
-
+			'account': 20,
 			'state' : 0,
-
-
 			"bought": [],
-
 			"upgraded": [],
-
 			"sold": [],
-
 			"loaned": [],
-
 			"drew": [],
-
-			"used": [],
-
+			"used": []
 		};
-
-		// recupère le solde du joueur
-		connection.query('SELECT solde FROM parties p LEFT JOIN participe pa ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = pa.idJoueur WHERE pa.idJoueur = ' 
-			+idJoueur + ' AND pa.idPartie = ' +idPartie, function(err, rows, fields) {
-			if (err) throw err;
-
-			data.account = rows[0]["solde"];
-			callback(data, ++cpt);
-		});
 
 		// recupere la liste des cartes dans la base de données
 		connection.query('SELECT * FROM cartes', function(err,rows,fields){
@@ -63,6 +39,7 @@ module.exports = function(server, connection) {
 		});
 	}
 
+	// récupère le nombre de joueurs maximum pour une partie
 	function getNbPlayers(idPartie, callback){
 		connection.query('SELECT nbJoueurs FROM parties WHERE idPartie = ' +idPartie, function(err, rows, fields) {
 			if (err) throw err;
@@ -70,17 +47,35 @@ module.exports = function(server, connection) {
 		});
 	}
 
-	var io = require('socket.io')(server);
-	var nsp = io.of('/subscribe');
-	var allPlayers = null;
-	var numberOfPlayer = 0;
-
+	// récupère le nombre de joueurs dans une room
 	function getNbPlayersInRoom(RoomID){
 		var compteur = 0;
 		for (var socket in io.nsps['/subscribe'].adapter.rooms[RoomID] )
 			compteur++;
 		return compteur;
 	}
+
+	// vérifie si le pseudo existe déjà dans la base données
+	function getPseudoExists(account, callback) {
+		connection.query('SELECT pseudo FROM joueurs WHERE pseudo = \''+account.login+'\'', function(err, rows, fields) {
+			if (err) throw err;
+			if(rows[0]) {
+				callback(true);
+			} else {
+				callback(false);
+			}
+		});
+	}
+
+	var io = require('socket.io')(server);	
+	var nsp = io.of('/subscribe');		// jeu
+	var acc = io.of('/account');		// comptes
+	var allPlayers = null;
+	var numberOfPlayer = 0;
+
+	/* =============================================================================================================================================
+														FONCTIONS SOCKET POUR LE JEU
+	============================================================================================================================================= */
 
 	nsp.on('connection', function(socket){
 
@@ -99,7 +94,7 @@ module.exports = function(server, connection) {
 			});
 
 			initGame(data.idGlobal, data.RoomID, function(dataInitGame, cpt) {
-				if(cpt == 3){
+				if(cpt == 2){
 					getNbPlayers(data.RoomID, function(nbplayer){
 						socket.emit('PlayerNumber',numberOfPlayer-1, dataInitGame,nbplayer);
 					});
@@ -114,7 +109,6 @@ module.exports = function(server, connection) {
 		//END OF TURN
 		socket.on('endofturn',function(data){
 			console.log(data);
-			// end of turn==================================================================
 			require('./endofturn.js')(data, connection);
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
@@ -132,8 +126,6 @@ module.exports = function(server, connection) {
 
 		//DISCONNECTING
 		socket.on('disconnect', function(data){
-			// Do stuff (probably some jQuery)
-
 			if(allPlayers != null && allPlayers[0] !== undefined){
 
 				var i = allPlayers.indexOf(socket);
@@ -164,33 +156,28 @@ module.exports = function(server, connection) {
 
 	});
 
-	var acc = io.of('/account');
-	
+
+	/* =============================================================================================================================================
+														FONCTIONS SOCKET POUR LE COMPTE
+	============================================================================================================================================= */
+
 	acc.on('connection', function(socket){
+		// création de compte
 		socket.on('register', function(account) {
 			getPseudoExists(account, function(exists){
-				console.log(""+exists);
+
 				socket.emit("loginExists", exists);
 				if(!exists) {
-					connection.query('INSERT INTO joueurs (pseudo, mdp, position, etat, solde) VALUES (\''+account.login+'\', md5(\''+account.pass+'\'), 0, 0, 0)', function(err, rows, fields) {
+					connection.query('INSERT INTO joueurs (pseudo, mdp, position, etat, solde) VALUES (\''+
+						account.login+'\', md5(\''+account.pass+'\'), 0, 0, 0)', function(err, rows, fields) {
 						if (err) throw err;
 					});
 				}
 			});
 			
 		});
+
+
+		// login
 	});
-
-	function getPseudoExists(account, callback) {
-		connection.query('SELECT pseudo FROM joueurs WHERE pseudo = \''+account.login+'\'', function(err, rows, fields) {
-				if (err) throw err;
-				if(rows[0]) {
-					callback(true);
-				} else {
-					callback(false);
-				}
-			});
-	}
-
-
 }
