@@ -67,6 +67,19 @@ module.exports = function(server, connection) {
 		});
 	}
 
+	// Test login
+	function verifyLogin(account, callback) {
+		connection.query('SELECT * FROM joueurs WHERE pseudo = \''+account.login+'\' AND mdp = \''+account.pass+'\'', function(err, rows, fields) {
+			if (err) throw err;
+			callback(rows[0]);
+			/*if(rows[0]) {
+				callback(rows[0]);
+			} else {
+				callback(false);
+			} */
+		});
+	}
+
 	var io = require('socket.io')(server);	
 	var nsp = io.of('/subscribe');		// jeu
 	var acc = io.of('/account');		// comptes
@@ -112,10 +125,6 @@ module.exports = function(server, connection) {
 			require('./endofturn.js')(data, connection);
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
-		});
-		
-		socket.on('ILost',function(data){
-			socket.broadcast.to(data.GameID).emit('SomebodyLost',data.idPlayer);
 		});
 
 		// ERROR HANDLER
@@ -179,5 +188,25 @@ module.exports = function(server, connection) {
 
 
 		// login
+		socket.on('login', function(account) {
+			verifyLogin(account, function(infos){
+				socket.emit("loginSuccess", infos);
+		 	});
+			/* getPseudoExists(account, function(exists){
+
+				socket.emit("loginExists", exists);
+				if(!exists) {
+					connection.query('INSERT INTO joueurs (pseudo, mdp, position, etat, solde) VALUES (\''+
+						account.login+'\', md5(\''+account.pass+'\'), 0, 0, 0)', function(err, rows, fields) {
+						if (err) throw err;
+					});
+				}
+			}); */ 
+			
+		});
 	});
+
 }
+
+
+
