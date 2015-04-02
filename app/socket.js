@@ -80,9 +80,18 @@ module.exports = function(server, connection) {
 		});
 	}
 
+	// récupère l'id en fonction du pseudo
+	function getIdFromPseudo(pseudo, callback){
+		connection.query('SELECT idJoueur FROM joueurs WHERE pseudo = \'' +pseudo+ '\'', function(err, rows, fields){
+			if (err) throw err;
+			callback(rows[0]["idJoueur"]);
+		});
+	}
+
 	var io = require('socket.io')(server);	
 	var nsp = io.of('/subscribe');		// jeu
 	var acc = io.of('/account');		// comptes
+	var salon = io.of('/salon');		// salon
 	var allPlayers = null;
 	var numberOfPlayer = 0;
 
@@ -144,14 +153,15 @@ module.exports = function(server, connection) {
 					if(allPlayers[i].socket === socket)
 						index = i;
 				}
+				if (index != -1) {
+					var roomID = allPlayers[index].roomID; // save the room ID
+					allPlayers.splice(index, 1); // removes the player from the list
+					numberOfPlayer = getNbPlayersInRoom(roomID);
 
-				var roomID = allPlayers[index].roomID; // save the room ID
-				allPlayers.splice(index, 1); // removes the player from the list
-				numberOfPlayer = getNbPlayersInRoom(roomID);
-
-				getNbPlayers(roomID, function(nbplayer){
-					socket.broadcast.to(roomID).emit('somebodyLeft',numberOfPlayer,nbplayer);
-				});
+					getNbPlayers(roomID, function(nbplayer){
+						socket.broadcast.to(roomID).emit('somebodyLeft',numberOfPlayer,nbplayer);
+					});
+				}
 
 				console.log("user left room " + data);
 			}
@@ -192,17 +202,20 @@ module.exports = function(server, connection) {
 			verifyLogin(account, function(infos){
 				socket.emit("loginSuccess", infos);
 		 	});
-			/* getPseudoExists(account, function(exists){
+		});
+	});
 
-				socket.emit("loginExists", exists);
-				if(!exists) {
-					connection.query('INSERT INTO joueurs (pseudo, mdp, position, etat, solde) VALUES (\''+
-						account.login+'\', md5(\''+account.pass+'\'), 0, 0, 0)', function(err, rows, fields) {
+	salon.on('connection', function(socket){
+		//création de partie
+		//var login = 'Ana';
+		socket.on('whoami', function(login){
+			getIdFromPseudo(login, function(id){
+				socket.on('createGame', function(nbplayers){
+					connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ')' ,function(err, rows, fields) {
 						if (err) throw err;
-					});
-				}
-			}); */ 
-			
+					}); 
+				});
+			});
 		});
 	});
 
