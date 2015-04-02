@@ -8,8 +8,6 @@ module.exports = function(server, connection) {
 	// récupère les informations initiale pour le commencement d'une partie
 	function initGame(idJoueur, idPartie, callback) {
 		var cpt = 0;
-
-
 		var data = {
 			'cartes':{},	// liste de tout les pays dans la base de données
 			'pays' : {},	// liste de toutes les cartes dans la base de données
@@ -69,14 +67,11 @@ module.exports = function(server, connection) {
 		});
 	}
 
-
-
 	var io = require('socket.io')(server);	
 	var nsp = io.of('/subscribe');		// jeu
 	var acc = io.of('/account');		// comptes
 	var allPlayers = null;
 	var numberOfPlayer = 0;
-
 
 	/* =============================================================================================================================================
 														FONCTIONS SOCKET POUR LE JEU
@@ -114,7 +109,6 @@ module.exports = function(server, connection) {
 		//END OF TURN
 		socket.on('endofturn',function(data){
 			console.log(data);
-			// end of turn==================================================================
 			require('./endofturn.js')(data, connection);
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
@@ -132,8 +126,6 @@ module.exports = function(server, connection) {
 
 		//DISCONNECTING
 		socket.on('disconnect', function(data){
-			// Do stuff (probably some jQuery)
-
 			if(allPlayers != null && allPlayers[0] !== undefined){
 
 				var i = allPlayers.indexOf(socket);
@@ -185,8 +177,7 @@ module.exports = function(server, connection) {
 			
 		});
 
-		// login
 
-		//création de partie
+		// login
 	});
 }
