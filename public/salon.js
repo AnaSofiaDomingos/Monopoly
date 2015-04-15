@@ -1,5 +1,4 @@
-var socketSalon = io('http://localhost:8080/salon');
-//var socketSalon = io('http://129.194.185.13:8080/salon');
+var socketSalon = io('http://'+domain+':8080/salon');
 
 function createGame(){
 	socketSalon.emit('whoami', $('#pseudoTitle').text());

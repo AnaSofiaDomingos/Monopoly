@@ -35,7 +35,7 @@ var owns   = [];
 var backup = [];
 var joueurs = [0, 0, 0, 0, 0];
 
-var domain = "localhost";
+var domain = "129.194.185.13";
 var port = "8080";
 
 var localJson = [];
