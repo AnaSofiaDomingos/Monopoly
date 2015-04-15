@@ -52,6 +52,8 @@ function login() {
 				$('#accInfos').show();
 				$('#pseudoLogin').val("");
 				$('#passLogin').val("");
+				$('#infoPersonne').show();
+				$('#creation').show();
 				$('#saloon').show();
 				salon();
 			} else {
@@ -65,7 +67,10 @@ function login() {
 }
 
 function logout() {
+	$('#pseudoTitle').text("");
 	$('#accInfos').hide();
+	$('#creation').hide();
+	$('#saloon').hide();
 	$('#register').show();
 	$('#login').show();
 	infosConnect = {};
