@@ -84,8 +84,8 @@ module.exports = function(server, connection) {
 	}
 
 	// recupère la liste des parties
-	function listGames(callback){
-		connection.query('SELECT * FROM parties p JOIN joueurs j ON p.idJoueur = j.idJoueur WHERE p.finie = -1', function(err, rows, fields){
+	function listGames(status, callback){
+		connection.query('SELECT * FROM parties p JOIN joueurs j ON p.idJoueur = j.idJoueur WHERE p.finie = '+ status, function(err, rows, fields){
 			if (err) throw err;
 			callback(rows);
 		});
@@ -122,6 +122,11 @@ module.exports = function(server, connection) {
 				if(cpt == 2){
 					getNbPlayers(data.RoomID, function(nbplayer){
 						socket.emit('PlayerNumber',numberOfPlayer-1, dataInitGame,nbplayer);
+						if (numberOfPlayer == nbplayer){
+							connection.query('UPDATE parties SET finie = 0 WHERE idPartie = '+ data.RoomID , function(err, rows, fields){
+								if (err) throw err;
+							});
+						}
 					});
 				}
 			});
@@ -210,20 +215,45 @@ module.exports = function(server, connection) {
 
 	salon.on('connection', function(socket){
 		socket.on('whoami', function(login){
-			console.log(login);
 			//création de partie
 			getIdFromPseudo(login, function(id){
+
+				socket.on("join", function(partie){
+					connection.query('SELECT * FROM participe WHERE idJoueur =' + id, function(err, rows, fields){
+						if (err) throw err;
+						if (rows[0] == null)
+							connection.query('INSERT INTO participe VALUES (' + id + ',' + partie+')', function(err, rows, fields){
+								if (err) throw err;
+								console.log("joined rom");
+								socket.emit("myid", id);
+							});
+						else
+								socket.emit("myid", id);
+					});
+					
+				});
+
 				socket.on('createGame', function(nbplayers){
 					connection.query('INSERT INTO parties VALUES ("",' + nbplayers + ',' + id + ', -1)' ,function(err, rows, fields) {
 						if (err) throw err;
 						console.log("game created");
 					}); 
 				});
+
+
+				
 			});
+
 		});
 
-		listGames(function(list){
-			socket.emit("listGames", list);
+
+		socket.on("games", function(){
+			listGames(-1, function(list){
+				socket.emit("listGames", list);
+			});
+			listGames(0, function(list){
+				socket.emit("myGames", list);
+			});
 		});
 	});
 }

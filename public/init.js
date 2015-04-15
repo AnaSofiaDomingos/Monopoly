@@ -25,8 +25,8 @@ var buff_time   = -1;
 var waiting     = false;
 var nbTotalPlayer;
 
-var GameID = 1;
-var idGlobal = Math.floor(Math.random() * 4) + 1;
+var GameID = localStorage.getItem("idPartie");
+var idGlobal = localStorage.getItem("idGlobal");
 var idPlayer;
 var sentJson;
 var nbJoueurs;
