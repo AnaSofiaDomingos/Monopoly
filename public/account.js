@@ -52,7 +52,6 @@ function login() {
 				$('#pseudoLogin').val("");
 				$('#passLogin').val("");
 				$('#saloon').show();
-
 				salon();
 			} else {
 				$('#errorsLogin').text("Login failed");

@@ -3,12 +3,6 @@ html,body{
 	height: 100%;
 }
 
-#saloon {
-	margin :auto;
-	width :87%;
-	height : 500px;
-	display: none;
-}
 #connexion{
 	width: 100%;
 	padding-top: 75px;
@@ -34,9 +28,51 @@ html,body{
 	color : red;
 }
 
+#pseudoTitle{
+	text-align: center;
+}
+
 nav{
 	position: fixed;
 	display: block;
 	width: 100%;
 	z-index: 2;
 }
+
+#creation{
+	width: 100%;
+	padding-top: 75px;
+	margin-left:  6.5%;
+	margin-right: 6.5%;
+
+}
+
+#creation .card{
+	width: 40%;
+	display: inline-block;
+}
+
+#saloon {
+	width: 87%;
+	margin:auto;
+	display: none;
+}
+
+#saloon span{
+	display: block;
+}
+
+#idRoom, #nbJoueurs, #createur, #actions{
+	display: inline-block;
+	float:left;
+
+}
+
+
+.title{
+	font-weight: bold;
+}
+
+
+
+
