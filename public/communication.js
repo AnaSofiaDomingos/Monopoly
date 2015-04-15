@@ -36,15 +36,16 @@ function upgrade(idCurrentPlayer){
 		} else if (newLvl == upCountry) {
 			updateLogs("You can't upgrade to the same level");
 			modified = false;
-		} else if (newLvl < upCountry) {
-			var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
-			var newPrice = getUpdatePrice(pays.Prix, newLvl);
-			var diff = alreadyPaid-newPrice;
-			credit(diff);
-			modified = true;
-			updateLogs(pays.NomPays + " successfully downgraded to "+newLvl+" ("+diff+")");
-			getMyInfos();
-		}
+		} else if (newLvl < upCountry)
+			if (newLvl >= 0) {
+				var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
+				var newPrice = getUpdatePrice(pays.Prix, newLvl);
+				var diff = alreadyPaid-newPrice;
+				credit(diff);
+				modified = true;
+				updateLogs(pays.NomPays + " successfully downgraded to "+newLvl+" ("+diff+")");
+				getMyInfos();
+			}
 
 		if(modified) {
 			// upgrade of the country

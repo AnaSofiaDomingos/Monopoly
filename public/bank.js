@@ -22,6 +22,7 @@ function debitObligatoire(sum) {
 
 	if (sentJson.account < sum)
 		if((propertiesValue()+sentJson.account) > sum) {
+			$('#dialog').empty();
 			$('#dialog').show();
 			proposeVente(sum);
 		} else
