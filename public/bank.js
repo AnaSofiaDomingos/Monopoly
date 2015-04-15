@@ -131,6 +131,7 @@ function desherit(sample) {
 // Inherit a country
 function inherit(country) {
 
+
 	var victimID;
 	if (localJson.length > 0){
 		for (var i = 0; i < localJson.length; i++) 
@@ -213,7 +214,7 @@ function buy() {
 			getMyInfos();
 			getInfos(posLocal);
 
-			updateLogs("Player " + idPlayer + " bought " + country.NomPays);	
+			updateLogs("Vous avez acheté " + country.NomPays + " pour " + country.Prix + "M");	
 
 			//updateUI
 			var paysTest = getCountryById(idPays);
@@ -223,10 +224,10 @@ function buy() {
 			
 		}else {
 			$("#btnBuy").hide();
-			updateLogs("You can't buy" + country.NomPays);	
+			updateLogs("Vous ne pouvez pas acheter " + country.NomPays);	
 		}
 	} else {
-		updateLogs("You don't have enough money ("+diff+")");
+		updateLogs("il vous manque " + diff + " pour pouvoir acheter ce pays");
 		return 1;
 	}
 
@@ -236,7 +237,6 @@ function buy() {
 function sell(idCountry) {
 
 	var valid = checkActionAvailable(idCountry);
-
 
 	if(valid) {
 		removeItem(localJson[idPlayer].owns, 'country', idCountry);
@@ -257,7 +257,7 @@ function sell(idCountry) {
 		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
 
 	} else {
-		updateLogs("You can't sell this country, you little hacker");
+		updateLogs("Vous ne pouvez pas vendre ce pays");
 	}
 
 
@@ -279,11 +279,11 @@ function loan(idCountry) {
 
 		credit(countries[idCountry - 1].Prix);
 		
-		updateLogs("Player "+idPlayer+" loaned "+idCountry);
+		updateLogs("Vous avez hypothéqué " + idCountry);
 		getMyInfos();
 		getInfos(-1,idCountry);
 	} else {
-		updateLogs("You can't loan this country, you little hacker");
+		updateLogs("Vous ne pouvez pas hypothéquer ce pays");
 	}
 
 }
@@ -309,12 +309,14 @@ function recover(idCountry) {
 		getMyInfos();
 		getInfos(-1,idCountry);
 		
+		updateLogs("Vous avez récupéré votre pays");
+		
 		return 0;
 		
 	}
 	else {
 	
-		updateLogs("Vous avez besoin de "+diff+" pour terminer cette action");
+		updateLogs("Vous avez besoin de " + diff + " pour récupérer votre pays");
 		return 1;
 		
 	}

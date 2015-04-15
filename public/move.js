@@ -80,10 +80,10 @@ function lancerDes(idCurrentPlayer) {
 
 	// If jailed, must do a double 
 	if (((sentJson.state == S_JAILED) && (de1 == de2))) {
-		updateLogs("Player "+ idPlayer + " got out of jail");
+		updateLogs("Vous êtes sorti de prison");
 	}
 	else if ((sentJson.state == S_JAILED) && (de1 != de2)){
-		updateLogs("Player "+ idPlayer + " stays in jail");
+		updateLogs("Vous restez en prison");
 		jail_time -= 1;
 	}
 		
@@ -91,11 +91,14 @@ function lancerDes(idCurrentPlayer) {
 	if (posLocal >= taillePlateau) {
 		posLocal %= taillePlateau;
 
-		updateLogs("Player "+idPlayer+" got the salary");
-		if (posLocal == 0)
+		if (posLocal == 0) {
 			credit(SALARY*2);
-		else
+			updateLogs("Vous obtenez le double de votre salaire");
+		}
+		else {
 			credit(SALARY);
+			updateLogs("Vous obtenez votre salaire");
+		}
 
 		getMyInfos();
 	}
@@ -112,7 +115,7 @@ function lancerDes(idCurrentPlayer) {
 		case 30 :
 			if (debitObligatoire(TAXES) == 0) {
 				getMyInfos();
-				updateLogs("Player "+idPlayer+" paid "+TAXES+" of taxes");
+				updateLogs("Vous avez payé " + TAXES + " aux impôts");
 			}
 			break;
 			
@@ -126,7 +129,7 @@ function lancerDes(idCurrentPlayer) {
 			
 		// Aller en prison
 		case 27 :
-			updateLogs("Player "+idPlayer+" goes to jail");
+			updateLogs("Vous allez en prison");
 			sentJson.state = S_JAILED;
 			posLocal = 9;
 			jail_time = 3;
@@ -136,10 +139,10 @@ function lancerDes(idCurrentPlayer) {
 		case 18:
 			var r = Math.random();
 			if(r < 1/nbJoueurs) {
-				updateLogs("You win 2M at the lottery");
+				updateLogs("Vous avez gagné 2'000'000 à la loterie");
 				credit(2);
 			} else {
-				updateLogs("You havn't won the lottery");
+				updateLogs("Merci d'avoir joué à la loterie !");
 			}
 			break;
 
@@ -154,7 +157,7 @@ function lancerDes(idCurrentPlayer) {
 					// Price defined by lvl of upgrade (see documentation)
 					var price = 0.2 * (result.lvl + 1) * country.Prix;
 					if (debitObligatoire(price) == 0){
-						updateLogs("Player " + idPlayer +" paided to "+result.idPlayer);
+						updateLogs("Vous avez payé " + price + "M à " + result.idPlayer);
 						credit(price, result.idPlayer);
 						getMyInfos();
 					}
