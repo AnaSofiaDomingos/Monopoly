@@ -21,41 +21,48 @@ function upgrade(idCurrentPlayer){
 	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
 	var modified = false;
 	newLvl = parseInt(newLvl);
-	if (newLvl > upCountry) {
-		var price = getUpdatePrice(pays.Prix, newLvl);
-		
-		var r = debit(price);
-		if (r == 0) {
-			updateLogs(pays.NomPays + " successfully upgraded to level "+newLvl);
-			modified = true;
-		} else {
-			updateLogs("You don't have enough money ("+r+" needed)");
+	if(newLvl <= maxUpgrade) {
+		if (newLvl > upCountry) {
+			var price = getUpdatePrice(pays.Prix, newLvl);
+			
+			var r = debit(price);
+			if (r == 0) {
+				updateLogs(pays.NomPays + " successfully upgraded to level "+newLvl+" ("+price+")");
+				modified = true;
+			} else {
+				updateLogs("You don't have enough money ("+r+" needed)");
+				modified = false;
+			}
+		} else if (newLvl == upCountry) {
+			updateLogs("You can't upgrade to the same level");
 			modified = false;
-		}
-	} else if (newLvl == upCountry) {
-		updateLogs("You can't upgrade to the same level");
-		modified = false;
-	} else if (newLvl < upCountry) {
-		var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
-		var newPrice = getUpdatePrice(pays.Prix, newLvl);
-		credit(alreadyPaid-newPrice);
-		modified = true;
-		updateLogs(pays.NomPays + " successfully downgraded to "+newLvl);
-	}
-
-	if(modified) {
-		// upgrade of the country
-		sentJson.upgraded.push({
-			'country' : idPays,
-			'level' : newLvl
-		});
-
-		for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
-			if(localJson[idPlayer].owns[i].country == idPays)
-				localJson[idPlayer].owns[i].level = newLvl;
+		} else if (newLvl < upCountry) {
+			var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
+			var newPrice = getUpdatePrice(pays.Prix, newLvl);
+			var diff = alreadyPaid-newPrice;
+			credit(diff);
+			modified = true;
+			updateLogs(pays.NomPays + " successfully downgraded to "+newLvl+" ("+diff+")");
+			getMyInfos();
 		}
 
-		updateUpgrades(sentJson.upgraded);
+		if(modified) {
+			// upgrade of the country
+			sentJson.upgraded.push({
+				'country' : idPays,
+				'level' : newLvl
+			});
+
+			for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
+				if(localJson[idPlayer].owns[i].country == idPays)
+					localJson[idPlayer].owns[i].level = newLvl;
+			}
+
+			updateUpgrades(sentJson.upgraded);
+			getInfos(posPays, idPays);
+		}
+	} else {
+		updateLogs("You can't upgrade to level "+newLvl+" (max is "+maxUpgrade+")");
 	}
 }
 
