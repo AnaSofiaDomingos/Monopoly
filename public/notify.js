@@ -16,13 +16,18 @@ socket.on('Loading', function(nbPlayer, totalPlayer){
 socket.on("somebodyLeft",function(nbPlayer,totalPlayer){
 	$('#loading').empty();
 	$('#loading').append( nbPlayer  + "/" + totalPlayer );
+	nbJoueurs = nbPlayer;
+	terminateGame();
+	/*
 	if(nbPlayer == totalPlayer)
 		$('#loadingGame').addClass("hideit");
 	else
 		$('#loadingGame').removeClass("hideit");
+	*/
 });
 
 socket.on('notify',function(data){
+	console.log(data);
 	receiveData(data);
 });
 
