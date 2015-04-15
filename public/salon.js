@@ -1,33 +1,38 @@
-//var socketSalon = io('http://localhost:8080/salon');
-var socketSalon = io('http://129.194.185.13:8080/salon');
+var socketSalon = io('http://localhost:8080/salon');
+//var socketSalon = io('http://129.194.185.13:8080/salon');
 
 function createGame(){
 	socketSalon.emit('whoami', $('#pseudoTitle').text());
 	var nbplayers = $('#nbPlayers').val();
 	socketSalon.emit('createGame', nbplayers);
+	refresh();
 }
 
 function salon(){
-	var pseudo = $('#pseudoTitle').text();
 	socketSalon.emit("games");
+}
+
 	// lister les parties
-	socketSalon.on('listGames', function(list){
-		//$('#saloon').append("<table class='striped'><tr><th>id partie</th><th>nombre de joueurs</th><th>créateur</th><th>Action</th></tr>");
-		
-		for (var i=0; i<list.length; i++){
-			/*$('#saloon').append("<tr><td>" + list[i].idPartie + "</td>");
-			$('#saloon').append("<td>" + list[i].c + " / " + list[i].nbJoueurs + "</td>");
-			$('#saloon').append("<td>" + list[i].Pseudo + "</td>");
-			$('#saloon').append('<td><input type="button" name="joinGame" value="Rejoindre" onclick="joinGame(\''+pseudo+'\','+ list[i].idPartie +')" /></td></tr>');
-			*/
-			$('#idRoom').append('<li class="collection-item">'+list[i].idPartie+'</li>');
-			$('#nbJoueurs').append('<li class="collection-item">'+ list[i].c + " / " + list[i].nbJoueurs +'</li>');
-			$('#createur').append('<li class="collection-item">'+ list[i].Pseudo +'</li>');
-			$('#actions').append('<li class="collection-item"><input type="button" name="joinGame" value="Rejoindre" onclick="joinGame(\''+
-				pseudo+'\','+ list[i].idPartie +')" /></li>');
-		}
-		//$('#saloon').append("</table>");
-	});
+socketSalon.on('listGames', function(list){
+	for (var i=0; i<list.length; i++){
+		$('#idRoom').append('<li class="collection-item">'+list[i].idPartie+'</li>');
+		$('#nbJoueurs').append('<li class="collection-item">'+ list[i].c + " / " + list[i].nbJoueurs +'</li>');
+		$('#createur').append('<li class="collection-item">'+ list[i].Pseudo +'</li>');
+		$('#actions').append('<li class="collection-item"><a href="#" onClick="joinGame(\''+
+			$('#pseudoTitle').text()+'\','+ list[i].idPartie +')">Rejoindre</a></li>');
+	}
+});
+
+function refresh(){
+	$('#idRoom').empty();
+	$('#nbJoueurs').empty();
+	$('#createur').empty();
+	$('#actions').empty();
+	$('#idRoom').append('<li class="collection-header title"><span>Partie</span></li>');
+	$('#nbJoueurs').append('<li class="collection-header title"><span>Nombre de joueurs</span></li>');
+	$('#createur').append('<li class="collection-header title"><span>Créateur</span></li>');
+	$('#actions').append('<li class="collection-header title"><span>Action</span></li>');
+	salon();
 }
 
 function joinGame(pseudo , idPartie){

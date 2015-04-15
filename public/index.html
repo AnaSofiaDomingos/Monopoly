@@ -11,14 +11,14 @@
 		<script src="./js/materialize.min.js"></script>
 		<script src="./account.js"></script>
 		<script src="./salon.js"></script>
-		<script type="text/javascript">$('#creation').hide();</script>
+		<script type="text/javascript"></script>
 	</head>
 	<body>
 		<nav>
 			<div class="nav-wrapper indigo darken-2">
 				<a href="#" class="brand-logo center">monopoly online</a>
 				<ul id="nav-mobile" class="left hide-on-med-and-down">
-					<li><a href="#accInfos" class="waves-effect waves-light">Créer une partie</a></li>
+					<li><a href="#" onClick="logout();">Logout</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -71,9 +71,9 @@
 				</form>
 			</section>
 		</div>
+		<h3 id="pseudoTitle"></h3>
 		<div class="contener" id="creation">
-			<h3 id="pseudoTitle"></h3>
-			<section class="card" id="accInfos">
+			<section class="card" id="creation2">
 				<div class="col s12" >
 					<span class="card-title indigo-text">Création de partie</span>
 					<div class="row">
@@ -83,15 +83,12 @@
 						</div>
 						<input type="button" name="submitGame" value="Create Game" onClick="createGame();" />
 					</div>
-					<a href="#" onClick="logout();">Logout</a>
 				</div>
 			</section>
-		</div>
 
-		<div class="contener" id="saloon">
-			<section class="card">
-				<div class="card-content">
-					<span class="card-title indigo-text">Liste parties disponibles</span>
+			<section class="card" id="saloon">
+				<span class="card-title indigo-text">Liste parties disponibles</span>
+				<div class="card-content" id="parties">
 					<ul class="collection with-header" id="idRoom">
 						 <li class="collection-header title"><span>Partie</span></li>
 					</ul>
@@ -104,6 +101,7 @@
 					<ul class="collection with-header" id="actions">
 						<li class="collection-header title"><span>Action</span></li>
 					</ul>
+					<input type="button" name="refresh" value="Refresh" onClick="refresh();" />
 				</div>
 			</section>
 		</div>

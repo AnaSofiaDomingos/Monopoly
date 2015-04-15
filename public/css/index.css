@@ -42,20 +42,26 @@ nav{
 #creation{
 	width: 100%;
 	padding-top: 75px;
-	margin-left:  6.5%;
-	margin-right: 6.5%;
-
+	padding-left:  9%;
+	padding-right: 9%;
+	display: none;
 }
-
+.brand-logo{text-transform: capitalize;}
 #creation .card{
 	width: 40%;
 	display: inline-block;
 }
 
 #saloon {
-	width:  87%;
-	margin:auto;
 	display: none;
+	float: right;
+	top : -95px;
+	min-width: 516px;
+}
+
+#creation2{
+	float: left;
+	top: -95px;
 }
 
 #saloon span{
@@ -65,14 +71,9 @@ nav{
 #idRoom, #nbJoueurs, #createur, #actions{
 	display: inline-block;
 	float:left;
-
 }
-
 
 .title{
 	font-weight: bold;
 }
-
-
-
 
