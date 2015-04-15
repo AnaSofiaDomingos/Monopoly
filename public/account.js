@@ -1,5 +1,6 @@
 
-var socket = io('http://localhost:8080/account');
+//var socket = io('http://localhost:8080/account');
+var socket = io('http://129.194.185.13:8080/account');
 
 var infosConnect;
 
