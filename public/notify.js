@@ -16,6 +16,8 @@ socket.on('Loading', function(nbPlayer, totalPlayer){
 socket.on("somebodyLeft",function(nbPlayer,totalPlayer){
 	$('#loading').empty();
 	$('#loading').append( nbPlayer  + "/" + totalPlayer );
+	nbJoueurs = nbPlayer;
+	terminateGame();
 	/*
 	if(nbPlayer == totalPlayer)
 		$('#loadingGame').addClass("hideit");
@@ -25,6 +27,7 @@ socket.on("somebodyLeft",function(nbPlayer,totalPlayer){
 });
 
 socket.on('notify',function(data){
+	console.log(data);
 	receiveData(data);
 });
 
