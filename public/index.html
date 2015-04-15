@@ -70,23 +70,39 @@
 				</form>
 			</section>
 		</div>
-		<div class="contener">
+		<div class="contener" >
 			<section class="card" id="accInfos">
 				<div class="col s12" >
 					<h3 id="pseudoTitle"></h3>
-					<label>Création de partie</label>
-					<br />
-					<label>Nombre de joueurs</label><input type="text" name="nbPlayers" id="nbPlayers" />
-					<br />
-					<input type="button" name="submitGame" value="create Game" onClick="createGame();" />
-					<br />
+					<span class="card-title indigo-text">Création de partie</span>
+					<div class="row">
+						<div class="input-field col s12">
+							<input type="text" name="nbPlayers" id="nbPlayers" class="validate" />
+							<label for="nbJoueur">Nombre de joueurs</label>
+						</div>
+						<input type="button" name="submitGame" value="create Game" onClick="createGame();" />
+					</div>
 					<a href="#" onClick="logout();">Logout</a>
 				</div>
 			</section>
 		</div>
-		<div class="contener">
+
+		<div class="contener" >
 			<div class="card" id="saloon">
-				<div class="card-content">SALOON WEHS PETIT-GROS !</div>
+				<div class="card-content">
+					<span class="card-title indigo-text">Liste parties disponibles</span>
+				<div class="card-content" id="idRoom">
+					<span class="title">Partie<span>
+				</div>
+				<div class="card-content" id="nbJoueurs">
+					<span class="title">Nombre de joueurs<span>
+				</div>
+				<div class="card-content" id="createur">
+					<span class="title">Créateur<span>
+				</div>
+				<div class="card-content" id="actions">
+					<span class="title">Action<span>
+				</div>
 			</div>
 		</div>
 
