@@ -27,14 +27,14 @@ function upgrade(idCurrentPlayer){
 			
 			var r = debit(price);
 			if (r == 0) {
-				updateLogs(pays.NomPays + " successfully upgraded to level "+newLvl+" ("+price+")");
+				updateLogs(pays.NomPays + " amélioré au niveau "+newLvl+" ("+price+")");
 				modified = true;
 			} else {
-				updateLogs("You don't have enough money ("+r+" needed)");
+				updateLogs("Vous n'avez pas assez d'argent (il vous manque "+r+")");
 				modified = false;
 			}
 		} else if (newLvl == upCountry) {
-			updateLogs("You can't upgrade to the same level");
+			updateLogs("Impossible d'améliorer au même niveau");
 			modified = false;
 		} else if (newLvl < upCountry)
 			if (newLvl >= 0) {
@@ -43,7 +43,7 @@ function upgrade(idCurrentPlayer){
 				var diff = alreadyPaid-newPrice;
 				credit(diff);
 				modified = true;
-				updateLogs(pays.NomPays + " successfully downgraded to "+newLvl+" ("+diff+")");
+				updateLogs(pays.NomPays + " descendu au niveau "+newLvl+" ("+diff+")");
 				getMyInfos();
 			}
 
@@ -63,7 +63,7 @@ function upgrade(idCurrentPlayer){
 			getInfos(posPays, idPays);
 		}
 	} else {
-		updateLogs("You can't upgrade to level "+newLvl+" (max is "+maxUpgrade+")");
+		updateLogs("Impossible d'améliorer au niveau "+newLvl+" (Max. "+maxUpgrade+")");
 	}
 }
 
@@ -190,7 +190,7 @@ function receiveData(data) {
 			for(i = 0; i < data.paid.length; i++)
 				if(data.paid[i])
 					if(data.paid[i].player == idPlayer) {
-						updateLogs("Player " +data.id+" paid you "+data.paid[i].amount.toString().substring(0,6));
+						updateLogs("Le joueur " +data.id+" vous a payé "+data.paid[i].amount.toString().substring(0,6));
 						credit(data.paid[i].amount);
 						removeItem(data.paid[i], 'player', idPlayer);
 					}
