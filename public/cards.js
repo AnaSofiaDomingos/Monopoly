@@ -219,7 +219,7 @@ function applyCard(idCard) {
 				// Sortie prison
 				if (sentJson.state == S_JAILED)
 					sentJson.state = S_ALIVE;
-				updateLogs("Player "+id+" got out of jail");
+				updateLogs("Player "+idPlayer+" got out of jail");
 				removeItem(localJson[idPlayer].cards, "card", 15);
 			}
 			break;
@@ -228,7 +228,7 @@ function applyCard(idCard) {
 		
 			// Découverte puit vente pétrole 2 000 000
 			sum = 2;
-			if (credit(sum) == 0) updateLogs("Player "+id+" got 2'000'000");
+			if (credit(sum) == 0) updateLogs("Player "+idPlayer+" got 2'000'000");
 			break;
 				  
 		case 17 : 
@@ -236,13 +236,13 @@ function applyCard(idCard) {
 			// Gain de 1 000 000
 			sum = 1;
 			if (credit(sum) == 0) 
-				updateLogs("Player "+id+" got 1'000'000");
+				updateLogs("Player "+idPlayer+" got 1'000'000");
 			break;
 				  
 		case 18 : 
 		
 			// Rejouer
-			updateLogs("Player "+id+" replays");
+			updateLogs("Player "+idPlayer+" replays");
 			replay();
 			break;
 				  
@@ -251,10 +251,10 @@ function applyCard(idCard) {
 			// Debit 500 000 pour pub mais on recuperer 200 000 pdt 5 tours
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) {
-				updateLogs("Player "+id+" paid 500'000 for pub");
+				updateLogs("Player "+idPlayer+" paid 500'000 for pub");
 				localJson.state = S_PUBLIC;
 				credit(0.2);
-				updateLogs("Player "+id+" gained 200'000");
+				updateLogs("Player "+idPlayer+" gained 200'000");
 				buff_time = 5;
 			}
 			else gameOver();
@@ -265,13 +265,13 @@ function applyCard(idCard) {
 			// EMS en feu
 			sum = 0.3;
 			if (credit(sum) == 0) 
-				updateLogs("Player "+id+" got 300'000");
+				updateLogs("Player "+idPlayer+" got 300'000");
 			break;
 				  
 		case 21 : 
 		
 			// Burgonde King
-			updateLogs("Player "+id+" drew the Burgonde King");	
+			updateLogs("Player "+idPlayer+" drew the Burgonde King");	
 			break;
 
 	}

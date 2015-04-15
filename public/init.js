@@ -39,6 +39,7 @@ var domain = "localhost";
 var port = "8080";
 
 var localJson = [];
+var maxUpgrade = 4;
 
 // console.log(idGlobal);
 var data = {
