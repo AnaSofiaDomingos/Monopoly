@@ -62,7 +62,7 @@ function applyCard(idCard) {
 		case 4 :
 			
 			// Debit 100'000 par pays
-			if (localJson[idPlayer].owns.length > 1){
+			if (localJson[idPlayer].owns.length > 0){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					sum = 0.1 ;
 					if (debitObligatoire(sum) == 0) 
@@ -77,7 +77,7 @@ function applyCard(idCard) {
 		case 5 :
 			
 			// Plus eau 2 tours (amélioration niveau 0)
-			if (localJson[idPlayer].owns.length > 1){
+			if (localJson[idPlayer].owns.length > 0){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					
 					// Backup state
@@ -118,7 +118,7 @@ function applyCard(idCard) {
 		case 8 :
 		
 			// Roi Burgonde installé en Asie plus d'eau 2 tours (amélioration 0)
-			if (localJson[idPlayer].owns.length > 1){
+			if (localJson[idPlayer].owns.length > 0){
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					if(localJson[idPlayer].owns[i]){
 						// Backup state
@@ -137,7 +137,7 @@ function applyCard(idCard) {
 		
 		case 9 :
 			// USA saisissent les ameliorations Moyen-Orient
-			if (localJson[idPlayer].owns.length > 1) {
+			if (localJson[idPlayer].owns.length > 0) {
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
 				updateLogs("Les USA saisissent vos améliorations à " + localJson[idPlayer].owns[paysAleatoire].country);
@@ -148,7 +148,7 @@ function applyCard(idCard) {
 		case 10 :
 			
 			// Plus d'electricite pendant 2 tours
-			if (localJson[idPlayer].owns.length > 1) {
+			if (localJson[idPlayer].owns.length > 0) {
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++){
 				
 					// Backup the state
@@ -183,7 +183,7 @@ function applyCard(idCard) {
 			break;
 				  
 		case 13 : // garder
-			if (localJson[idPlayer].owns.length > 1) {
+			if (localJson[idPlayer].owns.length > 0) {
 				// Internet gratuit dans un pays
 				updateLogs("Vous obtenez gratuitement Internet dans un pays");
 				removeItem(localJson[idPlayer].cards, "card", 13);
