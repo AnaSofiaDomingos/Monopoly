@@ -28,7 +28,7 @@ function register() {
 			} else 
 				$('#errorsRegister').text("Password empty");
 		} else
-				$('#errorsRegister').text("Login empty");
+				$('#errorsRegister').text("Pseudo empty");
 	} else {
 		$('#errorsRegister').text("Passwords not matching");
 	}
@@ -57,12 +57,15 @@ function login() {
 				$('#errorsLogin').text("Login failed");
 			}
 		});
+	}else{
+		$('#errorsLogin').text("passowrd or login empty");
 	}
 	
 }
 
 function logout() {
-	$('#accInfos, #register').hide();
+	$('#accInfos').hide();
+	$('#register').show();
 	$('#login').show();
 	infosConnect = {};
 }
