@@ -85,17 +85,29 @@ module.exports = function(server, connection) {
 
 	// recupère la liste des parties
 	function listGames(status, callback){
-		connection.query('SELECT * FROM parties p JOIN joueurs j ON p.idJoueur = j.idJoueur WHERE p.finie = '+ status, function(err, rows, fields){
+		connection.query('SELECT p.idPartie, p.nbJoueurs, j.Pseudo, COUNT(pa.idJoueur) AS \'c\' FROM parties p LEFT JOIN participe pa ' +
+		 'ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = p.idJoueur WHERE p.finie =' +status+' GROUP BY p.idPartie'
+			, function(err, rows, fields){
 			if (err) throw err;
 			callback(rows);
 		});
+	}
+
+	function getPlayersInRoom(roomId) {
+		var tab = [];
+		for (var i = 0; i < allPlayers.length;i++){
+			if(allPlayers[i].roomID == roomId){
+				tab.push(allPlayers[i].idLocal);
+			}
+		}	
+		return tab;
 	}
 
 	var io = require('socket.io')(server);	
 	var nsp = io.of('/subscribe');		// jeu
 	var acc = io.of('/account');		// comptes
 	var salon = io.of('/salon');		// salon
-	var allPlayers = null;
+	var allPlayers = [];
 	var numberOfPlayer = 0;
 
 	/* =============================================================================================================================================
@@ -107,14 +119,14 @@ module.exports = function(server, connection) {
 		// HANDSHAKING
 		socket.on('handshake',function(data){
 			socket.join(data.RoomID);
-			console.log('user joined the room ' + data.RoomID);
-			allPlayers = [];
-			allPlayers.push({"socket" : socket, "roomID" : data.RoomID});
 
+			console.log('user joined the room ' + data.RoomID);
 			numberOfPlayer = getNbPlayersInRoom(data.RoomID);
 
+
+			allPlayers.push({"socket" : socket, "roomID" : data.RoomID, "idLocal" : numberOfPlayer - 1});
+
 			getNbPlayers(data.RoomID, function(nbplayer){
-				console.log(numberOfPlayer);
 				socket.broadcast.to(data.RoomID).emit('Loading', numberOfPlayer, nbplayer);
 			});
 
@@ -137,9 +149,32 @@ module.exports = function(server, connection) {
 		socket.emit('PlayersConnected', (numberOfPlayer));
 
 		//END OF TURN
+
 		socket.on('endofturn',function(data){
-			console.log(data);
 			require('./endofturn.js')(data, connection);
+			var isAlive = false;
+			console.log(data);
+
+			var tab = getPlayersInRoom(data.GameID);
+			var nbplayer = getNbPlayersInRoom(data.GameID);
+			var nextPlayer = ((data.id+1)%nbplayer);
+
+			while(!isAlive) {
+				for(var i = 0; i<tab.length; i++) {
+					if(tab[i] == nextPlayer) 
+						isAlive = true;
+				}
+				if(!isAlive){
+					nextPlayer += 1;
+					nextPlayer %= nbplayer;
+				}
+			}
+			
+			if(isAlive)
+				data.nextPlayer = nextPlayer;
+			console.log("nextplayer => "+nextPlayer);
+
+			
 
 			socket.broadcast.to(data.GameID).emit('notify',data);
 		});
@@ -148,6 +183,8 @@ module.exports = function(server, connection) {
 		socket.on('error',function(err){
 			console.log('Une erreur est survenue avec les sockets : ' + err);
 		});
+
+		
 
 
 		//DISCONNECTING

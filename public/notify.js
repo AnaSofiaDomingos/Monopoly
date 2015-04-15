@@ -1,6 +1,6 @@
-//var socket = io('http://129.194.185.13:8080/subscribe');
+var socket = io('http://129.194.185.13:8080/subscribe');
 
-var socket = io('http://' + domain + ':' + port +  '/subscribe');
+//gvar socket = io('http://' + domain + ':' + port +  '/subscribe');
 
 socket.emit('handshake', data); // tell the server which game this user is part of
 
@@ -16,13 +16,18 @@ socket.on('Loading', function(nbPlayer, totalPlayer){
 socket.on("somebodyLeft",function(nbPlayer,totalPlayer){
 	$('#loading').empty();
 	$('#loading').append( nbPlayer  + "/" + totalPlayer );
+	nbJoueurs = nbPlayer;
+	terminateGame();
+	/*
 	if(nbPlayer == totalPlayer)
 		$('#loadingGame').addClass("hideit");
 	else
 		$('#loadingGame').removeClass("hideit");
+	*/
 });
 
 socket.on('notify',function(data){
+	console.log(data);
 	receiveData(data);
 });
 
@@ -50,10 +55,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
 
-	dataInitGame.upgraded = [{
-		"country": 25, // Suisse
-		"level": "2"
-	}];
 
 	nbJoueurs = totalPlayer;
 	countries = dataInitGame.pays;
@@ -77,7 +78,8 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 		"state" : dataInitGame.state,
 		"position": joueurs[idPlayer],
 		"GameID" : GameID,
-		"paid" : [{}]
+		"paid" : [{}],
+		"nextPlayer" : idPlayer
 	};
 
 	updateUpgrades(sentJson.upgraded);

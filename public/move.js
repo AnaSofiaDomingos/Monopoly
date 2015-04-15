@@ -173,7 +173,7 @@ function lancerDes(idCurrentPlayer) {
 	getMyInfos();
 
 	// Double --> replay
-	if (de1 == de2)
+	if ((de1 == de2) || (replays)) 
 		replay(); 
 	else {
 		$('#btnFinTour').removeAttr("disabled");
@@ -210,10 +210,9 @@ function isPossessed(posPays) {
 }
 
 function replay() {
-	waiting = false;
 	myTurn = true;
 	replays = true;
-	$('#btnDes').removeAttr('disabled');
+	$("#btnDes").attr("disabled", "true");
 	$('#btnFinTour').attr('disabled', 'true');
 }
 
@@ -223,8 +222,14 @@ function transition(idCurrentPlayer,posLocal) {
 		joueurs[idCurrentPlayer] = (joueurs[idCurrentPlayer]+1)%taillePlateau;
 		WritePlayerAtPosition(idCurrentPlayer,oldPos, joueurs[idCurrentPlayer]);
 
-		if(joueurs[idCurrentPlayer] != posLocal)
+		if(joueurs[idCurrentPlayer] != posLocal) {
 			transition(idCurrentPlayer,posLocal);
+		} else {
+			if(replays) {
+				$('#btnDes').removeAttr("disabled");
+				replays = false;
+			}
+		}
 	}, 300);
 }
 

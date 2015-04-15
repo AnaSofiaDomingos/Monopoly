@@ -1,5 +1,6 @@
 
-var socket = io('http://localhost:8080/account');
+//var socket = io('http://localhost:8080/account');
+var socket = io('http://129.194.185.13:8080/account');
 
 var infosConnect;
 
@@ -52,7 +53,6 @@ function login() {
 				$('#pseudoLogin').val("");
 				$('#passLogin').val("");
 				$('#saloon').show();
-
 				salon();
 			} else {
 				$('#errorsLogin').text("Login failed");
