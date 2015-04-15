@@ -85,10 +85,22 @@ module.exports = function(server, connection) {
 
 	// recupère la liste des parties
 	function listGames(status, callback){
-		connection.query('SELECT * FROM parties p JOIN joueurs j ON p.idJoueur = j.idJoueur WHERE p.finie = '+ status, function(err, rows, fields){
+		connection.query('SELECT p.idPartie, p.nbJoueurs, j.Pseudo, COUNT(pa.idJoueur) AS \'c\' FROM parties p LEFT JOIN participe pa ' +
+		 'ON pa.idPartie = p.idPartie LEFT JOIN joueurs j ON j.idJoueur = p.idJoueur WHERE p.finie =' +status+' GROUP BY p.idPartie'
+			, function(err, rows, fields){
 			if (err) throw err;
 			callback(rows);
 		});
+	}
+
+	function getPlayersInRoom(roomId) {
+		var tab = [];
+		for (var i = 0; i < allPlayers.length;i++){
+			if(allPlayers[i].roomID == roomId){
+				tab.push(allPlayers[i].idLocal);
+			}
+		}	
+		return tab;
 	}
 
 	var io = require('socket.io')(server);	
@@ -171,15 +183,7 @@ module.exports = function(server, connection) {
 			console.log('Une erreur est survenue avec les sockets : ' + err);
 		});
 
-		function getPlayersInRoom(roomId) {
-			var tab = [];
-			for (var i = 0; i < allPlayers.length;i++){
-				if(allPlayers[i].roomID == roomId){
-					tab.push(allPlayers[i].idLocal);
-				}
-			}	
-			return tab;
-		}
+		
 
 
 		//DISCONNECTING
