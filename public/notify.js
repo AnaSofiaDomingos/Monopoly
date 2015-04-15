@@ -77,7 +77,8 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 		"state" : dataInitGame.state,
 		"position": joueurs[idPlayer],
 		"GameID" : GameID,
-		"paid" : [{}]
+		"paid" : [{}],
+		"nextPlayer" : idPlayer
 	};
 
 	updateUpgrades(sentJson.upgraded);
