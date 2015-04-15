@@ -15,13 +15,18 @@ html,body{
 	width :70%;
 	height : 500px;
 }
-
-#register {
-
+#connexion{
+	width: 100%;
 }
 
-#login {
+#connexion .card{
+	width: 30%;
+	display: inline-block;
+}
 
+#register {
+	margin-left: -5em;
+	margin-right: 1em;
 }
 
 #errorsRegister {
@@ -32,9 +37,6 @@ html,body{
 	display: ;
 }
 
-body{
-	padding-top: 75px;
-}
 header{
 	width: 100%;
 	top:0;
