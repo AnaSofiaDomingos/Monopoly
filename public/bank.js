@@ -262,7 +262,9 @@ function sell(idCountry) {
 		$("#btnUpgrade").hide();
 		//updateUI
 		var paysTest = getCountryById(idCountry);
-		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer + 1));
+		console.log('#case'+paysTest.Position);
+		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer));
+		$('#case'+paysTest.Position).children().remove("span.upgrade");
 
 	} else {
 		updateLogs("Vous ne pouvez pas vendre ce pays");

@@ -38,7 +38,7 @@ nav{
 	width: 100%;
 	z-index: 2;
 }
-
+.card{padding: 1em;}
 #creation{
 	width: 100%;
 	padding-top: 75px;
@@ -55,13 +55,13 @@ nav{
 #saloon {
 	display: none;
 	float: right;
-	top : -95px;
-	min-width: 516px;
+	top : -75px;
+	min-width: 600px;
 }
 
 #creation2{
 	float: left;
-	top: -95px;
+	top: -75px;
 }
 
 #saloon span{
@@ -76,4 +76,7 @@ nav{
 .title{
 	font-weight: bold;
 }
-
+#saloon *{
+	transition: 1s ease-in;
+	-webkit-transition: 1s ease-in;
+}
