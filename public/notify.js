@@ -55,10 +55,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
 
-	dataInitGame.upgraded = [{
-		"country": 25, // Suisse
-		"level": "2"
-	}];
 
 	nbJoueurs = totalPlayer;
 	countries = dataInitGame.pays;
