@@ -245,7 +245,15 @@ function sell(idCountry) {
 			'country' : idCountry
 		});
 
-		credit(countries[idCountry - 1].Prix); //
+		var level = 0;
+		for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
+			if(localJson[idPlayer].owns[i].country == idCountry) 
+				level = localJson[idPlayer].owns[i].level;
+		}
+
+		var sum = countries[idCountry - 1].Prix+getUpdatePrice(countries[idCountry - 1].Prix, level);
+
+		credit(sum); //
 
 		updateLogs("Player "+idPlayer+" sold country "+idCountry);
 		getMyInfos();
