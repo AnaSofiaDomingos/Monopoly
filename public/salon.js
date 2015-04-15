@@ -6,6 +6,7 @@ function createGame(){
 	var nbplayers = $('#nbPlayers').val();
 	socketSalon.emit('createGame', nbplayers);
 	refresh();
+	alert("Partie Créee");
 }
 
 function salon(){
