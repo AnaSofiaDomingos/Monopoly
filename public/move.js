@@ -173,8 +173,9 @@ function lancerDes(idCurrentPlayer) {
 	getMyInfos();
 
 	// Double --> replay
-	if (de1 == de2) {
+	if ((de1 == de2) || (replays)) {
 		replay(); 
+		replays = false;
 	} else {
 		$('#btnFinTour').removeAttr("disabled");
 		$("#btnDes").attr("disabled", "true");
