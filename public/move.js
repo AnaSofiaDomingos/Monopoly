@@ -213,7 +213,7 @@ function isPossessed(posPays) {
 function replay() {
 	myTurn = true;
 	replays = true;
-	// $('#btnDes').removeAttr('disabled');
+	$('#btnDes').removeAttr('disabled');
 	$("#btnDes").attr("disabled", "true");
 	$('#btnFinTour').attr('disabled', 'true');
 }

@@ -1,6 +1,6 @@
 var socket = io('http://129.194.185.13:8080/subscribe');
 
-//var socket = io('http://' + domain + ':' + port +  '/subscribe');
+//gvar socket = io('http://' + domain + ':' + port +  '/subscribe');
 
 socket.emit('handshake', data); // tell the server which game this user is part of
 
@@ -55,10 +55,6 @@ socket.on('PlayerNumber',function(idLocal,dataInitGame,totalPlayer){
 	if((idPlayer + 1) == totalPlayer)
 		$('#loadingGame').addClass("hideit");
 
-	dataInitGame.upgraded = [{
-		"country": 25, // Suisse
-		"level": "2"
-	}];
 
 	nbJoueurs = totalPlayer;
 	countries = dataInitGame.pays;
