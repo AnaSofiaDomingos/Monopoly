@@ -231,7 +231,7 @@ function getMyInfos(){
 	// liste les loans
 	for (var i=0; i < localJson[idPlayer].loans.length; i++){
 		if (localJson[idPlayer].loans[i].country  != undefined){
-			var country = getCountryById(localJson[idPlayer].owns[i].country);
+			var country = getCountryById(localJson[idPlayer].loans[i].country);
 			var nom = country.NomPays;
 			$('#pays').append("<li class='data-infopays hypotheque'>" + nom + "</li>");
 		}
