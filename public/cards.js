@@ -5,7 +5,7 @@ function tirerCarte() {
 			card = Math.floor((Math.random() * CARDS));
 
 	sentJson.drew.push({'card' : card});
-	updateLogs("Player "+idPlayer+" drew card "+card + " : " + getCardById(card).Contenu);
+	updateLogs("Vous avez tiré la carte "+card + " : " + getCardById(card).Contenu);
 	
 	if (cards[card-1].Garder) {
 		localJson[idPlayer].cards.push({'card' : card});
@@ -27,7 +27,7 @@ function applyCard(idCard) {
 			// Kim Jung pirate notre banque
 			sum = 1;
 			if (debitObligatoire(sum) == 0) 
-				updateLogs("Player "+idPlayer+" paid 200'000");
+				updateLogs("Vous avez perdu 1'000'000");
 			else 
 				gameOver();
 			break;
@@ -44,9 +44,9 @@ function applyCard(idCard) {
 					debuff_time = 2;
 					
 				}
-				updateLogs("Player "+idPlayer+" has no internet for 2 turn");
+				updateLogs("Vous n'avez plus Internet pendant 2 tours");
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 			
 		case 3 : 
@@ -54,7 +54,7 @@ function applyCard(idCard) {
 			// Debit 200 000 aux taxes
 			sum = 0.2;
 			if (debitObligatoire(sum) == 0) 
-				updateLogs("Player "+idPlayer+" paid 200'000");
+				updateLogs("Vous avez payé 200'000 de taxes");
 			else 
 				gameOver();
 			break;
@@ -66,12 +66,12 @@ function applyCard(idCard) {
 				for (var i = 0; i < localJson[idPlayer].owns.length; i++) {
 					sum = 0.1 ;
 					if (debitObligatoire(sum) == 0) 
-						updateLogs("Player "+idPlayer+" paid 100'000");
+						updateLogs("Vous avez payé 100'000");
 					else 
 						gameOver();
 				}
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 			
 		case 5 :
@@ -86,9 +86,9 @@ function applyCard(idCard) {
 					debuff_time = 2;
 					
 				}
-				updateLogs("Player "+idPlayer+" has no water for 2 turn");
+				updateLogs("Vous n'avez plus d'Eau pendant 2 tours");
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 			
 		case 6 : 
@@ -96,7 +96,7 @@ function applyCard(idCard) {
 			// Debit 500 000 
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
-				updateLogs("Player "+idPlayer+" paid 500'000");
+				updateLogs("Vous avez payé 500'000");
 			else 
 				gameOver();
 			break;
@@ -106,13 +106,13 @@ function applyCard(idCard) {
 			// Viol sur mineur => debit 2 000 000
 			sum = 2;
 			if (debitObligatoire(sum) == 0) 
-				updateLogs("Player "+idPlayer+" paid 2 000'000");
+				updateLogs("Vous avez payé 2'000'000");
 			else 
 				gameOver();
 
 			var idCredit = (idPlayer + 1) % nbJoueurs;
 			credit(2, idCredit);
-			updateLogs("Player "+idCredit+" got'em");
+			updateLogs("Le joueur "+idCredit+" les reçoit");
 			break;
 			
 		case 8 :
@@ -130,20 +130,19 @@ function applyCard(idCard) {
 						debuff_time = 2;
 					}
 				}
-				updateLogs("Player "+idPlayer+" has no water in Asia for 2 turn");
+				updateLogs("Vous n'avez plus d'Eau en Asie pendant 2 tours");
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 		
 		case 9 :
 			// USA saisissent les ameliorations Moyen-Orient
 			if (localJson[idPlayer].owns.length > 1) {
-				updateLogs("Player "+idPlayer+" have no more levels for a random country"); 
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
-				updateLogs("Country "+localJson[idPlayer].owns[paysAleatoire].country+" got robbed by the USA");
+				updateLogs("Les USA saisissent vos améliorations à " + localJson[idPlayer].owns[paysAleatoire].country);
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 			
 		case 10 :
@@ -159,9 +158,9 @@ function applyCard(idCard) {
 					debuff_time = 2;
 					
 				}
-				updateLogs("Player "+idPlayer+" has no electricity for 2 turns");
+				updateLogs("Vous n'avez plus d'Électricité en Asie pendant 2 tours");
 			}else
-				updateLogs("Player "+idPlayer+" got lucky the card can't be applied");
+				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
 
 
@@ -170,7 +169,7 @@ function applyCard(idCard) {
 			// Debite 500 000 (Arthur Pendragon)
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) 
-				updateLogs("Player "+idPlayer+" paid 500'000");
+				updateLogs("Vous avez payé 500'000");
 			else 
 				gameOver();
 			break;
@@ -180,17 +179,17 @@ function applyCard(idCard) {
 			// Labo de meth not found => credit de 1 000 000 
  			sum = 1;
 			if (credit(sum) == 0) 
-				updateLogs("Player "+idPlayer+" got 1'000'000");
+				updateLogs("Vous avez reçu 1'000'000");
 			break;
 				  
 		case 13 : // garder
 			if (localJson[idPlayer].owns.length > 1) {
 				// Internet gratuit dans un pays
-				updateLogs("Player "+idPlayer+" can have internet for free");
+				updateLogs("Vous obtenez gratuitement Internet dans un pays");
 				removeItem(localJson[idPlayer].cards, "card", 13);
 				grade(country, UP_INT);
 			}else
-				updateLogs("Player "+idPlayer+" can't use that card");
+				updateLogs("La carte ne peut être utilisée !");
 			break;
 				  
 		case 14 :  // garder
@@ -199,7 +198,7 @@ function applyCard(idCard) {
 			if (sentJson.position > 1) {
 				var	country = Math.ceil(Math.random() * sentJson.position) + 1;		
 				if (debit(10) == 0) {
-					updateLogs("Player "+idPlayer+" invades country "+country);
+					updateLogs("Vous envahissez " + country);
 					inherit(country);
 					for (var i = 0; i < localJson[idPlayer].cards.length; i++)
 						if (localJson[idPlayer].cards[i].card == country)
@@ -208,18 +207,18 @@ function applyCard(idCard) {
 					removeItem(localJson[idPlayer].cards, "card", 14);
 					getMyInfos();
 				}else
-					updateLogs("Player "+idPlayer+" don't have enough money");
+					updateLogs("Vous n'avez pas assez d'argent");
 			}
 			break;
 				  
 		case 15 :  // garder
 			if (sentJson.state == S_ALIVE)
-				updateLogs("You are not in jail");
+				updateLogs("La carte ne peut être utilisée !");
 			else{
 				// Sortie prison
 				if (sentJson.state == S_JAILED)
 					sentJson.state = S_ALIVE;
-				updateLogs("Player "+idPlayer+" got out of jail");
+				updateLogs("Vous êtes sorti de prison");
 				removeItem(localJson[idPlayer].cards, "card", 15);
 			}
 			break;
@@ -228,7 +227,7 @@ function applyCard(idCard) {
 		
 			// Découverte puit vente pétrole 2 000 000
 			sum = 2;
-			if (credit(sum) == 0) updateLogs("Player "+idPlayer+" got 2'000'000");
+			if (credit(sum) == 0) updateLogs("Vous avec reçu 2'000'000");
 			break;
 				  
 		case 17 : 
@@ -236,13 +235,13 @@ function applyCard(idCard) {
 			// Gain de 1 000 000
 			sum = 1;
 			if (credit(sum) == 0) 
-				updateLogs("Player "+idPlayer+" got 1'000'000");
+				updateLogs("Vous avez reçu 1'000'000");
 			break;
 				  
 		case 18 : 
 		
 			// Rejouer
-			updateLogs("Player "+idPlayer+" replays");
+			updateLogs("Vous rejouez");
 			replay();
 			break;
 				  
@@ -251,10 +250,10 @@ function applyCard(idCard) {
 			// Debit 500 000 pour pub mais on recuperer 200 000 pdt 5 tours
 			sum = 0.5;
 			if (debitObligatoire(sum) == 0) {
-				updateLogs("Player "+idPlayer+" paid 500'000 for pub");
+				updateLogs("Vous avez payé 500'000");
 				localJson.state = S_PUBLIC;
 				credit(0.2);
-				updateLogs("Player "+idPlayer+" gained 200'000");
+				updateLogs("Vous avez reçu 200'000");
 				buff_time = 5;
 			}
 			else gameOver();
@@ -265,13 +264,13 @@ function applyCard(idCard) {
 			// EMS en feu
 			sum = 0.3;
 			if (credit(sum) == 0) 
-				updateLogs("Player "+idPlayer+" got 300'000");
+				updateLogs("Vous avez reçu 300'000");
 			break;
 				  
 		case 21 : 
 		
 			// Burgonde King
-			updateLogs("Player "+idPlayer+" drew the Burgonde King");	
+			updateLogs("Vous avez tiré le Roi Burgonde !");
 			break;
 
 	}
