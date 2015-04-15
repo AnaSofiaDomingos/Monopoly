@@ -17,40 +17,62 @@ function upgrade(idCurrentPlayer){
 	var posPays = joueurs[idCurrentPlayer];
 	var pays = findCountry(posPays);
 	var idPays = pays.idPays;
+	var upCountry = getUpByCountry(idPays);
 	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
-	var price;
-	switch(parseInt(newLvl)) {
-		case 1 : price=pays.Prix*0.3;
+	var modified = false;
+	newLvl = parseInt(newLvl);
+	if (newLvl > upCountry) {
+		var price = getUpdatePrice(pays.Prix, newLvl);
+		
+		var r = debit(price);
+		if (r == 0) {
+			updateLogs(pays.NomPays + " successfully upgraded to level "+newLvl);
+			modified = true;
+		} else {
+			updateLogs("You don't have enough money ("+r+" needed)");
+			modified = false;
+		}
+	} else if (newLvl == upCountry) {
+		updateLogs("You can't upgrade to the same level");
+		modified = false;
+	} else if (newLvl < upCountry) {
+		var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
+		var newPrice = getUpdatePrice(pays.Prix, newLvl);
+		credit(alreadyPaid-newPrice);
+		modified = true;
+		updateLogs(pays.NomPays + " successfully downgraded to "+newLvl);
+	}
+
+	if(modified) {
+		// upgrade of the country
+		sentJson.upgraded.push({
+			'country' : idPays,
+			'level' : newLvl
+		});
+
+		for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
+			if(localJson[idPlayer].owns[i].country == idPays)
+				localJson[idPlayer].owns[i].level = newLvl;
+		}
+
+		updateUpgrades(sentJson.upgraded);
+	}
+}
+
+function getUpdatePrice(paysPrix, level) {
+	switch(level) {
+		case 1 : return (paysPrix*0.3);
 		break;
-		case 2 : price=pays.Prix*0.4;
+		case 2 : return (paysPrix*0.4);
 		break;
-		case 3 : price=pays.Prix*0.7;
+		case 3 : return (paysPrix*0.7);
 		break;
-		case 4 : price=pays.Prix*1.2;
+		case 4 : return (paysPrix*1.2);
 		break;
 		default :
 			return -1;
 		break;
 	}
-
-	var r = debit(price);
-	if(r == 0)
-		window.alert(pays.NomPays + " amelioré !");
-	else
-		window.alert("Il manque "+r+" pour acheter "+pays.NomPays);
-
-	// upgrade of the country
-	sentJson.upgraded.push({
-		'country' : idPays,
-		'level' : newLvl
-	});
-
-	for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
-		if(localJson[idPlayer].owns[i].country == idPays)
-			localJson[idPlayer].owns[i].level = newLvl;
-	}
-
-	updateUpgrades(sentJson.upgraded);
 }
 
 function getUpByCountry(idCountry) {
@@ -190,6 +212,8 @@ function receiveData(data) {
 	console.log(data.state);
 	if(data.state == S_DEAD){ // if somebody lost we check if the game is over
 		nbJoueurs--;
+		localJson[data.id].owns = [];
+		localJson[data.id].loans = [];
 		terminateGame();
 	}
 
