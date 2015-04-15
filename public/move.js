@@ -236,7 +236,7 @@ function transition(idCurrentPlayer,posLocal) {
 function ResetPlateau(){
 	for(var i = 0; i<taillePlateau;i++) {
 		var div = document.getElementById("case"+i);
-		div.innerHTML("");
+		div.innerHTML = "";
 	}
 }
 
