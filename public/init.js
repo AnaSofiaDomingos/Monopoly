@@ -57,5 +57,6 @@ function updateLogs(log){
 	$('#logs-list').append(liElem + log + liElemClose);
 	var height = $('#logs').prop('scrollHeight');
 	$('#logs').scrollTop(height);
+	getMyInfos();
 }
 
