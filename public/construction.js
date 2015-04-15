@@ -4,6 +4,21 @@ var myTurn;
   return 'Are you sure you want to leave?';
 }); */
 
+// update UI
+function updateUpgrades(data){
+	for (var i = 0; i < data.length; i++){
+		// retrieves the position of a country from it's id
+		for ( var iter = 0; iter < countries.length; iter++)
+			if(countries[iter].idPays == data[i].country)
+				var posPays = countries[iter].Position;
+
+		$('#case'+posPays).children('span.upgrade').remove(); // removes all the upgrades in the country
+		for (var y = 0; y < data[i].level; y++) {
+			$('#case'+posPays).append('<span class="upgrade"></span>');
+		}
+	}
+}
+
 // fonction permettant de construire les cases de chaque pays et carte
 function constructionCase(typecase, id, sens, parent ){
 	if (sens == 1)
