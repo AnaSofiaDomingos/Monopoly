@@ -7,12 +7,10 @@ function createGame(){
 }
 
 function salon(){
-	console.log("salon");
 	var pseudo = $('#pseudoTitle').text();
 	socketSalon.emit("games");
 	// lister les parties
 	socketSalon.on('listGames', function(list){
-		console.log("in salon");
 		$('#saloon').append("<h3>Liste des parties disponibles</h3>");
 		$('#saloon').append("<table><tr>");
 		$('#saloon').append("<th>id partie</th><th>nombre de joueurs</th><th>créateur</th><th>Action</th></tr>");
@@ -20,8 +18,8 @@ function salon(){
 		for (var i=0; i<list.length; i++){
 			$('#saloon').append("<tr>");
 			$('#saloon').append("<td>" + list[i].idPartie + "</td>");
-			$('#saloon').append("<td>" + list[i].nbJoueurs + "</td>");
-			$('#saloon').append("<td>" + list[i].pseudo + "</td>");
+			$('#saloon').append("<td>" + list[i].c + " / " + list[i].nbJoueurs + "</td>");
+			$('#saloon').append("<td>" + list[i].Pseudo + "</td>");
 			$('#saloon').append('<td><input type="button" name="joinGame" value="Rejoindre" onclick="joinGame(\''+pseudo+'\','+ list[i].idPartie +')" /></td>');
 			$('#saloon').append("</tr>");
 		}

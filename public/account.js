@@ -51,6 +51,7 @@ function login() {
 				$('#accInfos').show();
 				$('#pseudoLogin').val("");
 				$('#passLogin').val("");
+				$('#saloon').show();
 
 				salon();
 			} else {
