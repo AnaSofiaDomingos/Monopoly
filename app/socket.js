@@ -151,9 +151,9 @@ module.exports = function(server, connection) {
 		//END OF TURN
 
 		socket.on('endofturn',function(data){
-			console.log(data);
 			require('./endofturn.js')(data, connection);
 			var isAlive = false;
+			console.log(data);
 
 			var tab = getPlayersInRoom(data.GameID);
 			var nbplayer = getNbPlayersInRoom(data.GameID);
@@ -172,6 +172,7 @@ module.exports = function(server, connection) {
 			
 			if(isAlive)
 				data.nextPlayer = nextPlayer;
+			console.log("nextplayer => "+nextPlayer);
 
 			
 
