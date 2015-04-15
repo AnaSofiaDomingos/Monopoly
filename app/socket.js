@@ -41,8 +41,10 @@ module.exports = function(server, connection) {
 
 	// récupère le nombre de joueurs maximum pour une partie
 	function getNbPlayers(idPartie, callback){
+		console.log("idpartie => " + idPartie);
 		connection.query('SELECT nbJoueurs FROM parties WHERE idPartie = ' +idPartie, function(err, rows, fields) {
 			if (err) throw err;
+			console.log("nbJoueurs =>" + rows);
 			callback(rows[0]["nbJoueurs"]);
 		});
 	}
