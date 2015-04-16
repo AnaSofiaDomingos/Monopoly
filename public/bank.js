@@ -256,11 +256,9 @@ function sell(idCountry) {
 			sumAm = 0;
 		var sum = countries[idCountry - 1].Prix+sumAm;
 
-		console.log("--> "+sum);
-
 		credit(sum); //
 
-		updateLogs("Player "+idPlayer+" sold country "+idCountry);
+		updateLogs("Vous vendez "+countries[idCountry - 1].NomPays+" pour "+sum+"M");
 		getMyInfos();
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
