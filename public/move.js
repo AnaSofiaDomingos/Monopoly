@@ -73,8 +73,7 @@ function lancerDes(idCurrentPlayer) {
 
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
-	de1 = 2;
-	de2 = 3;
+	
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 	posLocal += de1 + de2;
 
@@ -96,15 +95,16 @@ function lancerDes(idCurrentPlayer) {
 
 		if (posLocal == 0) {
 			credit(SALARY*2);
-			updateLogs("Vous obtenez le double de votre salaire");
+			updateLogs("Vous obtenez le double de votre salaire (4)");
 		}
 		else {
 			credit(SALARY);
-			updateLogs("Vous obtenez votre salaire");
+			updateLogs("Vous obtenez votre salaire (2)");
 		}
 
 		getMyInfos();
 	}
+
 	// Special positions
 	switch (posLocal) {
 
@@ -197,20 +197,31 @@ function isPossessed(posPays) {
 		   };
 	}
 	var country = findCountry(posPays);
-	for (var p = 0; p < localJson.length; p++)
+	var isLoaned = false;
+	for (var p = 0; p < localJson.length; p++){
+
 		if(localJson[p].owns == null)
 			continue;
-		else
-			for (var i = 0; i < localJson[p].owns.length; i++)
-				if (localJson[p].owns[i].country == country.idPays) 
-					return { 
-							 'idPlayer': p, 
-					         'lvl'     : localJson[p].owns[i].level 
-						   };
+		else{
+			for (var i = 0; i < localJson[p].loans.length;i++){
+				if(localJson[p].loans[i].country == country.idPays){
+					updateLogs("Chanceux ! Ce pays a été hypothéqué par son propriétaire ~(O_O)~");
+					isLoaned = true;
+				}
+			}
+			if(!isLoaned)
+				for (var i = 0; i < localJson[p].owns.length; i++)
+					if (localJson[p].owns[i].country == country.idPays)
+						return {
+								'idPlayer': p,
+								'lvl'     : localJson[p].owns[i].level
+								};
+		}
+	}
 
 	return {
-		     'idPlayer' : -1, 
-			 'lvl'      : -1
+		    'idPlayer' : -1,
+			'lvl'      : -1
 		   };
 	
 }

@@ -16,54 +16,56 @@ function finTour() {
 function upgrade(idCurrentPlayer){
 	var posPays = joueurs[idCurrentPlayer];
 	var pays = findCountry(posPays);
-	var idPays = pays.idPays;
-	var upCountry = getUpByCountry(idPays);
-	var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
-	var modified = false;
-	newLvl = parseInt(newLvl);
-	if(newLvl <= maxUpgrade) {
-		if (newLvl > upCountry) {
-			var price = getUpdatePrice(pays.Prix, newLvl);
-			
-			var r = debit(price);
-			if (r == 0) {
-				updateLogs(pays.NomPays + " amélioré au niveau "+newLvl+" ("+price+")");
-				modified = true;
-			} else {
-				updateLogs("Vous n'avez pas assez d'argent (il vous manque "+r+")");
+	if(typeof(idPays) != undefined){
+		var idPays = pays.idPays;
+		var upCountry = getUpByCountry(idPays);
+		var newLvl = prompt("Quel genre d'amélioration voulez-vous effectuer ?", getUpByCountry(idPays));
+		var modified = false;
+		newLvl = parseInt(newLvl);
+		if(newLvl <= maxUpgrade) {
+			if (newLvl > upCountry) {
+				var price = getUpdatePrice(pays.Prix, newLvl);
+				
+				var r = debit(price);
+				if (r == 0) {
+					updateLogs(pays.NomPays + " amélioré au niveau "+newLvl+" ("+price+")");
+					modified = true;
+				} else {
+					updateLogs("Vous n'avez pas assez d'argent (il vous manque "+r+")");
+					modified = false;
+				}
+			} else if (newLvl == upCountry) {
+				updateLogs("Impossible d'améliorer au même niveau");
 				modified = false;
-			}
-		} else if (newLvl == upCountry) {
-			updateLogs("Impossible d'améliorer au même niveau");
-			modified = false;
-		} else if (newLvl < upCountry)
-			if (newLvl >= 0) {
-				var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
-				var newPrice = getUpdatePrice(pays.Prix, newLvl);
-				var diff = alreadyPaid-newPrice;
-				credit(diff);
-				modified = true;
-				updateLogs(pays.NomPays + " descendu au niveau "+newLvl+" ("+diff+")");
-				getMyInfos();
-			}
+			} else if (newLvl < upCountry)
+				if (newLvl >= 0) {
+					var alreadyPaid = getUpdatePrice(pays.Prix, upCountry);
+					var newPrice = getUpdatePrice(pays.Prix, newLvl);
+					var diff = alreadyPaid-newPrice;
+					credit(diff);
+					modified = true;
+					updateLogs(pays.NomPays + " descendu au niveau "+newLvl+" ("+diff+")");
+					getMyInfos();
+				}
 
-		if(modified) {
-			// upgrade of the country
-			sentJson.upgraded.push({
-				'country' : idPays,
-				'level' : newLvl
-			});
+			if(modified) {
+				// upgrade of the country
+				sentJson.upgraded.push({
+					'country' : idPays,
+					'level' : newLvl
+				});
 
-			for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
-				if(localJson[idPlayer].owns[i].country == idPays)
-					localJson[idPlayer].owns[i].level = newLvl;
+				for(var i = 0; i<localJson[idPlayer].owns.length; i++) {
+					if(localJson[idPlayer].owns[i].country == idPays)
+						localJson[idPlayer].owns[i].level = newLvl;
+				}
+
+				updateUpgrades(sentJson.upgraded);
+				getInfos(posPays, idPays);
 			}
-
-			updateUpgrades(sentJson.upgraded);
-			getInfos(posPays, idPays);
+		} else {
+			updateLogs("Impossible d'améliorer au niveau "+newLvl+" (Max. "+maxUpgrade+")");
 		}
-	} else {
-		updateLogs("Impossible d'améliorer au niveau "+newLvl+" (Max. "+maxUpgrade+")");
 	}
 }
 
@@ -167,7 +169,7 @@ function receiveData(data) {
 		if(typeof data.loaned !== [])
 			for (i = 0; i < data.loaned.length; i++)
 				if(!data.loaned[i].recovered)
-					localJson[data.id].loans.push(data.loaned);
+					localJson[data.id].loans.push(data.loaned[i]);
 				else{
 					removeItem(data.loaned,'country',data.loaned[i].country);
 					removeItem(localJson[data.id].loans,'country',data.loaned[i].country);
@@ -200,7 +202,7 @@ function receiveData(data) {
 		PlayerPos = data.position;
 		transition(data.id,PlayerPos);
 	}
-	
+
 	idCurrentPlayer = data.id;
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
