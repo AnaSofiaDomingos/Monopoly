@@ -14,16 +14,16 @@ How to start:
 
     $ node server
 
-Open [http://localhost:4567](http://localhost:4567)
+Open [http://localhost:8080](http://localhost:8080)
 
 If you need a different port:
 
-    $ PORT=9999 node server
+    $ PORT=8080 node server
 
-Open [http://localhost:9999](http://localhost:9999)
+Open [http://localhost:8080](http://localhost:8080)
 
 If you need a different hostname:
 
-    $ HOSTNAME=192.168.0.1 node server
+    $ HOSTNAME=129.194.185.13 node server
 
-Open [http://192.168.0.1:4567](http://192.168.0.1:4567)
+Open [http://129.194.185.13:8080](http://129.194.185.13:8080)
