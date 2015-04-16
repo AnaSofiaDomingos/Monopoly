@@ -73,8 +73,11 @@ function lancerDes(idCurrentPlayer) {
 
 	var de1 = Math.floor((Math.random() * 6) + 1);
 	var de2 = Math.floor((Math.random() * 6) + 1);
+	de1 = 2;
+	de2 = 3;
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 	posLocal += de1 + de2;
+
 	sentJson.state = S_ALIVE;
 	$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2));
 

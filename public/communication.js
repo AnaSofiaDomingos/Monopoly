@@ -174,7 +174,6 @@ function receiveData(data) {
 				}
 					
 
-		console.log(data.sold);
 		// update list of sold countries
 		if(typeof data.sold !== [])
 			for(var i = 0; i < data.sold.length; i++){
@@ -201,13 +200,12 @@ function receiveData(data) {
 		PlayerPos = data.position;
 		transition(data.id,PlayerPos);
 	}
-
+	
+	idCurrentPlayer = data.id;
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
+	updateUpgrades(data.upgraded);
 
-	updateUpgrades(localJson[data.id].upgraded);
-
-	console.log(data.state);
 	if(data.state == S_DEAD){ // if somebody lost we check if the game is over
 		nbJoueurs--;
 		localJson[data.id].owns = [];

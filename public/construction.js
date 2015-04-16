@@ -6,16 +6,25 @@ var myTurn;
 
 // update UI
 function updateUpgrades(data){
+	console.log(localJson);
 	for (var i = 0; i < data.length; i++){
 		// retrieves the position of a country from it's id
 		for ( var iter = 0; iter < countries.length; iter++)
 			if(countries[iter].idPays == data[i].country)
 				var posPays = countries[iter].Position;
+		var isOwned = false;
+
+		for (var itera = 0; itera < localJson.length; itera++)
+			for (var iter = 0; iter < localJson[itera].owns.length; iter++)
+				if(data[i].country == localJson[itera].owns[iter].country)
+					isOwned = true;
 
 		$('#case'+posPays).children('span.upgrade').remove(); // removes all the upgrades in the country
-		for (var y = 0; y < data[i].level; y++) {
-			$('#case'+posPays).append('<span class="upgrade"></span>');
-		}
+
+		if(isOwned)
+			for (var y = 0; y < data[i].level; y++) 
+				$('#case'+posPays).append('<span class="upgrade"></span>');
+
 	}
 }
 
