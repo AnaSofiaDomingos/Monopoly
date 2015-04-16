@@ -251,7 +251,12 @@ function sell(idCountry) {
 				level = localJson[idPlayer].owns[i].level;
 		}
 
-		var sum = countries[idCountry - 1].Prix+getUpdatePrice(countries[idCountry - 1].Prix, level);
+		var sumAm = getUpdatePrice(countries[idCountry - 1].Prix, level);
+		if(sumAm < 0)
+			sumAm = 0;
+		var sum = countries[idCountry - 1].Prix+sumAm;
+
+		console.log("--> "+sum);
 
 		credit(sum); //
 
@@ -262,6 +267,7 @@ function sell(idCountry) {
 		$("#btnUpgrade").hide();
 		//updateUI
 		var paysTest = getCountryById(idCountry);
+		getInfos(paysTest.Position);
 		console.log('#case'+paysTest.Position);
 		$('#case'+paysTest.Position).removeClass("player"+ (idPlayer));
 		$('#case'+paysTest.Position).children().remove("span.upgrade");
