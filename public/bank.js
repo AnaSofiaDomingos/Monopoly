@@ -258,7 +258,7 @@ function sell(idCountry) {
 
 		credit(sum); //
 
-		updateLogs("Vous vendez "+idCountry+" pour "+sum+"M");
+		updateLogs("Vous vendez "+countries[idCountry - 1].NomPays+" pour "+sum+"M");
 		getMyInfos();
 		$("#btnSell").hide();
 		$("#btnLoan").hide();
