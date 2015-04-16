@@ -14,7 +14,7 @@ var UP_INT = 3;
 var UP_NUC = 4;
 
 // Constants
-var SALARY    = 0.5;
+var SALARY    = 2;
 var TAXES     = 0.05;
 var CARDS     = 20; // King Burgonde not implemented (id 21)
 
@@ -35,7 +35,7 @@ var owns   = [];
 var backup = [];
 var joueurs = [0, 0, 0, 0, 0];
 
-var domain = "129.194.185.13";
+var domain = "localhost";
 var port = "8080";
 
 var localJson = [];

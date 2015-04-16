@@ -147,17 +147,6 @@ function receiveData(data) {
 				}
 			}
 
-		// update list of sold countries
-		if(typeof data.sold !== [])
-			for(var i = 0; i < data.sold.length; i++){
-				//updateUI
-
-				if (typeof data.sold[i].country !== 'undefined') {
-					var paysTest = getCountryById(data.sold[i].country);
-					$('#case'+paysTest.Position).removeClass("player" + data.id);
-					removeItem(countries.owns,'country',data.sold[i].country);
-				}
-			}
 		// update list of cards countries
 		if(typeof data.drew !== [])
 			localJson[data.id].cards.push({'card' : data.drew});
@@ -174,17 +163,31 @@ function receiveData(data) {
 					if(localJson[data.id].owns[i].country == data.upgraded[y].country)
 						localJson[data.id].owns[i].level = data.upgraded[y].level;
 
-		// update list of cards countries
+		// update list of cards loaned
 		if(typeof data.loaned !== [])
 			for (i = 0; i < data.loaned.length; i++)
 				if(!data.loaned[i].recovered)
 					localJson[data.id].loans.push(data.loaned);
-
-		// update list of bought countries
-		if(typeof data.loaned !== [])
-			for(i = 0; i < data.loaned.length; i++)
-				if(data.loaned[i].recovered)
+				else{
 					removeItem(data.loaned,'country',data.loaned[i].country);
+					removeItem(localJson[data.id].loans,'country',data.loaned[i].country);
+				}
+					
+
+		console.log(data.sold);
+		// update list of sold countries
+		if(typeof data.sold !== [])
+			for(var i = 0; i < data.sold.length; i++){
+				//updateUI
+
+				if (typeof data.sold[i].country !== 'undefined') {
+					var paysTest = getCountryById(data.sold[i].country);
+					$('#case'+paysTest.Position).removeClass("player" + data.id);
+					$('#case'+paysTest.Position).children().remove("span.upgrade");
+					removeItem(countries.owns,'country',data.sold[i].country);
+					removeItem(localJson[data.id].owns,'country',data.sold[i].country)
+				}
+			}
 
 		if(typeof data.paid !== [{}])
 			for(i = 0; i < data.paid.length; i++)
@@ -202,7 +205,7 @@ function receiveData(data) {
 	var nextPlayer = ((data.id+1)%nbJoueurs);
 
 
-	updateUpgrades(data.upgraded);
+	updateUpgrades(localJson[data.id].upgraded);
 
 	console.log(data.state);
 	if(data.state == S_DEAD){ // if somebody lost we check if the game is over
