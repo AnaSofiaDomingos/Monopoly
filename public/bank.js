@@ -254,7 +254,7 @@ function sell(idCountry) {
 		var sumAm = getUpdatePrice(countries[idCountry - 1].Prix, level);
 		if(sumAm < 0)
 			sumAm = 0;
-		var sum = countries[idCountry - 1].Prix+sumAm;
+		var sum = (countries[idCountry - 1].Prix*0.8)+sumAm;
 
 		credit(sum); //
 
