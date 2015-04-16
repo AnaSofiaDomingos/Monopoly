@@ -1,11 +1,22 @@
 var socketSalon = io('http://'+domain+':8080/salon');
 
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function createGame(){
+	$('#errorsCreation').show();
 	socketSalon.emit('whoami', $('#pseudoTitle').text());
-	var nbplayers = $('#nbPlayers').val();
-	socketSalon.emit('createGame', nbplayers);
-	refresh();
-	alert("Partie Créee");
+	if (isNumber($('#nbPlayers').val())){
+		var nbplayers = $('#nbPlayers').val();
+		socketSalon.emit('createGame', nbplayers);
+		refresh();
+		$('#errorsCreation').css("color", "green");
+		$('#errorsCreation').text("Game created");
+	}else if (!isNumber($('#nbPlayers').val())) {
+		$('#errorsCreation').css("color", "red");
+		$('#errorsCreation').text("You have to specify a number");
+	}
 }
 
 function salon(){
