@@ -146,6 +146,7 @@ function applyCard(idCard) {
 				var paysAleatoire = Math.floor(Math.random() * localJson[idPlayer].owns.length);
 				grade(localJson[idPlayer].owns[paysAleatoire].country, 0);
 				updateLogs("Les USA saisissent vos améliorations à " + localJson[idPlayer].owns[paysAleatoire].country);
+				updateUpgrades(sentJson.upgraded);
 			}else
 				updateLogs("La carte ne peut être appliquée (chanceux !)");
 			break;
