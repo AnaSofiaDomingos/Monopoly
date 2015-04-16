@@ -23,7 +23,7 @@ function debitObligatoire(sum) {
 	if (sentJson.account < sum)
 		if((propertiesValue()+sentJson.account) > sum) {
 			$('#listSell').empty();
-			$('#listSell').append('What do you want to sell?');
+			$('#listSell').append('Que voulez vous vendre?');
 			proposeVente(sum);
 		} else
 			return gameOver();
@@ -121,7 +121,7 @@ function desherit(sample) {
 
 	if (sample.victimID == idPlayer) {
 		removeItem(localJson[idPlayer].owns, 'country', country);
-		updateLogs("Player "+idPlayer+" got a country robbed");
+		updateLogs("Vous vous êtes fait voler un pays");
 	}
 	
 	return 0;
@@ -154,7 +154,7 @@ function inherit(country) {
 		
 		socket.emit('robbed', sample);
 		
-		updateLogs("Player "+idPlayer+" robbed a country from player "+victimID);
+		updateLogs("Vous avez volé un pays au joueur "+victimID);
 	}
 	return 0;
 
@@ -227,7 +227,7 @@ function buy() {
 			updateLogs("Vous ne pouvez pas acheter " + country.NomPays);	
 		}
 	} else {
-		updateLogs("il vous manque " + diff + " pour pouvoir acheter ce pays");
+		updateLogs("il vous manque " + diff.toFixed(2) + " pour pouvoir acheter ce pays");
 		return 1;
 	}
 
@@ -326,7 +326,7 @@ function recover(idCountry) {
 	}
 	else {
 	
-		updateLogs("Vous avez besoin de " + diff + " pour récupérer votre pays");
+		updateLogs("Vous avez besoin de " + diff.toFixed(2) + " pour récupérer votre pays");
 		return 1;
 		
 	}
