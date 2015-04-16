@@ -193,6 +193,7 @@ function applyCard(idCard) {
 				// Internet gratuit dans un pays
 				updateLogs("Vous obtenez gratuitement Internet dans un pays");
 				removeItem(localJson[idPlayer].cards, "card", 13);
+				var country = localJson[idPlayer].owns[Math.floor(Math.random() * localJson[idPlayer].owns.length)].country;
 				grade(country, UP_INT);
 			}else
 				updateLogs("La carte ne peut être utilisée !");
