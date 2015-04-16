@@ -77,11 +77,10 @@ function lancerDes(idCurrentPlayer) {
 	var posJoueur = $("#case"+joueurs[idCurrentPlayer]);
 	posLocal += de1 + de2;
 
-	sentJson.state = S_ALIVE;
 	$("#btnDes").attr("value", de1+" + "+de2+" = " +(de1+de2));
 
 	// If jailed, must do a double 
-	if (((sentJson.state == S_JAILED) && (de1 == de2))) {
+	if ((sentJson.state == S_JAILED) && (de1 == de2)) {
 		updateLogs("Vous êtes sorti de prison");
 	}
 	else if ((sentJson.state == S_JAILED) && (de1 != de2)){
@@ -132,10 +131,7 @@ function lancerDes(idCurrentPlayer) {
 			
 		// Aller en prison
 		case 27 :
-			updateLogs("Vous allez en prison");
-			sentJson.state = S_JAILED;
-			posLocal = 9;
-			jail_time = 3;
+			goToJail(idPlayer);
 			break;
 
 		// Case parking
@@ -173,7 +169,8 @@ function lancerDes(idCurrentPlayer) {
 		
 	checkUpgradeAvailible();
 
-	transition(idCurrentPlayer, posLocal);
+	if (sentJson.state != S_JAILED)
+		transition(idCurrentPlayer, posLocal);
 
 	getInfos(posLocal);
 	getMyInfos();
@@ -277,4 +274,12 @@ function WriteAllPlayersPosition(){
 		posJoueur.appendChild(pion);
 
 	}
+}
+
+function goToJail(idPlayer){
+	sentJson.state = S_JAILED;
+	updateLogs("Vous allez en prison");
+	posLocal = 9;
+	jail_time = 3;
+	transition(idPlayer, 9);
 }

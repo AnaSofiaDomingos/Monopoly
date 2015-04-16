@@ -1,3 +1,4 @@
+	
 function tirerCarte() {
 
 	var card = 0;
@@ -113,6 +114,10 @@ function applyCard(idCard) {
 			var idCredit = (idPlayer + 1) % nbJoueurs;
 			credit(2, idCredit);
 			updateLogs("Le joueur "+idCredit+" les reçoit");
+
+
+			// prison
+			goToJail(idPlayer);
 			break;
 			
 		case 8 :
